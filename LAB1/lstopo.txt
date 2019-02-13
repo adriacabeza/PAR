@@ -1,0 +1,57 @@
+Machine (23GB total)
+  NUMANode L#0 (P#0 12GB) + Package L#0 + L3 L#0 (12MB)
+    L2 L#0 (256KB) + L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0
+      PU L#0 (P#0)
+      PU L#1 (P#12)
+    L2 L#1 (256KB) + L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1
+      PU L#2 (P#2)
+      PU L#3 (P#14)
+    L2 L#2 (256KB) + L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2
+      PU L#4 (P#4)
+      PU L#5 (P#16)
+    L2 L#3 (256KB) + L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3
+      PU L#6 (P#6)
+      PU L#7 (P#18)
+    L2 L#4 (256KB) + L1d L#4 (32KB) + L1i L#4 (32KB) + Core L#4
+      PU L#8 (P#8)
+      PU L#9 (P#20)
+    L2 L#5 (256KB) + L1d L#5 (32KB) + L1i L#5 (32KB) + Core L#5
+      PU L#10 (P#10)
+      PU L#11 (P#22)
+  NUMANode L#1 (P#1 12GB) + Package L#1 + L3 L#1 (12MB)
+    L2 L#6 (256KB) + L1d L#6 (32KB) + L1i L#6 (32KB) + Core L#6
+      PU L#12 (P#1)
+      PU L#13 (P#13)
+    L2 L#7 (256KB) + L1d L#7 (32KB) + L1i L#7 (32KB) + Core L#7
+      PU L#14 (P#3)
+      PU L#15 (P#15)
+    L2 L#8 (256KB) + L1d L#8 (32KB) + L1i L#8 (32KB) + Core L#8
+      PU L#16 (P#5)
+      PU L#17 (P#17)
+    L2 L#9 (256KB) + L1d L#9 (32KB) + L1i L#9 (32KB) + Core L#9
+      PU L#18 (P#7)
+      PU L#19 (P#19)
+    L2 L#10 (256KB) + L1d L#10 (32KB) + L1i L#10 (32KB) + Core L#10
+      PU L#20 (P#9)
+      PU L#21 (P#21)
+    L2 L#11 (256KB) + L1d L#11 (32KB) + L1i L#11 (32KB) + Core L#11
+      PU L#22 (P#11)
+      PU L#23 (P#23)
+  HostBridge L#0
+    PCIBridge
+      PCI 8086:10c9
+        Net L#0 "eth0"
+      PCI 8086:10c9
+        Net L#1 "eth1"
+    PCIBridge
+      PCI 8086:105e
+        Net L#2 "eth2"
+      PCI 8086:105e
+        Net L#3 "eth3"
+    PCIBridge
+      PCI 102b:0522
+    PCI 8086:3a20
+      Block(Disk) L#4 "sda"
+      Block(Disk) L#5 "sdb"
+    PCI 8086:3a26
+      Block(Removable Media Device) L#6 "sr0"

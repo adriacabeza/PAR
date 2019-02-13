@@ -1,0 +1,2 @@
+Number pi after 1000000000 iterations = 3.141592653589768
+Execution time (secs.): 3.962481

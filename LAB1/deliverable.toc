@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Node architecture and memory}{3}
+\contentsline {section}{\numberline {3}Sequential and parallel executions}{3}
+\contentsline {subsection}{\numberline {3.1}Strong scalability}{3}
+\contentsline {subsection}{\numberline {3.2}Weak scalability}{3}
+\contentsline {section}{\numberline {4}Conclusions}{3}

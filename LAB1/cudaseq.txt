@@ -1,0 +1,3 @@
+make: 'pi_seq' is up to date.
+Number pi after 1000000000 iterations = 3.141592653589768
+Execution time (secs.): 3.945269
