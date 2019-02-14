@@ -1,9 +1,9 @@
 \documentclass[12]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
-\author{Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
+\author{par4111 \\ Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
 \title{Lab 1: Experimental setup and tools}
-\date{\today}
+\date{\today \\ 2018 - 19 PRIMAVERA}
 
 
 \begin{document}
@@ -17,17 +17,28 @@
 
 
 \begin{table}[h]
-    \begin{tabular}{llll}
-                               & boada-1 to boada-4 & boada-5 & boada-6 to boada-8   \\
-    Number of sockets per node &                    &         &                      \\
-    Number of cores per socket &                    &         &                      \\
-    Number of threads per core &                    &         &                     \\
-    L1-I cache size (per-core) &                    &         &                      \\
-    L1-D cache size (per core) &                    &         &                      \\
-    L2 cache size (per-core)   &                    &         &                       \\
-    Last-level cache size (per-socket) &            &         &                      \\
-    Main memory  size (per socket) &                &         &                       \\
-    Main memory size (per node)  &                    &         &                       \\
+    \begin{tabular}{|l||l|l|l|}
+    \hline
+                                        & boada-1 to boada-4    & boada-5   & boada-6 to boada-8    \\
+    \hline\hline
+    Number of sockets per node          & 2                     & 2         & 2                     \\
+    \hline
+    Number of cores per socket          & 6                     & 6         & 8                     \\
+    \hline
+    Number of threads per core          & 2                     & 2         & 1                     \\
+    \hline
+    L1-I cache size (per-core)          & 32 KB                 & 32 KB     & 32 KB                 \\    
+    \hline
+    L1-D cache size (per core)          & 32 KB                 & 32 KB     & 32 KB                 \\
+    \hline
+    L2 cache size (per-core)            & 256 KB                & 256 KB    & 256 KB                \\
+    \hline
+    Last-level cache size (per-socket)  & 12 MB                 & 15 MB     & 20 MB                 \\
+    \hline
+    Main memory  size (per socket)      & 12 GB                 & 31 GB     & 16 GB                 \\
+    \hline
+    Main memory size (per node)         & 23 GB                 & 63 GB     & 31 GB                 \\
+    \hline
     \end{tabular}
 \end{table}
 

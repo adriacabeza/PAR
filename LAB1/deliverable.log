@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  14 FEB 2019 18:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  14 FEB 2019 21:25
 entering extended mode
 **d:/code/PAR/LAB1/deliverable.tex
 (d:/code/PAR/LAB1/deliverable.tex
@@ -65,7 +65,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout3 = `deliverable.toc'.
 
  [2]
-Overfull \hbox (50.83408pt too wide) in paragraph at lines 20--32
+Overfull \hbox (52.83408pt too wide) in paragraph at lines 20--43
 [][] 
  []
 
@@ -73,13 +73,13 @@ Overfull \hbox (50.83408pt too wide) in paragraph at lines 20--32
 Here is how much of TeX's memory you used:
  349 strings out of 492946
  4233 string characters out of 3135530
- 63796 words of memory out of 3000000
+ 64796 words of memory out of 3000000
  4310 multiletter control sequences out of 15000+200000
  7895 words of font info for 28 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 23i,7n,18p,209b,200s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 23i,7n,18p,220b,200s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on d:/code\PAR\LAB1\deliverable.pdf (3 pages, 73053 bytes).
+Output written on d:/code\PAR\LAB1\deliverable.pdf (3 pages, 76192 bytes).
 PDF statistics:
  32 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
