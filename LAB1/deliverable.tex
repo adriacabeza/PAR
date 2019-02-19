@@ -12,8 +12,14 @@
 \tableofcontents
 \newpage
 \section{Introduction}
-\section{Node architecture and memory}
+In order to do properly this subject, first, we have to introduce some new concepts and architecture.  The following document contains an introductory approach, step by step introducing those concepts. We will introduce the Boada architecture, some of the most important parallelism concepts and several tests to see its effects. 
 
+\section{Node architecture and memory}
+%AIXO M'ho he copiat tal qual ho he de modificat una miqueta
+Boada is a cluster divided in different nodes, each of them with different architecture and diffferent uses. For the scope of PAR subject, the nodes avaliable goes from boada-1 to boada-8. In addition, the students only have access to boada-1, and to run programsn on the other nodes the cluster have a queue system that allows to choose the architecture in which the program will be run (but not the core, the user just chooses the architecture in which the program will be run).
+\\
+The easiest way to obtain the information of the hardware used in each node is using the linux commands lscpu and lstopo. This commands can be easily in the boada-1 node, becase is the one used by the user, but in the ohter nodes a .sh scripts must be created( in our case by modifying the submit-*.sh scripts provides by the PAR teachers).
+After creating the scipts and applying them to each of the nodes, we obtained the following hardware information: 
 
 
 \begin{table}[h]
