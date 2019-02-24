@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Experimental setup}{3}
+\contentsline {subsection}{\numberline {2.1}Node architecture and memory}{3}
+\contentsline {subsection}{\numberline {2.2}Sequential and parallel executions}{5}
+\contentsline {subsubsection}{\numberline {2.2.1}Strong scalability}{5}
+\contentsline {subsubsection}{\numberline {2.2.2}Weak scalability}{5}
+\contentsline {section}{\numberline {3}Experimental setup}{5}
+\contentsline {subsection}{\numberline {3.1}Introduction}{5}
+\contentsline {subsection}{\numberline {3.2}Analysis of task decompositions for 3DFFT}{5}
+\contentsline {section}{\numberline {4}Conclusions}{5}

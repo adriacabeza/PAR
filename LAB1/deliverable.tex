@@ -4,26 +4,61 @@
 \author{par4111 \\ Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
 \title{Lab 1: Experimental setup and tools}
 \date{\today \\ 2018 - 19 PRIMAVERA}
-
-
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\lstset{
+	frame=tb,language=C,breaklines=true,numbers=none, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, tabsize=3,   showstringspaces=false,
+  columns=flexible, 
+}
 \begin{document}
 \maketitle
 \newpage
 \tableofcontents
 \newpage
 \section{Introduction}
-In order to do properly this subject, first, we have to introduce some new concepts and architecture.  The following document contains an introductory approach, step by step introducing those concepts. We will introduce the Boada architecture, some of the most important parallelism concepts and several tests to see its effects. 
+In order to do properly this subject, first, we have to introduce some new concepts and hardware and software environment that we will use during this semester to do all laboratory assignments.  The following document contains an introductory approach, step by step introducing those concepts. We will introduce the \textit{Boada} architecture, some of the most important parallelism concepts and several tests to see its effects. 
 
-\section{Node architecture and memory}
-%AIXO M'ho he copiat tal qual ho he de modificat una miqueta
-Boada is a cluster divided in different nodes, each of them with different architecture and diffferent uses. For the scope of PAR subject, the nodes avaliable goes from boada-1 to boada-8. In addition, the students only have access to boada-1, and to run programsn on the other nodes the cluster have a queue system that allows to choose the architecture in which the program will be run (but not the core, the user just chooses the architecture in which the program will be run).
+\section{Experimental setup}
+\subsection{Node architecture and memory}
+
+\textit{Boada} is a multiprocessor server located at the Computer Architecture Department divided in different nodes, each of them with different architecture and diffferent uses. \textit{Boada} is composed of 8 nodes (from boada-1 to boada-8) and they can be grouped as the following table: 
 \\
-The easiest way to obtain the information of the hardware used in each node is using the linux commands lscpu and lstopo. This commands can be easily in the boada-1 node, becase is the one used by the user, but in the ohter nodes a .sh scripts must be created( in our case by modifying the submit-*.sh scripts provides by the PAR teachers).
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|}
+\hline
+Node name    & Processor generation                & Interactive & Queue name \\ \hline
+boada-1      & Intel Xeon E5645                    & Yes         & batch      \\
+boada-2 to 4 & Intel Xeon E5645                    & No          & execution  \\
+boada-5      & Intel Xeon E5-2620 v2 + Nvidia K40c & No          & cuida      \\
+boada-6 to 8 & Intel Xeon E5-2609 v4               & No          & execution2 \\ \hline
+\end{tabular}
+\end{table}
+
+However in this course we are going to use mainly from boada-1 to boada-4. The easiest way to obtain the information of the hardware used in each node is using the linux commands lscpu and lstopo(~\ref{fig:lstopto2} and ~\ref{fig:lstopto8}). This commands can be easily executed in the boada-1 node (because it is interactive), but if we want to use the other nodes we can use the submit-*.sh script provided by the PAR teachers and use the queue system. \\
+\medskip
+
+\begin{figure}[h]
+\centering  \includegraphics[width=.8\linewidth]{map-2.png}
+  \caption{Boada-2 architecture outputed by lstopo.}
+  \label{fig:lstopto2}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=.8\linewidth]{map-8.png}
+  \caption{Boada-8 architecture outputed by lstopo.}
+  \label{fig:lstopto8}
+\end{figure}
+
 After creating the scipts and applying them to each of the nodes, we obtained the following hardware information: 
 
 
 \begin{table}[h]
-    \begin{tabular}{|l||l|l|l|}
+\centering    \begin{tabular}{|l||l|l|l|}
     \hline
                                         & boada-1 to boada-4    & boada-5   & boada-6 to boada-8    \\
     \hline\hline
@@ -48,12 +83,231 @@ After creating the scipts and applying them to each of the nodes, we obtained th
     \end{tabular}
 \end{table}
 
+\bigskip
+
+The previous table gives us really powerful information that will be necessary in the future to properly use the \textit{boada} system and understand the parallelism decomposition and time we will get. 
+
+\subsection{Sequential and parallel executions}
+
+\subsubsection{Strong scalability}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{pi_omp-100000000-1-12-3-weak-boada-6.png}
+ \caption{ \textit{pi\_omp} with 100000000 weak by boada-6}
+  \label{fig:pi_ompboada6}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{pi_omp-1000000000-1-12-3-strong-boada-8.png}
+ \caption{ \textit{pi\_omp} with 1000000000 strong by boada-8}
+ \label{fig:pi_ompboada8}
+\end{figure}
+
+\subsubsection{Weak scalability}
 
 
 
-\section{Sequential and parallel executions}
-\subsection{Strong scalability}
-\subsection{Weak scalability}
+\section{Experimental setup}
+\subsection{Introduction}
+The objective of this laboratory is learn how to use Tareador, an environment to analyse the potential parallelilsm that can be obtained when a certain task decomposition is applied to a code. We will introduce how it works and we will experiment and analyse decomposition with a sequential code called 3DFFT.
+
+\subsection{Analysis of task decompositions for 3DFFT}
+
+\subsubsection{Version 1}
+\begin{lstlisting}
+ tareador_start_task("0");
+    ffts1_planes(p1d, in_fftw);
+    tareador_end_task("0");
+
+    tareador_start_task("1");
+    transpose_xy_planes(tmp_fftw, in_fftw);
+    tareador_end_task("1");
+
+    tareador_start_task("2");
+    ffts1_planes(p1d, tmp_fftw);
+    tareador_end_task("2");
+
+    tareador_start_task("3");	
+    transpose_zx_planes(in_fftw, tmp_fftw);
+    tareador_end_task("3");
+    
+    tareador_start_task("4");
+    ffts1_planes(p1d, in_fftw);
+    tareador_end_task("4");
+
+    tareador_start_task("5");
+    transpose_zx_planes(tmp_fftw, in_fftw);
+    tareador_end_task("5");
+
+    tareador_start_task("6");
+    transpose_xy_planes(in_fftw, tmp_fftw);
+    tareador_end_task("6");
+\end{lstlisting}
+
+Once we have created all these tasks, we ... PURO PALO, ja ho faré 
+
+\subsubsection{Version 2}
+\begin{lstlisting}
+
+void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
+    int k,j;
+
+    for (k=0; k<N; k++) {
+     tareador_start_task("ffts1_planes_loop_k");
+     for (j=0; j<N; j++) {
+       fftwf_execute_dft( p1d, (fftwf_complex *)in_fftw[k][j][0], (fftwf_complex *)in_fftw[k][j][0]);
+     }
+     tareador_end_task("ffts1_planes_loop_k");
+    }
+}
+
+
+int main(){
+...
+  tareador_start_task("1");
+    transpose_xy_planes(tmp_fftw, in_fftw);
+    tareador_end_task("1");
+
+    ffts1_planes(p1d, tmp_fftw);
+
+    tareador_start_task("3");	
+    transpose_zx_planes(in_fftw, tmp_fftw);
+    tareador_end_task("3");
+
+    ffts1_planes(p1d, in_fftw);
+
+    tareador_start_task("5");
+    transpose_zx_planes(tmp_fftw, in_fftw);
+    tareador_end_task("5");
+
+    tareador_start_task("6");
+    transpose_xy_planes(in_fftw, tmp_fftw);
+    tareador_end_task("6");
+...
+}
+
+\end{lstlisting}
+
+\subsubsection{Version 3}
+\begin{lstlisting}
+void transpose_xy_planes(fftwf_complex  tmp_fftw[][N][N], fftwf_complex in_fftw[][N][N]) {
+    int k,j,i;
+
+    for (k=0; k<N; k++) {
+     tareador_start_task("transpose_xy_planes_loop_k");
+     for (j=0; j<N; j++) {
+       for (i=0; i<N; i++)
+       {
+         tmp_fftw[k][i][j][0] = in_fftw[k][j][i][0];
+         tmp_fftw[k][i][j][1] = in_fftw[k][j][i][1];
+       }
+     }
+     tareador_end_task("transpose_xy_planes_loop_k"); 
+   }
+}
+
+void transpose_zx_planes(fftwf_complex in_fftw[][N][N], fftwf_complex tmp_fftw[][N][N]) {
+    int k, j, i;
+
+    for (k=0; k<N; k++) {
+     tareador_start_task("transpose_zx_planes_loop_k");
+     for (j=0; j<N; j++) {
+       for (i=0; i<N; i++)
+       {
+         in_fftw[i][j][k][0] = tmp_fftw[k][j][i][0];
+         in_fftw[i][j][k][1] = tmp_fftw[k][j][i][1];
+       }
+     }
+     tareador_end_task("transpose_zx_planes_loop_k");
+
+    }
+}
+
+int main(){
+...
+ tareador_start_task("init_complex_grid");
+    init_complex_grid(in_fftw);
+    tareador_end_task("init_complex_grid");
+
+    STOP_COUNT_TIME("Init Complex Grid FFT3D");
+
+    START_COUNT_TIME;
+
+    ffts1_planes(p1d, in_fftw);
+    transpose_xy_planes(tmp_fftw, in_fftw);
+    ffts1_planes(p1d, tmp_fftw);
+    transpose_zx_planes(in_fftw, tmp_fftw);
+    ffts1_planes(p1d, in_fftw);
+    transpose_zx_planes(tmp_fftw, in_fftw);
+    transpose_xy_planes(in_fftw, tmp_fftw);
+...
+}
+\end{lstlisting}
+\subsubsection{Version 4}
+\begin{lstlisting}
+void init_complex_grid(fftwf_complex in_fftw[][N][N]) {
+  int k,j,i;
+
+  for (k = 0; k < N; k++) {
+    tareador_start_task("transpose_init_complex_grid_loop_k");
+    for (j = 0; j < N; j++) {
+      for (i = 0; i < N; i++)
+      {
+        in_fftw[k][j][i][0] = (float) (sin(M_PI*((float)i)/64.0)+sin(M_PI*((float)i)/32.0)+sin(M_PI*((float)i/16.0)));
+        in_fftw[k][j][i][1] = 0;
+#if TEST
+        out_fftw[k][j][i][0]= in_fftw[k][j][i][0];
+        out_fftw[k][j][i][1]= in_fftw[k][j][i][1];
+#endif
+      }
+    }
+ 
+     tareador_end_task("transpose_init_complex_grid_loop_k"); 
+ }
+}
+int main(){
+...
+
+init_complex_grid(in_fftw);
+    STOP_COUNT_TIME("Init Complex Grid FFT3D");
+
+    START_COUNT_TIME;
+
+    ffts1_planes(p1d, in_fftw);
+    transpose_xy_planes(tmp_fftw, in_fftw);
+    ffts1_planes(p1d, tmp_fftw);
+    transpose_zx_planes(in_fftw, tmp_fftw);
+    ffts1_planes(p1d, in_fftw);
+    transpose_zx_planes(tmp_fftw, in_fftw);
+    transpose_xy_planes(in_fftw, tmp_fftw);
+...
+}
+
+\end{lstlisting}
+\subsubsection{Version 5}
+\begin{lstlisting}
+
+
+
+\end{lstlisting}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+Version & $T_1 $ & $T_\infty$ & Parallelism \\ \hline
+seq     &   &   &             \\ \hline
+v1      &   &   &             \\ \hline
+v2      &   &   &             \\ \hline
+v3      &   &   &             \\ \hline
+v4      &   &   &             \\ \hline
+v5      &   &   &             \\ \hline
+\end{tabular}
+\end{table}
+
+
 \section{Conclusions}
 
 \end{document}
