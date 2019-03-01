@@ -6,6 +6,7 @@
 \date{\today \\ 2018 - 19 PRIMAVERA}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{pgfplots}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{float}
@@ -379,6 +380,18 @@ void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
   \label{fig:Dependency5}
 \end{figure}
 
+\subsubsection{Comparison between version 4 and version 5}
+\begin{table}[h]
+\begin{tabular}{l|l|l|l|l|l|l|}
+\cline{2-7}
+                         & 1           & 2           & 4           & 8          & 16         & 32         \\ \hline
+\multicolumn{1}{|l|}{v4} & 639.780.001 & 320.310.001 & 165.389.001 & 91.496.001 & 64.018.001 & 64.018.001 \\ \hline
+\multicolumn{1}{|l|}{v5} & 639.780.001 & 321.493.001 & 172.584.001 & 99.126.001 & 53.554.001 & 44.356.001 \\ \hline
+\end{tabular}
+\end{table}
+
+
+
 \subsection{Summary}
 
 To sum up, we show a table with all the data obtained with our experiments. We can see that in all the versions excepting for the first ones, we increase the Parallelism.
@@ -397,6 +410,9 @@ v4      & 639,780,001   &  64,018,001   &        9.99375161683     \\ \hline
 v5      &639,780,001     & 38,224,001  &        16.7376513254    \\ \hline
 \end{tabular}
 \end{table}
+
+
+
 
 
 \section{Conclusions}
