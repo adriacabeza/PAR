@@ -389,8 +389,15 @@ void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
 \multicolumn{1}{|l|}{v5} & 639.780.001 & 321.493.001 & 172.584.001 & 99.126.001 & 53.554.001 & 44.356.001 \\ \hline
 \end{tabular}
 \end{table}
-
-
+\\
+\medskip
+\begin{table}[h]
+\begin{tabular}{l|l|l|l|l|l|l|}
+\cline{2-7}
+                              & 1 & 2              & 4              & 8              & 16            & 32            \\ \hline
+\multicolumn{1}{|l|}{Speedup} & 1 & 0.996320293144 & 0.958310156455 & 0.923027259014 & 1.19539156374 & 1.44327711148 \\ \hline
+\end{tabular}
+\end{table}
 
 \subsection{Summary}
 
