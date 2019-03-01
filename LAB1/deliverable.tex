@@ -44,14 +44,14 @@ However in this course we are going to use mainly from boada-1 to boada-4. The e
 \medskip
 
 \begin{figure}[h]
-\centering  \includegraphics[width=.8\linewidth]{map-2.png}
+\centering  \includegraphics[width=.8\linewidth]{images/map-2.png}
   \caption{Boada-2 architecture outputed by lstopo.}
   \label{fig:lstopto2}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-  \includegraphics[width=.8\linewidth]{map-8.png}
+  \includegraphics[width=.8\linewidth]{images/map-8.png}
   \caption{Boada-8 architecture outputed by lstopo.}
   \label{fig:lstopto8}
 \end{figure}
@@ -103,14 +103,14 @@ Nonetheless, the speed-up is bounded by the parallelization of the program and t
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{pi_omp-100000000-1-12-3-weak-boada-6.png}
+\includegraphics[scale=0.5]{images/pi_omp-100000000-1-12-3-weak-boada-6.png}
  \caption{ \textit{pi\_omp} with 100000000 weak by boada-6}
   \label{fig:pi_ompboada6}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{pi_omp-1000000000-1-12-3-strong-boada-8.png}
+\includegraphics[scale=0.5]{images/pi_omp-1000000000-1-12-3-strong-boada-8.png}
  \caption{ \textit{pi\_omp} with 1000000000 strong by boada-8}
  \label{fig:pi_ompboada8}
 \end{figure}
@@ -132,7 +132,7 @@ To obtain $T_\infty$ we will assume that each instruction takes one time unit to
 Once we have created those tasks, we can visualize the dependency graph using \textit{Tareador}. Each node of the graph represents a task: diferents shapes and colours are used to identify task instances and each one is labeled with a task instance number and some important information like the number of instructions. Also the size of the shape reflects in some way its granularity. 
  
 \begin{figure}[H]
-\centering  \includegraphics[width=.8\linewidth, height=14cm, width=6cm]{dependency_graph0.png}
+\centering  \includegraphics[width=.8\linewidth, height=14cm, width=6cm]{images/dependency_graph0.png}
   \caption{Dependency graph for the original version.}
   \label{fig:Depencency0}
 \end{figure}
@@ -176,7 +176,7 @@ The first version consists in replacing the task named \texttt{ffts1\_and\_trans
 Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph \ref{Dependency1st}. As we can see comparing the original graph, \ref{Depencency0}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth, height=22cm, width=5cm]{dependency_graph1.png}
+\centering  \includegraphics[width=\linewidth, height=22cm, width=5cm]{images/dependency_graph1.png}
   \caption{Dependency graph for the first version.}
   \label{fig:Dependency1st}
 \end{figure}
@@ -229,7 +229,7 @@ int main(){
 
 As we can see in the outputed dependency graph given by the \textit{Tareador} our dependency graph has now changed and there are several more shapes. The task that previously was \texttt{ffts1\_planes} has been divided into several more. 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm ]{dependency_graph2.png}
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm ]{images/dependency_graph2.png}
   \caption{Dependency graph for the second version.}
   \label{fig:Depencency2nd}
 \end{figure}
@@ -295,7 +295,7 @@ int main(){
 Like in the previous cases, we can now see in the dependency graph our results and the level of granularity we are getting. 
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{dependency_graph3.png}
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{images/dependency_graph3.png}
   \caption{Dependency graph for the third version.}
   \label{fig:Depencency3rd}
 \end{figure}
@@ -345,7 +345,7 @@ int main(){
 \end{lstlisting}
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{dependency_graph4.png}
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{images/dependency_graph4.png}
   \caption{Dependency graph for the forth version.}
   \label{fig:Dependency4rth}
 \end{figure}
@@ -354,7 +354,7 @@ int main(){
 \subsubsection{Version 5}
 This is the final version; in this version we will explore even more finer-grained tasks. In order to continue this task we observed the forth figure given by \textit{Tareador} which corresponds to the forth version of the code. 
 
-As we can see in the \ref{Dependency4rth} the task granularity that has less granularity is the \textit{ffts1_planes_loop_k} with 10305 instructions. So we deepen in the code of the corresponding function and we created tasks in a loop deeper than our first approach. 
+As we can see in the \ref{Dependency4rth} the task granularity that has less granularity is the \textit{ffts1\_planes\_loop\_k} with 10305 instructions. So we deepen in the code of the corresponding function and we created tasks in a loop deeper than our first approach. 
 \begin{lstlisting}
 
 void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
@@ -375,7 +375,7 @@ void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
 \bigskip
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{dependency_graph5.png}
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{images/dependency_graph4.png}
   \caption{Dependency graph for the final version.}
   \label{fig:Dependency5}
 \end{figure}
