@@ -356,21 +356,45 @@ This is the final version; in this version we will explore even more finer-grain
 As we can see in the \ref{Dependency4rth} the task granularity that has less granularity is the \textit{ffts1_planes_loop_k} with 10305 instructions. So we deepen in the code of the corresponding function and we created tasks in a loop deeper than our first approach. 
 \begin{lstlisting}
 
+void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
+    int k,j;
+    for (k=0; k<N; k++) {
+     for (j=0; j<N; j++) {
+       tareador_start_task("ffts1_planes_loop_j");
+
+        fftwf_execute_dft( p1d, (fftwf_complex *)in_fftw[k][j][0], (fftwf_complex *)in_fftw[k][j][0]);
+    tareador_end_task("ffts1_planes_loop_j");
+         }
+
+    }
+}
 
 
 \end{lstlisting}
+\bigskip
 
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{dependency_graph5.png}
+  \caption{Dependency graph for the final version.}
+  \label{fig:Dependency5}
+\end{figure}
+
+\subsection{Summary}
+
+To sum up, we show a table with all the data obtained with our experiments. We can see that in all the versions excepting for the first ones, we increase the Parallelism.
+\\
+\medskip
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
 Version & $T_1 $ & $T_\infty$ & Parallelism \\ \hline
-seq     & 639,780,001 ns  &   &             \\ \hline
-v1      &  639,780,001 ns &   &             \\ \hline
-v2      & 639,780,001 ns  &   &             \\ \hline
-v3      & 639,780,001 ns  &   &             \\ \hline
-v4      & 639,780,001 ns  &   &             \\ \hline
-v5      &639,780,001 ns    &   &            \\ \hline
+seq     & 639,780,001   & 639,707,001 ns   &        1.00011411474     \\ \hline
+v1      &  639,780,001  & 639,707,001  &         1.00011411474      \\ \hline
+v2      & 639,780,001   & 361,190,001   &      1.77131149597      \\ \hline
+v3      & 639,780,001   & 154,354,001&         4.14488770524    \\ \hline
+v4      & 639,780,001   &  64,018,001   &        9.99375161683     \\ \hline
+v5      &639,780,001     & 38,224,001  &        16.7376513254    \\ \hline
 \end{tabular}
 \end{table}
 
