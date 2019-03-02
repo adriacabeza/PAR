@@ -40,7 +40,7 @@ boada-6 to 8 & Intel Xeon E5-2609 v4               & No          & execution2 \\
 \end{tabular}
 \end{table}
 
-However in this course we are going to use mainly from boada-1 to boada-4. The easiest way to obtain the information of the hardware used in each node is using the linux commands lscpu and lstopo(~\ref{fig:lstopto2} and ~\ref{fig:lstopto8}). This commands can be easily executed in the boada-1 node (because it is interactive), but if we want to use the other nodes we can use the submit-*.sh script provided by the PAR professors and use the queue system. \\
+However in this course we are going to use mainly from boada-1 to boada-4. The easiest way to obtain the information of the hardware used in each node is using the linux commands lscpu and lstopo(see Figure  ~\ref{fig:lstopto2} and ~\ref{fig:lstopto8}). This commands can be easily executed in the boada-1 node (because it is interactive), but if we want to use the other nodes we can use the submit-*.sh script provided by the PAR professors and use the queue system. \\
 \medskip
 
 \begin{figure}[h]
@@ -56,7 +56,7 @@ However in this course we are going to use mainly from boada-1 to boada-4. The e
   \label{fig:lstopto8}
 \end{figure}
 
-After creating the scipts and applying them to each of the nodes, we obtained the following hardware information: 
+After creating the scripts and applying them to each of the nodes, we obtained the following hardware information: 
 
 
 \begin{table}[h]
@@ -173,7 +173,7 @@ The first version consists in replacing the task named \texttt{ffts1\_and\_trans
     tareador_end_task("6");
 \end{lstlisting}
 
-Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph \ref{Dependency1st}. As we can see comparing the original graph, \ref{Depencency0}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
+Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph, see Figure \ref{Dependency1st}. As we can see comparing the original graph, see Figure \ref{Depencency0}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
 
 \begin{figure}[H]
 \centering  \includegraphics[width=\linewidth, height=22cm, width=5cm]{images/dependency_graph1.png}
@@ -354,7 +354,7 @@ int main(){
 \subsubsection{Version 5}
 This is the final version; in this version we will explore even more finer-grained tasks. In order to continue this task we observed the forth figure given by \textit{Tareador} which corresponds to the forth version of the code. 
 
-As we can see in the \ref{Dependency4rth} the task granularity that has less granularity is the \textit{ffts1\_planes\_loop\_k} with 10305 instructions. So we deepen in the code of the corresponding function and we created tasks in a loop deeper than our first approach. 
+As we can see in the Figure \ref{Dependency4rth} the task granularity that has less granularity is the \textit{ffts1\_planes\_loop\_k} with 10305 instructions. So we deepen in the code of the corresponding function and we created tasks in a loop deeper than our first approach. 
 \begin{lstlisting}
 
 void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
@@ -375,33 +375,71 @@ void ffts1_planes(fftwf_plan p1d, fftwf_complex in_fftw[][N][N]) {
 \bigskip
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{images/dependency_graph4.png}
+\centering  \includegraphics[width=\linewidth , height=13cm, width=13cm  ]{images/dependency_graph5.png}
   \caption{Dependency graph for the final version.}
   \label{fig:Dependency5}
 \end{figure}
 
 \subsubsection{Comparison between version 4 and version 5}
+
+
+\begin{large}
+\begin{center}
+Time comparison (in ns) between version 4 and version 5
+\end{center}
+\end{large}
 \begin{table}[h]
+\begin{center}
+Number of processors 
+\end{center}
 \begin{tabular}{l|l|l|l|l|l|l|}
 \cline{2-7}
+
                          & 1           & 2           & 4           & 8          & 16         & 32         \\ \hline
 \multicolumn{1}{|l|}{v4} & 639.780.001 & 320.310.001 & 165.389.001 & 91.496.001 & 64.018.001 & 64.018.001 \\ \hline
 \multicolumn{1}{|l|}{v5} & 639.780.001 & 321.493.001 & 172.584.001 & 99.126.001 & 53.554.001 & 44.356.001 \\ \hline
 \end{tabular}
 \end{table}
-\\
-\medskip
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/Time.png}
+  \caption{Time comparison between v4 and v5.}
+  \label{fig:PlotComparison}
+\end{figure}
+
+\begin{large}
+\begin{center}
+Speedup between version 4 and version 5
+\end{center}
+\end{large}
+
 \begin{table}[h]
+\begin{center}
+Number of processors 
+\end{center}
 \begin{tabular}{l|l|l|l|l|l|l|}
 \cline{2-7}
                               & 1 & 2              & 4              & 8              & 16            & 32            \\ \hline
-\multicolumn{1}{|l|}{Speedup} & 1 & 0.996320293144 & 0.958310156455 & 0.923027259014 & 1.19539156374 & 1.44327711148 \\ \hline
+\multicolumn{1}{|l|}{Speedup} & 1 & 0.99632029 & 0.95831015 & 0.92302725 & 1.1953915 & 1.4432771 \\ \hline
 \end{tabular}
 \end{table}
 
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/Speedup.png}
+  \caption{Speedup between v4 and v5.}
+  \label{fig:PlotComparison}
+\end{figure}
+
+
+From this two plots we can observe that there's a moment when it does not matter how many processors you use, you cannot improve the execution time we can get. In the case of the fourth version we can see it clearly comparing the time we get with 16 processors and the time we get with 32. \\
+
+Moreover, there is still another interesting point we can still analyse. Even though the fifth version had more finer-grained tasks (check Figure \ref{fig:Dependency5} when we use less than 16 processors v4 gets a better time execution. That could be justified with the time is focused for making the finer-grained tasks work together. 
+
+
 \subsection{Summary}
 
-To sum up, we show a table with all the data obtained with our experiments. We can see that in all the versions excepting for the first ones, we increase the Parallelism.
+To sum up, we show a table with all the data obtained with our experiments. We can see that in all the versions excepting for the first ones, we increase the parallelism.
 \\
 \medskip
 \begin{table}[h]
@@ -422,6 +460,6 @@ v5      &639,780,001     & 38,224,001  &        16.7376513254    \\ \hline
 
 
 
-\section{Conclusions}
+%he pensat que maybe podriem treure les conclusions ss\section{Conclusions}
 
 \end{document}
