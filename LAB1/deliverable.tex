@@ -437,7 +437,7 @@ Number of processors
 
 From this two plots we can observe that there's a moment when it does not matter how many processors you use, you cannot improve the execution time we can get. In the case of the fourth version we can see it clearly comparing the time we get with 16 processors and the time we get with 32. \\
 
-Moreover, there is still another interesting point we can still analyse. Even though the fifth version had more finer-grained tasks (check Figure \ref{fig:Dependency5} when we use less than 16 processors v4 gets a better time execution. That could be justified with the time is focused for making the finer-grained tasks work together. 
+Moreover, there is still another interesting point we can still analyse. Even though the fifth version had more finer-grained tasks (check Figure \ref{fig:Dependency5} when we use less than 16 processors v4 gets a better time execution. That could be justified with the time is focused for making the finer-grained tasks work together because of the overhead.  
 
 
 \subsection{Summary}
@@ -450,7 +450,7 @@ To sum up, we show a table with all the data obtained with our experiments. We c
 \begin{tabular}{|l|l|l|l|}
 \hline
 Version & $T_1 $ & $T_\infty$ & Parallelism \\ \hline
-seq     & 639,780,001   & 639,707,001 ns   &        1.00011411474     \\ \hline
+seq     & 639,780,001   & 639,707,001    &        1.00011411474     \\ \hline
 v1      &  639,780,001  & 639,707,001  &         1.00011411474      \\ \hline
 v2      & 639,780,001   & 361,190,001   &      1.77131149597      \\ \hline
 v3      & 639,780,001   & 154,354,001&         4.14488770524    \\ \hline
@@ -460,15 +460,17 @@ v5      &639,780,001     & 38,224,001  &        16.7376513254    \\ \hline
 \end{table}
 
 \section{Understanding the parallel execution}
-In this final section we have used several \textit{Paraver} configurations to be able to understand better the parallel executions. See Figures \ref{fig:3dfftomp_original_8} and \ref{fig:3dfftomp_original_1}
+In this final section we have used several \textit{Paraver} configurations to be able to understand better the parallel executions. For example there is the Statistics Configuration File, see Figures \ref{fig:3dfftomp_original_8} and \ref{fig:3dfftomp_original_1}, where we can see the \% of each part of the execution time. 
+
+
 
 The results obtained are in the following table.
 \begin{table}[H]
 \begin{tabular}{|l|l|l|l|l|l|}
-\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_8$ & $S_8$ \\ \hline
-initial version in \textit{3dfft\_omp.c} & & & & \\ \hline
-new version with improved $\phi$ & & & & \\ \hline
-final version with reduced parallelisation overhead & & & &  \\ \hline
+\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
+initial version in \textit{3dfft\_omp.c} & & & & & \\ \hline
+new version with improved $\phi$ & & & & & \\ \hline
+final version with reduced parallelisation overhead & & & & &  \\ \hline
 
 \end{tabular}
 \begin{center}
@@ -491,7 +493,27 @@ $\phi = T_{par} / (T_{seq} + T_{par}) $
   \label{fig:3dfftomp_original_8}
 \end{figure}
 
+Temps paral·lelitzat en un processador
+343,032.74 us
+330,705.06 us
+105,560.45 us
+146,440.56 us
+199,973.45 us
+401,774.42 us
+Temps total un processador
 
+2894642449 ns 
+Temps paral·lelitzat en el 8 processadors
+us
+1,284,479.03 
+1,145,823.44 
+709,704.96 
+496,762.32 
+321,938.67 
+579,582.94 
+
+Temps total
+1400960654 ns 
 
 
 
