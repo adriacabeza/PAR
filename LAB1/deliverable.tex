@@ -18,6 +18,11 @@
 }
 \begin{document}
 \maketitle
+\vspace*{\fill}
+\begin{center}
+\includegraphics[scale=0.5]{images/UPClogo.png}
+\end{center}
+
 \newpage
 \tableofcontents
 \newpage
@@ -464,19 +469,6 @@ In this final section we have used several \textit{Paraver} configurations to be
 
 
 
-The results obtained are in the following table.
-\begin{table}[H]
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
-initial version in \textit{3dfft\_omp.c} & & & & & \\ \hline
-new version with improved $\phi$ & & & & & \\ \hline
-final version with reduced parallelisation overhead & & & & &  \\ \hline
-
-\end{tabular}
-\begin{center}
-$\phi = T_{par} / (T_{seq} + T_{par}) $
-\end{center}
-\end{table}
 
 
 \begin{figure}[H]
@@ -493,29 +485,82 @@ $\phi = T_{par} / (T_{seq} + T_{par}) $
   \label{fig:3dfftomp_original_8}
 \end{figure}
 
-Temps paral·lelitzat en un processador
+FER GRAFICA A PARTIR D'AQUEST VALORS; AIXÒ ES LA PRIMERA VERSIÓ 
+
+Temps paral·lelitzat en un processador(per parts)
 343,032.74 us
 330,705.06 us
 105,560.45 us
 146,440.56 us
 199,973.45 us
 401,774.42 us
+Total paralelitzat
+1.527.486,68 us
 Temps total un processador
+2894642449 ns
 
-2894642449 ns 
-Temps paral·lelitzat en el 8 processadors
-us
-1,284,479.03 
-1,145,823.44 
-709,704.96 
-496,762.32 
-321,938.67 
-579,582.94 
+ 
+Temps paral·lelitzat en el 8 processadors (per parts)
+1,284,479.03 us
+1,145,823.44 us
+709,704.96 us
+496,762.32 us
+321,938.67 us
+579,582.94 us
+Total paralelitzat
+4538291,36 us
+Temps total 
+1.400.960.654 ns 
 
-Temps total
-1400960654 ns 
+%Our calculations have been made using the default configuration to get the total time, see Figures  and the ____ configuration to get the parallelizable time, see Figures 
 
 
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/TempsParalVersio1Processador1.png}
+  \caption{blablabla}
+  \label{fig:tempsParalv1Proc1}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/TempsVersio1Processador1.png}
+  \caption{blablabla}
+  \label{fig:tempsv1Proc1}
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/TempsVersio1Processador8.png}
+  \caption{blablabla}
+  \label{fig:tempsParalv1Proc8}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\centering  \includegraphics[width=\linewidth]{images/TempsParalVersio1Processador8.png}
+  \caption{blablablabla}
+  \label{fig:tempsParalv1Proc8}
+\end{figure}
+
+
+The results obtained are in the following table.
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
+initial version in \textit{3dfft\_omp.c} & & & & & \\ \hline
+new version with improved $\phi$ & & & & & \\ \hline
+final version with reduced parallelisation overhead & & & & &  \\ \hline
+
+\end{tabular}
+\begin{center}
+$\phi = T_{par} / (T_{seq} + T_{par}) $
+\end{center}
+\end{table}
 
 %he pensat que maybe podriem treure les conclusions ss\section{Conclusions}
 
