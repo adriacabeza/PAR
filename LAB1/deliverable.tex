@@ -109,7 +109,7 @@ Nonetheless, the speed-up is bounded by the parallelization of the program and t
 For Boada 1 we can see how execution time is logarithmically reduced in Figure \ref{fig:pi_strong_ompboada1}. At 11 threads the time seems to slightly increase. To be sure we can look at the speed-up plot, where we can clearly appreciate how speed-up slowly stops increasing and starts to fall down at around 11 threads. This evidence supports the previous statement about time. This is most likely caused by the overhead that parallelizing a program creates: creating new threads, synchronizing the results, etc. The graphic shows how running the program on 12 threads is actually slower than doing so on 11, and even though we cannot see it in the plots, performance would probably keep going down due to the added overhead with each new thread used.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-1000000000-1-12-3-strong-boada-1.png}
+\includegraphics[scale=0.15]{images/pi_omp-1000000000-1-12-3-strong-boada-1.png}
  \caption{ \textit{pi\_omp} with strong scalability by Boada-1}
   \label{fig:pi_strong_ompboada1}
 \end{figure}
@@ -122,7 +122,7 @@ Since Boada 1 has the same architecture as 2, 3 and 4, it is fair to expect a ve
 It would be fair to say that for the \textit{pi\_omp.c} program running Boada 1 to 4, up to 10 threads are beneficial to reduce execution time, but at around 5 threads speed-up starts to increase more slowly at what seems like a logarithmic rate.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-1000000000-1-12-3-strong-boada-4.png}
+\includegraphics[scale=0.15]{images/pi_omp-1000000000-1-12-3-strong-boada-4.png}
  \caption{ \textit{pi\_omp} with strong scalability by Boada-4}
   \label{fig:pi_strong_ompboada4}
 \end{figure}
@@ -132,7 +132,7 @@ It would be fair to say that for the \textit{pi\_omp.c} program running Boada 1 
 Boada 5 uses a different processor, but the overhead principle should still be present because the generated overhead will start to overcome the parallelization speed-up at some point. In fact, looking at the generated graphics, the loss begins at approximately the same number of threads than the previous Boadas (1-4).  
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-1000000000-1-12-3-strong-boada-5.png}
+\includegraphics[scale=0.15]{images/pi_omp-1000000000-1-12-3-strong-boada-5.png}
  \caption{ \textit{pi\_omp} with strong scalability by Boada-5}
   \label{fig:pi_strong_ompboada5}
 \end{figure}
@@ -143,7 +143,7 @@ Boada 6 to 8 use again a different processor. This time, however, the speed-up a
 Nevertheless, speed-up should still decay later on if we kept increasing the number of threads, because a point will be reached where the added overhead will surpass the time-reduction gained by parallelism.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-1000000000-1-12-3-strong-boada-8.png}
+\includegraphics[scale=0.15]{images/pi_omp-1000000000-1-12-3-strong-boada-8.png}
  \caption{ \textit{pi\_omp} with strong scalability by Boada-8}
   \label{fig:pi_strong_ompboada8}
 \end{figure}
@@ -159,7 +159,7 @@ Weak scalability takes a different approach. It takes advantage of the additiona
 For Boada 1 with weak scalability the graphic clearly shows how speed-up stays mostly the same at first. This is due to increasing the problem size proportionally to the number of threads. At around 9 threads, however, the speed-ups starts to decrease similarly to strong scalability. The reason is the same: excess overhead created by parallelization. To keep speed-up the same from this point on we should start to increase the problem size more slowly while keeping the thread number increment the same. 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-100000000-1-12-3-weak-boada-1.png}
+\includegraphics[scale=0.15]{images/pi_omp-100000000-1-12-3-weak-boada-1.png}
  \caption{ \textit{pi\_omp} with weak scalability by Boada-1}
   \label{fig:pi_weak_ompboada1}
 \end{figure}
@@ -169,7 +169,7 @@ For Boada 1 with weak scalability the graphic clearly shows how speed-up stays m
 As with strong scalability, Boada 2 to 4 produce a very similar result to Boada 1 due to them having the same processor. There is not much to add with respect to Boada 1.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-100000000-1-12-3-weak-boada-3.png}
+\includegraphics[scale=0.15]{images/pi_omp-100000000-1-12-3-weak-boada-3.png}
  \caption{ \textit{pi\_omp} with weak scalability by Boada-3}
   \label{fig:pi_weak_ompboada3}
 \end{figure}
@@ -179,7 +179,7 @@ As with strong scalability, Boada 2 to 4 produce a very similar result to Boada 
 For Boada 5 we observe a similar behaviour, but this time speed-up goes over 1, meaning the problem size could be increased faster if we wanted to keep speed-up steady. In the end, however, overhead still counters the extra processors and speed-up goes down at around 10-12 threads.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-100000000-1-12-3-weak-boada-5.png}
+\includegraphics[scale=0.15]{images/pi_omp-100000000-1-12-3-weak-boada-5.png}
  \caption{ \textit{pi\_omp} with weak scalability by Boada-5}
   \label{fig:pi_weak_ompboada5}
 \end{figure}
@@ -189,10 +189,29 @@ For Boada 5 we observe a similar behaviour, but this time speed-up goes over 1, 
 With Boada 6 to 8 we encounter the same situation as in strong scalability. There is no clear sign of overhead occuring in Figure \ref{fig:pi_weak_ompboada6}. Again, it would happen if we kept increasing the number of threads assuming the program could use them all, but up to 12 threads there is not a real downside of parallelizing the program too much.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/pi_omp-100000000-1-12-3-weak-boada-6.png}
+\includegraphics[scale=0.15]{images/pi_omp-100000000-1-12-3-weak-boada-6.png}
  \caption{ \textit{pi\_omp} with weak scalability by Boada-6}
   \label{fig:pi_weak_ompboada6}
 \end{figure}
+
+\section{Systematically analysing task decompositions with Tareador}
+\subsection{Introduction}
+The objective of this laboratory is learn how to use \textit{Tareador}, an environment to analyse the potential parallelilsm that can be obtained when a certain task decomposition is applied to a code. We will introduce how it works and we will experiment and analyse decomposition with a sequential code called 3DFFT.
+\subsection{Analysis of task decompositions for 3DFFT}
+
+Once we have seen the basic features in \textit{Tareador} we can now proceed to explore new tasks decompositions for a piece of code. Down below we will incrementally generate five new task decompositions and the potential parallelism ($T_1 / T_\infty$) from the task dependence graph generated by \textit{Tareador}. 
+\\
+To obtain $T_\infty$ we will assume that each instruction takes one time unit to execute and simulate the execution of the graph with a large number of processors.
+
+Once we have created those tasks, we can visualize the dependency graph using \textit{Tareador}. Each node of the graph represents a task: diferents shapes and colours are used to identify task instances and each one is labeled with a task instance number and some important information like the number of instructions. Also the size of the shape reflects in some way its granularity.
+
+\begin{figure}[H]
+\centering  \includegraphics[width=.8\linewidth, height=14cm, width=6cm]{images/dependency_graph0.png}
+  \caption{Dependency graph for the original version.}
+  \label{fig:Depencency0}
+\centering
+\end{figure}
+
 
 
 \subsubsection{Version 1}
@@ -230,13 +249,14 @@ The first version consists in replacing the task named \texttt{ffts1\_and\_trans
     tareador_end_task("6");
 \end{lstlisting}
 
-Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph, see Figure \ref{Dependency1st}. As we can see comparing the original graph, see Figure \ref{Depencency0}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
+Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph, see Figure \ref{fig:Dependency1st}. As we can see, comparing the original graph, see Figure \ref{fig:}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth, height=22cm, width=5cm]{images/dependency_graph1.png}
+\centering  \includegraphics[width=\linewidth, height=22cm, width=4cm]{images/dependency_graph1.png}
   \caption{Dependency graph for the first version.}
   \label{fig:Dependency1st}
 \end{figure}
+
 
 
 \subsubsection{Version 2}
@@ -493,9 +513,7 @@ From this two plots we can observe that there's a moment when it does not matter
 
 Moreover, there is still another interesting point we can still analyse. Even though the fifth version had more finer-grained tasks (check Figure \ref{fig:Dependency5} when we use less than 16 processors v4 gets a better time execution. That could be justified with the time is focused for making the finer-grained tasks work together because of the overhead.  
 
-
-\subsection{Summary}
-
+\subsubsection{Summary}
 To sum up, we show a table with all the data obtained with our experiments. We can see that in all the versions excepting for the first ones, we increase the parallelism.
 \\
 \medskip
