@@ -615,17 +615,25 @@ Temps total
 \end{figure}
 
 
+
+
 The results obtained are in the following table.
+
+3dfft:
+Tpar = 1523 ms
+Tseq = 1372 ms
+
 \begin{table}[H]
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
-initial version in \textit{3dfft\_omp.c} & & & & & \\ \hline
+initial version in \textit{3dfft\_omp.c} & 0.53 & 2.12 & 2895 ms & 1400 ms & 2.07 \\ \hline
 new version with improved $\phi$ & & & & & \\ \hline
 final version with reduced parallelisation overhead & & & & &  \\ \hline
 
 \end{tabular}
 \begin{center}
-$\phi = T_{par} / (T_{seq} + T_{par}) $
+$\phi = T_{par} / (T_{seq} + T_{par}) $ \\
+$S_\infty = 1 / (1 - \phi) $
 \end{center}
 \end{table}
 
