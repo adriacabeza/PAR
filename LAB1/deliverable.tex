@@ -579,26 +579,87 @@ Following are screen captures of \textit{Paraver} state config, timeline and par
 \includegraphics[scale=0.5]{images/3dfft/8threadsPercentage.PNG}
     \caption{State config with (\% time) of the first version of 3dfft\_omp.c with 8 threads}
 \end{figure}
-        
-\begin{figure}[H]
-\centering  
-\includegraphics[scale=0.5]{images/3dfft/parallelFunction.PNG}
-    \caption{Parallel function duration config with of the first version of 3dfft\_omp.c with 1 thread. Painted parts represent $T{par}$.}
-\end{figure}
 
 \begin{figure}[H]
 \centering  
 \includegraphics[scale=0.5]{images/3dfft/8threads.PNG}
     \caption{State config with (time) of the first version of 3dfft\_omp.c with 8 threads}
 \end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/parallelFunction.PNG}
+    \caption{Parallel function duration config with of the first version of 3dfft\_omp.c with 1 thread. Painted parts represent $T{par}$.}
+\end{figure}
         
+
+\subsection{Improving $\phi$}
+In this section we uncommented a line inside the init\_complex\_grid function to allow parallelization in its for loop. This incrased the parallel fraction notably (see results in table below and Figure \ref{fig:parFunc2}). It went from 0.53 to 0.85, which allowed speed-up with 8 threads to go from 2.07 to 2.55, a good result but far from what is ideally possible. Thanks to this change, ideal speed-up with infinite processors has gone up to 6.67. The problem again is that there is too much overhead from 9 threads on, as seen in Figure \ref{fig:imp3ddftStrongPlot}.
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/strongPlot.PNG}
+  \caption{Strong scalability plot of the second version of 3dfft\_omp.c}
+  \label{fig:imp3ddftStrongPlot}
+\end{figure}
+
+\bigskip
+Following are screen captures of \textit{Paraver} state config, timeline and parallel functions durations config (the latter to get $T{par}$):
+
+\bigskip
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/1threadTimeline.PNG}
+    \caption{Timeline of the second version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/1threadPercentage.PNG}
+    \caption{State config with (\% time) of the second version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/1thread.PNG}
+    \caption{State config with (time) of the second version of 3dfft\_omp.c with 1 thread}
+\end{figure}
     
 
-%Our calculations have been made using the default configuration to get the total time, see Figures  and the ____ configuration to get the parallelizable time, see Figures 
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/8threadsTimeline.PNG}
+    \caption{Timeline of the second version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+    
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/8threadsPercentage.PNG}
+    \caption{State config with (\% time) of the second version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/8threads.PNG}
+    \caption{State config with (time) of the second version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/improved_3dfft/parallelFunction.PNG}
+    \caption{Parallel function duration config with of the second version of 3dfft\_omp.c with 1 thread. Painted parts represent $T{par}$.}
+    \label{fig:parFunc2}
+\end{figure}
+
+
+\subsection{Reducing parallelisation overheads}
+In this last version, we moved all the "\#pragma omp for" lines one line above to include the upper for loop. This increases the granularity of tasks and should reduce overhead caused by parallelisation. 
 
 
 
 
+\bigskip
 
 The results obtained are in the following table.
 
@@ -622,6 +683,8 @@ Tseq = 500 ms \\
 initial version in \textit{3dfft\_omp.c} & 0.53 & 2.12 & 2895 ms & 1400 ms & 2.07 \\ \hline
 new version with improved $\phi$ & 0.85 & 6.67 & 2448 ms & 960 ms & 2.55 \\ \hline
 final version with reduced parallelisation overhead & 0.82 & 5.56 & 2758 ms & 1015 ms & 2.72 \\ \hline
+
+\bigskip
 
 \end{tabular}
 \begin{center}
