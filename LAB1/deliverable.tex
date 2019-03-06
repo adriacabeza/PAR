@@ -627,12 +627,16 @@ Tseq = 1372 ms
 Tpar = 2087 ms
 Tseq = 361 ms
 
+3dfft\_megaImproved:
+Tpar = 2258 ms
+Tseq = 500 ms
+
 \begin{table}[H]
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
 initial version in \textit{3dfft\_omp.c} & 0.53 & 2.12 & 2895 ms & 1400 ms & 2.07 \\ \hline
 new version with improved $\phi$ & 0.85 & 6.67 & 2448 ms & 960 ms & 2.55 \\ \hline
-final version with reduced parallelisation overhead & & & & &  \\ \hline
+final version with reduced parallelisation overhead & 0.82 & 5.56 & 2758 ms & 1015 ms & 2.72 \\ \hline
 
 \end{tabular}
 \begin{center}
