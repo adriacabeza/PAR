@@ -249,7 +249,7 @@ The first version consists in replacing the task named \texttt{ffts1\_and\_trans
     tareador_end_task("6");
 \end{lstlisting}
 
-Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph, see Figure \ref{fig:Dependency1st}. As we can see, comparing the original graph, see Figure \ref{fig:}, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
+Once we have created all these tasks, we have to execute the script \textit{./run-tareador.sh VERSION1} and visualize the task dependence graph, see Figure \ref{fig:Dependency1st}. As we can see, comparing the original graph, now the shape that was associated to \texttt{ffts1\_and\_transpositions} has now been divided into several other shapes which represents more granularity. 
 
 \begin{figure}[H]
 \centering  \includegraphics[width=\linewidth, height=22cm, width=4cm]{images/dependency_graph1.png}
@@ -654,14 +654,95 @@ Following are screen captures of \textit{Paraver} state config, timeline and par
 
 
 \subsection{Reducing parallelisation overheads}
-In this last version, we moved all the "\#pragma omp for" lines one line above to include the upper for loop. This increases the granularity of tasks and should reduce overhead caused by parallelisation. 
+In this last version, we moved all the "\#pragma omp for" lines one line above to include the upper for loop. This increases the granularity of tasks and should reduce overhead caused by parallelisation. \\
+As shown in the table below, it has indeed worked. Speed-up for 8 threads has gone from 2.55 to 2.72, even though total execution time has been increased both for 1 and 8 threads. So even if execution time has increased, the main goal has been achieved, which was to reduce overhead with respect to version 2.
 
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/strongPlot.PNG}
+  \caption{Strong scalability plot of the third version of 3dfft\_omp.c}
+  \label{fig:imp23ddftStrongPlot}
+\end{figure}
 
-
+\bigskip
+Following are screen captures of \textit{Paraver} state config, timeline and parallel functions durations config (the latter to get $T{par}$):
 
 \bigskip
 
-The results obtained are in the following table.
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/1threadTimeline.PNG}
+    \caption{Timeline of the third version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/1threadPercentage.PNG}
+    \caption{State config with (\% time) of the third version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/1thread.PNG}
+    \caption{State config with (time) of the third version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+    
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/8threadsTimeline.PNG}
+    \caption{Timeline of the third version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+    
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/8threadsPercentage.PNG}
+    \caption{State config with (\% time) of the third version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/8threads.PNG}
+    \caption{State config with (time) of the third version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/megaImproved_3dfft/parallelFunction.PNG}
+    \caption{Parallel function duration config with of the third version of 3dfft\_omp.c with 1 thread. Painted parts represent $T{par}$.}
+    \label{fig:parFunc3}
+\end{figure}
+
+
+
+
+
+
+\subsection{Final results}
+
+The results obtained are in the following table:
+\textit{Note that $S{8}$ has been calculated using $T1$ and $T8$, and $T1$ has been exctracted from executing the parallelised version 3dfft\_omp with 1 thread. For this reason, speed-up is different from the ones on the strong scalability plots, which use the sequential version of 3dfft to calculate.}
+
+\bigskip
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
+initial version in \textit{3dfft\_omp.c} & 0.53 & 2.12 & 2895 ms & 1400 ms & 2.07 \\ \hline
+new version with improved $\phi$ & 0.85 & 6.67 & 2448 ms & 960 ms & 2.55 \\ \hline
+final version with reduced parallelisation overhead & 0.82 & 5.56 & 2758 ms & 1015 ms & 2.72 \\ \hline
+
+\end{tabular}
+\end{table}
+
+\bigskip
+
+\begin{center}
+$\phi = T_{par} / (T_{seq} + T_{par}) $ \\
+$S_\infty = 1 / (1 - \phi) $
+\end{center}
+
+\bigskip
 
 3dfft: \\
 Tpar = 1523 ms \\
@@ -674,25 +755,6 @@ Tseq = 361 ms \\
 3dfft reducing overhead: \\
 Tpar = 2258 ms \\
 Tseq = 500 ms \\
-
-\bigskip
-
-\begin{table}[H]
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline \textbf{Version} & $\phi $ & $S_\infty$ & $T_1$ & $T_8$ & $S_8$ \\ \hline
-initial version in \textit{3dfft\_omp.c} & 0.53 & 2.12 & 2895 ms & 1400 ms & 2.07 \\ \hline
-new version with improved $\phi$ & 0.85 & 6.67 & 2448 ms & 960 ms & 2.55 \\ \hline
-final version with reduced parallelisation overhead & 0.82 & 5.56 & 2758 ms & 1015 ms & 2.72 \\ \hline
-
-\bigskip
-
-\end{tabular}
-\begin{center}
-$\phi = T_{par} / (T_{seq} + T_{par}) $ \\
-$S_\infty = 1 / (1 - \phi) $
-\end{center}
-\end{table}
-
 %he pensat que maybe podriem treure les conclusions ss\section{Conclusions}
 
 \end{document}
