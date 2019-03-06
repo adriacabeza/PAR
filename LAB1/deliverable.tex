@@ -522,114 +522,99 @@ To sum up, we show a table with all the data obtained with our experiments. We c
 \begin{tabular}{|l|l|l|l|}
 \hline
 Version & $T_1 $ & $T_\infty$ & Parallelism \\ \hline
-seq     & 639,780,001   & 639,707,001    &        1.00011411474     \\ \hline
-v1      &  639,780,001  & 639,707,001  &         1.00011411474      \\ \hline
-v2      & 639,780,001   & 361,190,001   &      1.77131149597      \\ \hline
-v3      & 639,780,001   & 154,354,001&         4.14488770524    \\ \hline
-v4      & 639,780,001   &  64,018,001   &        9.99375161683     \\ \hline
-v5      &639,780,001     & 38,224,001  &        16.7376513254    \\ \hline
+seq     & 639,780,001 ns   & 639,707,001 ns    &        1.00011411474     \\ \hline
+v1      &  639,780,001 ns  & 639,707,001 ns  &         1.00011411474      \\ \hline
+v2      & 639,780,001 ns   & 361,190,001 ns   &      1.77131149597      \\ \hline
+v3      & 639,780,001 ns   & 154,354,001 ns &         4.14488770524    \\ \hline
+v4      & 639,780,001 ns   &  64,018,001 ns   &        9.99375161683     \\ \hline
+v5      &639,780,001 ns     & 38,224,001 ns  &        16.7376513254    \\ \hline
 \end{tabular}
 \end{table}
 
 \section{Understanding the parallel execution}
-In this final section we have used several \textit{Paraver} configurations to be able to understand better the parallel executions. For example there is the Statistics Configuration File, see Figures \ref{fig:3dfftomp_original_8} and \ref{fig:3dfftomp_original_1}, where we can see the \% of each part of the execution time. 
+In this final section we have used \textit{Paraver} and several of its configurations to be able to understand better differently parallelized versions of the \textit{3dfft\_omp} program
 
-
-
-
-
-\begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/3dfftomp_original_1.png}
-  \caption{Statistics from the original 3dfftomp version with 1 processor. State\_profile configuration was used.}
-  \label{fig:3dfftomp_original_1}
-\end{figure}
-
-
+\subsection{Initial version}
+The first version we have tried is the one given to us, which is already parallelized partially. The for loop inside the init\_complex\_grid function is not parallelized. As seen in the table below, this will cause the parallel fraction to not be as high as the following versions. Nonetheless, there is still a good improvement from using 8 threads instead of 1, execution time has been halved. In fact, due to the low parallel fraction of this version, ideal speed-up with infinite processors is 2.12 while speed-up with 8 is 2.07, which is pretty close to the limit. In Figure \ref{fig:3ddftStrongPlot} we can appreciate how 8 threads have actually the best performance, and if we keep increasing the number of threads then overhead starts to make speed-up decay.
 
 \begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/3dfftomp_original_8.png}
-  \caption{Statistics from the original 3dfftomp version with 8 processors. State\_profile configuration was used.}
-  \label{fig:3dfftomp_original_8}
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/strongPlot.PNG}
+  \caption{Strong scalability plot of the first version of 3dfft\_omp.c}
+  \label{fig:3ddftStrongPlot}
 \end{figure}
 
-FER GRAFICA A PARTIR D'AQUEST VALORS; AIXÒ ES LA PRIMERA VERSIÓ 
+\bigskip
+Following are screen captures of \textit{Paraver} state config, timeline and parallel functions durations config (the latter to get $T{par}$):
 
-Temps paral·lelitzat en un processador(per parts)
-343,032.74 us
-330,705.06 us
-105,560.45 us
-146,440.56 us
-199,973.45 us
-401,774.42 us
-Total paralelitzat
-1.527.486,68 us
-Temps total un processador
-2894642449 ns
+\bigskip
 
- 
-Temps paral·lelitzat en el 8 processadors (per parts)
-1,284,479.03 us
-1,145,823.44 us
-709,704.96 us
-496,762.32 us
-321,938.67 us
-579,582.94 us
-Total paralelitzat
-4538291,36 us
-Temps total 
-1.400.960.654 ns 
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/1threadTimeline.PNG}
+    \caption{Timeline of the first version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/1threadPercentage.PNG}
+    \caption{State config with (\% time) of the first version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/1thread.PNG}
+    \caption{State config with (time) of the first version of 3dfft\_omp.c with 1 thread}
+\end{figure}
+    
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/8threadsTimeline.PNG}
+    \caption{Timeline of the first version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+    
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/8threadsPercentage.PNG}
+    \caption{State config with (\% time) of the first version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+        
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/parallelFunction.PNG}
+    \caption{Parallel function duration config with of the first version of 3dfft\_omp.c with 1 thread. Painted parts represent $T{par}$.}
+\end{figure}
+
+\begin{figure}[H]
+\centering  
+\includegraphics[scale=0.5]{images/3dfft/8threads.PNG}
+    \caption{State config with (time) of the first version of 3dfft\_omp.c with 8 threads}
+\end{figure}
+        
+    
 
 %Our calculations have been made using the default configuration to get the total time, see Figures  and the ____ configuration to get the parallelizable time, see Figures 
 
-
-
-\begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/TempsParalVersio1Processador1.png}
-  \caption{blablabla}
-  \label{fig:tempsParalv1Proc1}
-\end{figure}
-
-
-
-\begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/TempsVersio1Processador1.png}
-  \caption{blablabla}
-  \label{fig:tempsv1Proc1}
-\end{figure}
-
-
-
-
-\begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/TempsVersio1Processador8.png}
-  \caption{blablabla}
-  \label{fig:tempsParalv1Proc8}
-\end{figure}
-
-
-
-\begin{figure}[H]
-\centering  \includegraphics[width=\linewidth]{images/TempsParalVersio1Processador8.png}
-  \caption{blablablabla}
-  \label{fig:tempsParalv1Proc8}
-\end{figure}
 
 
 
 
 The results obtained are in the following table.
 
-3dfft:
-Tpar = 1523 ms
-Tseq = 1372 ms
+3dfft: \\
+Tpar = 1523 ms \\
+Tseq = 1372 ms \\
 
-3dfft\_improved:
-Tpar = 2087 ms
-Tseq = 361 ms
+3dfft improving parallel fraction: \\
+Tpar = 2087 ms \\
+Tseq = 361 ms \\
 
-3dfft\_megaImproved:
-Tpar = 2258 ms
-Tseq = 500 ms
+3dfft reducing overhead: \\
+Tpar = 2258 ms \\
+Tseq = 500 ms \\
+
+\bigskip
 
 \begin{table}[H]
 \begin{tabular}{|l|l|l|l|l|l|}
