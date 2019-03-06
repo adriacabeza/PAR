@@ -1,0 +1,103 @@
+\documentclass[12]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\author{par4111 \\ Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
+\title{Lab 2: Brief tutorial on OpenMP programming model }
+\date{\today \\ 2018 - 19 PRIMAVERA}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\lstset{
+	frame=tb,language=C,breaklines=true,numbers=none, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, tabsize=3,   showstringspaces=false,
+  columns=flexible, 
+}
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+
+In this session we will learn about the OpenMP programming model. 
+
+\section{Parallel regions}
+\subsection{hello.c}
+\textbf{1. How many times will you see the "Hello world!" message if the program is executed with \textit{./1.hello}?}
+
+\textbf{2. Without changing the program, how to make it to print 4 times the \textit{Hello World!} message?}
+
+
+\subsection{2.hello.c}
+\textbf{1. Is the execution of the program correct? (i.e., prints a sequence of \textit{(Thid) Hello (Thid)
+world!} being Thid the thread identifier). If not, add a data sharing clause to make it correct?} 
+
+\textbf{2. Are the lines always printed in the same order? Why the messages sometimes appear intermixed?
+(Execute several times in order to see this).}
+
+\subsection{how\_many.c}
+Assuming the \textit{OMP NUM THREADS} variable is set to 8 with \textit{export OMP NUM THREADS=8}
+
+
+\textbf{1. How many \textit{Hello world ...} lines are printed on the screen?}
+
+\textbf{2. What does omp get num threads return when invoked outside and inside a parallel region?}
+
+\subsection{data\_sharing.c}
+\textbf{1. Which is the value of variable x after the execution of each parallel region with different datasharing
+attribute (shared, private, firstprivate and reduction)? Is that the value you would expect? (Execute several times if necessary)}
+
+\section{Loop parallelism}
+\subsection{schedule.c}
+\textbf{1. Which iterations of the loops are executed by each thread for each schedule kind?}
+
+\subsection{2. nowait.c}
+\textbf{1. Which could be a possible sequence of printf when executing the program?}
+\textbf{2. How does the sequence of printf change if the nowait clause is removed from the first for
+directive?}
+\textbf{3. What would happen if dynamic is changed to static in the schedule in both loops? (keeping
+the nowait clause)}
+\subsection{collapse.c}
+\textbf{1. Which iterations of the loop are executed by each thread when the collapse clause is used?}
+\textbf{2. Is the execution correct if the collapse clause is removed? Which clause (different than
+collapse) should be added to make it correct?}
+\section{Synchronization}
+\subsection{datarace.c} 
+\textbf{1. Is the program always executing correctly?}
+\textbf{2. Add two alternative directives to make it correct. Explain why they make the execution
+correct.}
+\subsection{barrier.c}
+\textbf{1. Can you predict the sequence of messages in this program? Do threads exit from the barrier
+in any specific order?}
+\subsection{ordered.c}
+\textbf{1.Can you explain the order in which the \textit{Outside} and \textit{Inside} messages are printed?}
+\textbf{2. How can you ensure that a thread always executes two consecutive iterations in order during the execution of the ordered part of the loop body?}
+
+\section{Tasks}
+\subsection{1.single.c}
+\textbf{1. Can you explain why all threads contribute to the execution of instances of the single worksharing
+construct? Why are those instances appear to be executed in bursts?}
+\subsection{fibtask.c}
+\textbf{1. Why all tasks are created and executed by the same thread? In other words, why the program
+is not executing in parallel?}
+\textbf{2. Modify the code so that the program correctly executes in parallel, returning the same answer
+that the sequential execution would return.}
+\subsection{synchtasks.c}
+\textbf{1. Draw the task dependence graph that is specified in this program}
+\textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
+\subsection{taskloop.c}
+\textbf{1. Find out how many tasks and how many iterations each task execute when using the grainsize
+and num tasks clause in a taskloop. You will probably have to execute the program several times in order to have a clear answer to this question.}
+\textbf{2. What does occur if the nogroup clause in the first taskloop is uncommented?}
+
+\section{Conclusion}
+
+
+
+
+\end{document}
