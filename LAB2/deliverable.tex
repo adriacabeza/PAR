@@ -34,7 +34,7 @@ We see the message 24 times. This is due to the \textit{\#pragma omp parallel} c
 
 \textbf{2. Without changing the program, how to make it to print 4 times the \textit{Hello World!} message?}
 
-By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. We can accomplish this by adding \textit{num\_threads(4)} after \textit{\#pragma omp parallel}.
+By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. We can accomplish this by adding \textit{num\_threads(4)} after \textit{\#pragma omp parallel}. Another way would be by using \textit{export OMP\_NUM\_THREADS=4} before the execution of \textit{1.hola}, so that only 4 threads are available.
 
 \subsection{2.hello.c}
 \textbf{1. Is the execution of the program correct? (i.e., prints a sequence of \textit{(Thid) Hello (Thid)
@@ -55,10 +55,29 @@ Messages appear intermixed because even though we added the \textit{private(id)}
 \subsection{how\_many.c}
 Assuming the \textit{OMP NUM THREADS} variable is set to 8 with \textit{export OMP NUM THREADS=8}
 
-
 \textbf{1. How many \textit{Hello world ...} lines are printed on the screen?}
 
+20 \textit{Hello world ...} lines are printed on the screen. Each line is printed as many times as the number of threads available for the region of that line.
+
+\begin{itemize}
+    \item Hello world from the first parallel (8)!: 8 times
+    \item Hello world from the second parallel (2)!: 2 times
+    \item Hello world from the second parallel (3)!: 3 times
+    \item Hello world from the third parallel (4)!: 4 times
+    \item Hello world from the fourth parallel (3)!: 3 times 
+\end{itemize}
+
 \textbf{2. What does omp get num threads return when invoked outside and inside a parallel region?}
+
+Outside a parallel region it returns the number of threads during the sequential execution, which is always just one.
+\\
+Inside a parallel region however, it returns the number of threads available (busy or not) for that region:
+\begin{enumerate}
+\item For the first parallel region it returns all threads available for the program which are 8 (because of the \textit{export OMP\_NUM\_THREADS=8} restriction).
+\item  The second parallel region is inside a for loop which completes 2 iterations with \textit{i = 2 and 3}. Since the number of threads is set to \textit{i} at each iteration by calling \textit{omp\_set\_num\_threads(i)}, in the first iteration \textit{omp\_get\_num\_threads()} returns 2 and in the second and final one it returns 3. \\ Note that \textit{omp\_set\_num\_threads()} overrides the number of threads set by \textit{export OMP\_NUM\_THREADS=8}, which means that for the rest of the execution, unless otherwise specified, the number of available threads will be 3 (because the last call to \textit{omp\_set\_num\_threads(i)} was made in the second iteration, with \textit{i = 3}.)  
+\item Before the third parallel region, the \textit{\#pragma omp parallel} directive is extended by adding \textit{num\_threads(4)}, which overrides the number of available threads just for this entire parallel region to 4. This way \textit{omp\_get\_num\_threads()} returns 4.
+\item For this fourth parallel region the number of threads is not overriden, so it takes the value 3 (which is what \textit{omp\_get\_num\_threads()} returns) from the \textit{omp\_set\_num\_threads(3)} call in the for loop.
+\end{enumerate}
 
 \subsection{data\_sharing.c}
 \textbf{1. Which is the value of variable x after the execution of each parallel region with different datasharing
