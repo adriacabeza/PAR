@@ -30,8 +30,11 @@ In this session we will learn about the OpenMP programming model.
 \subsection{hello.c}
 \textbf{1. How many times will you see the "Hello world!" message if the program is executed with \textit{./1.hello}?}
 
+We see the message 24 times. This is due to the \textit{\#pragma omp parallel} call before \textit{printf("Hello world! \textbackslash n");}, which makes every available thread execute the \textit{printf}. In Boada 1, they happen to be 24 threads, and so the message is printed 24 times.
+
 \textbf{2. Without changing the program, how to make it to print 4 times the \textit{Hello World!} message?}
 
+By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. 
 
 \subsection{2.hello.c}
 \textbf{1. Is the execution of the program correct? (i.e., prints a sequence of \textit{(Thid) Hello (Thid)
