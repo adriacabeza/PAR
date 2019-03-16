@@ -24,10 +24,12 @@
 \newpage
 \section{Introduction}
 
-In this session we will learn about the OpenMP programming model. 
+POSAR QUELCOM MÉS ELABORAT AQUÍ 
 
-\section{Parallel regions}
-\subsection{hello.c}
+\section{OpenMP questionnaire}
+
+\subsection{Parallel regions}
+\subsubsection{1.hello.c}
 \textbf{1. How many times will you see the "Hello world!" message if the program is executed with \textit{./1.hello}?}
 
 We see the message 24 times. This is due to the \textit{\#pragma omp parallel} call before \textit{printf("Hello world! \textbackslash n");}, which makes every available thread execute the \textit{printf}. In Boada 1, they happen to be 24 threads, and so the message is printed 24 times.
@@ -36,7 +38,7 @@ We see the message 24 times. This is due to the \textit{\#pragma omp parallel} c
 
 By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. We can accomplish this by adding \textit{num\_threads(4)} after \textit{\#pragma omp parallel}. Another way would be by using \textit{export OMP\_NUM\_THREADS=4} before the execution of \textit{1.hola}, so that only 4 threads are available.
 
-\subsection{2.hello.c}
+\subsubsection{2.hello.c}
 \textbf{1. Is the execution of the program correct? (i.e., prints a sequence of \textit{(Thid) Hello (Thid)
 world!} being Thid the thread identifier). If not, add a data sharing clause to make it correct?} 
 
@@ -52,7 +54,7 @@ No, the lines are not always printed in the same order. This happens because thr
 \\
 Messages appear intermixed because even though we added the \textit{private(id)} tag, threads do not wait for other threads to finish their execution before printing their lines (that would be sequential instead of parallel). This way, one thread might print \textit{(id) Hello} and right then another thread's execution might start, printing \textit{(id) Hello} again with a different \textit{id}. After that, they both will finish with \textit{(id) world!} and messages will have been intermixed. To avoid this, we should make the execution of the other threads stop when one thread starts to print until it finishes (we could use the \textit{critical} construct), but that would make the execution sequential (with the added overhead of parallelization, even worse).
 
-\subsection{how\_many.c}
+\subsubsection{3.how\_many.c}
 Assuming the \textit{OMP NUM THREADS} variable is set to 8 with \textit{export OMP NUM THREADS=8}
 
 \textbf{1. How many \textit{Hello world ...} lines are printed on the screen?}
@@ -73,58 +75,72 @@ Outside a parallel region it returns the number of threads during the sequential
 \\
 Inside a parallel region however, it returns the number of threads available (busy or not) for that region:
 \begin{enumerate}
-\item For the first parallel region it returns all threads available for the program which are 8 (because of the \textit{export OMP\_NUM\_THREADS=8} restriction).
-\item  The second parallel region is inside a for loop which completes 2 iterations with \textit{i = 2 and 3}. Since the number of threads is set to \textit{i} at each iteration by calling \textit{omp\_set\_num\_threads(i)}, in the first iteration \textit{omp\_get\_num\_threads()} returns 2 and in the second and final one it returns 3. \\ Note that \textit{omp\_set\_num\_threads()} overrides the number of threads set by \textit{export OMP\_NUM\_THREADS=8}, which means that for the rest of the execution, unless otherwise specified, the number of available threads will be 3 (because the last call to \textit{omp\_set\_num\_threads(i)} was made in the second iteration, with \textit{i = 3}.)  
-\item Before the third parallel region, the \textit{\#pragma omp parallel} directive is extended by adding \textit{num\_threads(4)}, which overrides the number of available threads just for this entire parallel region to 4. This way \textit{omp\_get\_num\_threads()} returns 4.
-\item For this fourth parallel region the number of threads is not overriden, so it takes the value 3 (which is what \textit{omp\_get\_num\_threads()} returns) from the \textit{omp\_set\_num\_threads(3)} call in the for loop.
+    \item For the first parallel region it returns all threads available for the program which are 8 (because of the \textit{export OMP\_NUM\_THREADS=8} restriction).
+    \item  The second parallel region is inside a for loop which completes 2 iterations with \textit{i = 2 and 3}. Since the number of threads is set to \textit{i} at each iteration by calling \textit{omp\_set\_num\_threads(i)}, in the first iteration \textit{omp\_get\_num\_threads()} returns 2 and in the second and final one it returns 3. \\ Note that \textit{omp\_set\_num\_threads()} overrides the number of threads set by \textit{export OMP\_NUM\_THREADS=8}, which means that for the rest of the execution, unless otherwise specified, the number of available threads will be 3 (because the last call to \textit{omp\_set\_num\_threads(i)} was made in the second iteration, with \textit{i = 3}.)  
+    \item Before the third parallel region, the \textit{\#pragma omp parallel} directive is extended by adding \textit{num\_threads(4)}, which overrides the number of available threads just for this entire parallel region to 4. This way \textit{omp\_get\_num\_threads()} returns 4.
+    \item For this fourth parallel region the number of threads is not overriden, so it takes the value 3 (which is what \textit{omp\_get\_num\_threads()} returns) from the \textit{omp\_set\_num\_threads(3)} call in the for loop.
 \end{enumerate}
 
-\subsection{data\_sharing.c}
+\subsubsection{4.data\_sharing.c}
 \textbf{1. Which is the value of variable x after the execution of each parallel region with different datasharing
 attribute (shared, private, firstprivate and reduction)? Is that the value you would expect? (Execute several times if necessary)}
 
-\section{Loop parallelism}
-\subsection{schedule.c}
+\begin{enumerate}
+    \item After first parallel (shared) x's value keeps varying depending on the execution. It should be 120 as intended by the code because there are 16 threads (as set by \textit{omp\_set\_num\_threads(16)}) and $\sum_{i=0}^{15} i = 120$ , but its value after the execution is usually between 100 and 120. This variation occurs because all threads are sharing the same variable x, and to execute \textit{x+=omp\_get\_thread\_num();} they must first read the value of x and then write the result of the sum to it. When they do this, however, it can happen that for example thread 3 reads the value 10 in x, then thread 1 also reads the value 10, after that thread 3 updates x with 10+3=13 and thread 1, that has the old value of x, finally updates x with the value it knows: 10+1=11. And so x instead of being 10+3+1=14, is 11 because thread 1 did not notice thread 3's update of x. This happens quite randomly depending on the order of tasks assigned and threads occupation, so the final value of x keeps changing execution after execution.
+    \item After second parallel (private) x's value is always 5. This is expected as x is assigned the value of 5 right before the second parallel region. Then at the time of declaration of the parallel region, x is declared private (\textit{\#pragma omp parallel private(x)}), which means that each thread will modify a local copy (to each thread) of x, but will in no case modify the shared value of the variable (private(x) also makes the local copies of x start without an initialised value instead of the value of x previous to the parallel region (5)). This way threads can't modify the value other threads have of x, but this also means that after the parallel region, unless strictly specified, the shared value of x is still the same as before executing the region, because none of the threads has written the value of their local copy of x to the shared variable x. This is why in the end of the second parallel region x is always equal to 5.
+    \item After third parallel (firstprivate) x's value is also always 5. This is expected as well, since firstprivate(x) has the same behaviour as private(x) with the exception that firstprivate(x) initializes each local copy of x for each thread with the value that x had before the start of the parallel region. In this case, that value is 5. Still, this does not affect the value of x after the execution of the parallel region, but it changes the behaviour inside.
+    \item After fourth parallel (reduction) x's value is always 125. This is correct because \textit{pragma omp parallel reduction(+:x)} is supposed to make local copies of x for each thread, just like private, but initializing them to the neutral element (for addition, this would be 0). Then each thread executes its instructions inside the parallel region and after that all local copies' values are added together with the initial value of x (which was 5). This is therefore equivalent to computing the following (remember there are 16 threads): 
+    \begin{equation}
+        5 + \sum_{i=0}^{15} i = 125
+    \end{equation}
+    And 125 is indeed what is printed after each execution for the fourth parallel region, so it is safe to assume it works as intended.
+    
+\end{enumerate}
+
+\subsection{Loop parallelism}
+\subsubsection{1.schedule.c}
 \textbf{1. Which iterations of the loops are executed by each thread for each schedule kind?}
 
-\subsection{2. nowait.c}
+\subsubsection{2.nowait.c}
 \textbf{1. Which could be a possible sequence of printf when executing the program?}
 \textbf{2. How does the sequence of printf change if the nowait clause is removed from the first for
 directive?}
 \textbf{3. What would happen if dynamic is changed to static in the schedule in both loops? (keeping
 the nowait clause)}
-\subsection{collapse.c}
+\subsubsection{3.collapse.c}
 \textbf{1. Which iterations of the loop are executed by each thread when the collapse clause is used?}
 \textbf{2. Is the execution correct if the collapse clause is removed? Which clause (different than
 collapse) should be added to make it correct?}
-\section{Synchronization}
-\subsection{datarace.c} 
+\subsection{Synchronization}
+\subsubsection{1.datarace.c} 
 \textbf{1. Is the program always executing correctly?}
 \textbf{2. Add two alternative directives to make it correct. Explain why they make the execution
 correct.}
-\subsection{barrier.c}
+\subsubsection{2.barrier.c}
 \textbf{1. Can you predict the sequence of messages in this program? Do threads exit from the barrier
 in any specific order?}
-\subsection{ordered.c}
+\subsubsection{3.ordered.c}
 \textbf{1.Can you explain the order in which the \textit{Outside} and \textit{Inside} messages are printed?}
 \textbf{2. How can you ensure that a thread always executes two consecutive iterations in order during the execution of the ordered part of the loop body?}
 
-\section{Tasks}
-\subsection{1.single.c}
+\subsection{Tasks}
+\subsubsection{1.single.c}
 \textbf{1. Can you explain why all threads contribute to the execution of instances of the single worksharing
 construct? Why are those instances appear to be executed in bursts?}
-\subsection{fibtask.c}
+\subsubsection{2.fibtask.c}
 \textbf{1. Why all tasks are created and executed by the same thread? In other words, why the program
 is not executing in parallel?}
 \textbf{2. Modify the code so that the program correctly executes in parallel, returning the same answer
 that the sequential execution would return.}
-\subsection{synchtasks.c}
+\subsubsection{3.synchtasks.c}
 \textbf{1. Draw the task dependence graph that is specified in this program}
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
-\subsection{taskloop.c}
+\subsubsection{4.taskloop.c}
 \textbf{1. Find out how many tasks and how many iterations each task execute when using the grainsize
 and num tasks clause in a taskloop. You will probably have to execute the program several times in order to have a clear answer to this question.}
 \textbf{2. What does occur if the nogroup clause in the first taskloop is uncommented?}
+
+\section{Observing overheads}
 
 \section{Conclusion}
 
