@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1552755435 "d:/code/PAR/LAB2/deliverable.tex" "d:/code/PAR/LAB2/deliverable.pdf" "deliverable" 1552755456
+["pdflatex"] 1552763616 "d:/code/PAR/LAB2/deliverable.tex" "d:/code/PAR/LAB2/deliverable.pdf" "deliverable" 1552763680
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbxti10.tfm" 1136765053 1532 9162035f4e7176612125649e348e2195 ""
@@ -163,15 +163,15 @@
   "C:/Program Files/MiKTeX 2.9/tex/latex/xcolor/xcolor.sty" 1463131981 57049 34128738f682d033422ca125f82e5d62 ""
   "C:/Users/Xavi/AppData/Local/MiKTeX/2.9/miktex/data/le/pdftex/pdflatex.fmt" 1550163439 4157658 b9aece55c587e8e11e4696161f7a3e47 ""
   "C:/Users/Xavi/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map" 1550163205 80453 73224248f0a73acd005b5611945eaaa6 ""
-  "d:/code/PAR/LAB2/deliverable.aux" 1552755437 2035 3d7f4537ef4b3a5f3f18162580f539b1 ""
-  "d:/code/PAR/LAB2/deliverable.tex" 1552755456 5188 f75bf8c6a10451d61caa748c2b52902f ""
-  "deliverable.aux" 1552755437 2035 3d7f4537ef4b3a5f3f18162580f539b1 ""
-  "deliverable.tex" 1552755456 5188 f75bf8c6a10451d61caa748c2b52902f ""
-  "deliverable.toc" 1552755437 1226 ef2f187df80aa2b50697d0e387d520e6 ""
+  "d:/code/PAR/LAB2/deliverable.aux" 1552763618 2035 2c4f8e37bc0109ebd66eb27aeb9fc292 ""
+  "d:/code/PAR/LAB2/deliverable.tex" 1552763679 7146 990ce2995a4ef3d5f7669b0fb705ee00 ""
+  "deliverable.aux" 1552763618 2035 2c4f8e37bc0109ebd66eb27aeb9fc292 ""
+  "deliverable.tex" 1552763679 7146 990ce2995a4ef3d5f7669b0fb705ee00 ""
+  "deliverable.toc" 1552763618 1226 b62d0b97d2e14a86174b5e9b9cc31de8 ""
   (generated)
-  "deliverable.toc"
-  "d:/code/PAR/LAB2/deliverable.pdf"
-  "deliverable.aux"
-  "d:/code/PAR/LAB2/deliverable.log"
   "deliverable.log"
+  "d:/code/PAR/LAB2/deliverable.pdf"
   "deliverable.pdf"
+  "deliverable.aux"
+  "deliverable.toc"
+  "d:/code/PAR/LAB2/deliverable.log"

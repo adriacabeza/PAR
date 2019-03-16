@@ -34,14 +34,23 @@ We see the message 24 times. This is due to the \textit{\#pragma omp parallel} c
 
 \textbf{2. Without changing the program, how to make it to print 4 times the \textit{Hello World!} message?}
 
-By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. 
+By setting the number of threads available to 4, only 4 threads would execute the \textit{printf("Hello world! \textbackslash n");} line and so the message would be displayed only 4 times. We can accomplish this by adding \textit{num\_threads(4)} after \textit{\#pragma omp parallel}.
 
 \subsection{2.hello.c}
 \textbf{1. Is the execution of the program correct? (i.e., prints a sequence of \textit{(Thid) Hello (Thid)
 world!} being Thid the thread identifier). If not, add a data sharing clause to make it correct?} 
 
+It is not correct, sometimes errors like \\
+\textit{(2) Hello (1) Hello (1) world! (1) world!} \\
+occur. These happen because the variable \textit{id} is declared before \textit{\#pragma omp parallel}, meaning all threads share it. Then what can happen is that for example thread 2 reads the variable \textit{id}, prints the \textit{"(2) Hello"} line, then thread 1 changes the variable, and when it is time to print the \textit{"(2) world!"}, thread 2 prints \textit{"(1) world!"} instead, because thread 1 assigned a new value before thread 2 was done.
+\\
+To make it correct, we can add the \textit{private(id)} tag to the \textit{\#pragma omp parallel num\_threads(8)} line, so that every thread has its own local value of the variable \textit{id}. This way, when they assign their own id, they do not change the value other threads are reading from the var \textit{id}.
+
 \textbf{2. Are the lines always printed in the same order? Why the messages sometimes appear intermixed?
 (Execute several times in order to see this).}
+No, the lines are not always printed in the same order. This happens because threads do not get tasks assigned by \#id order, so whichever thread gets the task earlier in that execution will print earlier.
+\\
+Messages appear intermixed because even though we added the \textit{private(id)} tag, threads do not wait for other threads to finish their execution before printing their lines (that would be sequential instead of parallel). This way, one thread might print \textit{(id) Hello} and right then another thread's execution might start, printing \textit{(id) Hello} again with a different \textit{id}. After that, they both will finish with \textit{(id) world!} and messages will have been intermixed. To avoid this, we should make the execution of the other threads stop when one thread starts to print until it finishes (we could use the \textit{critical} construct), but that would make the execution sequential (with the added overhead of parallelization, even worse).
 
 \subsection{how\_many.c}
 Assuming the \textit{OMP NUM THREADS} variable is set to 8 with \textit{export OMP NUM THREADS=8}

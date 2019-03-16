@@ -2,19 +2,19 @@
 \contentsline {section}{\numberline {2}Parallel regions}{3}% 
 \contentsline {subsection}{\numberline {2.1}hello.c}{3}% 
 \contentsline {subsection}{\numberline {2.2}2.hello.c}{3}% 
-\contentsline {subsection}{\numberline {2.3}how\_many.c}{3}% 
-\contentsline {subsection}{\numberline {2.4}data\_sharing.c}{3}% 
+\contentsline {subsection}{\numberline {2.3}how\_many.c}{4}% 
+\contentsline {subsection}{\numberline {2.4}data\_sharing.c}{4}% 
 \contentsline {section}{\numberline {3}Loop parallelism}{4}% 
 \contentsline {subsection}{\numberline {3.1}schedule.c}{4}% 
 \contentsline {subsection}{\numberline {3.2}2. nowait.c}{4}% 
 \contentsline {subsection}{\numberline {3.3}collapse.c}{4}% 
-\contentsline {section}{\numberline {4}Synchronization}{4}% 
-\contentsline {subsection}{\numberline {4.1}datarace.c}{4}% 
-\contentsline {subsection}{\numberline {4.2}barrier.c}{4}% 
-\contentsline {subsection}{\numberline {4.3}ordered.c}{4}% 
+\contentsline {section}{\numberline {4}Synchronization}{5}% 
+\contentsline {subsection}{\numberline {4.1}datarace.c}{5}% 
+\contentsline {subsection}{\numberline {4.2}barrier.c}{5}% 
+\contentsline {subsection}{\numberline {4.3}ordered.c}{5}% 
 \contentsline {section}{\numberline {5}Tasks}{5}% 
 \contentsline {subsection}{\numberline {5.1}1.single.c}{5}% 
 \contentsline {subsection}{\numberline {5.2}fibtask.c}{5}% 
 \contentsline {subsection}{\numberline {5.3}synchtasks.c}{5}% 
 \contentsline {subsection}{\numberline {5.4}taskloop.c}{5}% 
-\contentsline {section}{\numberline {6}Conclusion}{5}% 
+\contentsline {section}{\numberline {6}Conclusion}{6}% 
