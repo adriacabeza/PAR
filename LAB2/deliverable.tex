@@ -8,12 +8,14 @@
 \usepackage{subcaption}
 \usepackage{pgfplots}
 \usepackage{listings}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage{float}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{dkgreen}{rgb}{0,0.6,0}
 \lstset{
-	frame=tb,language=C,breaklines=true,numbers=none, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, tabsize=3,   showstringspaces=false,
+  basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{orange},
+  keywordstyle=\color{blue},
+	frame=tb,language=C,breaklines=true,numbers=none,  stringstyle=\color{red}, tabsize=3,   showstringspaces=false,
   columns=flexible, 
 }
 \begin{document}
@@ -24,7 +26,9 @@
 \newpage
 \section{Introduction}
 
-POSAR QUELCOM MÉS ELABORAT AQUÍ 
+In this laboratory assignment we will learn the basics of OpenMP extensions to the C programming languge. At this moment we already know the hardware and tools we are going to use but this is the first approach to learn about the software needed to parallelize real applications. 
+
+This is the scope of the next two sessions of PAR laboratory: introducing the  main components of the OpenMP programming model, from the simpler to the most complicated pragmas. 
 
 \section{OpenMP questionnaire}
 
@@ -100,28 +104,263 @@ attribute (shared, private, firstprivate and reduction)? Is that the value you w
 \subsection{Loop parallelism}
 \subsubsection{1.schedule.c}
 \textbf{1. Which iterations of the loops are executed by each thread for each schedule kind?}
+\begin{itemize}
+\item \textbf{Schedule(static)}: There is an equal distribution of iterations for each thread. As we can see in the outputed execution of the loop, each of the four threads gets a chunk of 3 iterations, having in total of 12 iterations. 
+\\
+\begin{lstlisting}[frame=single]
+Going to distribute 12 iterations with schedule(static) ...
+Loop 1: (0) gets iteration 0
+Loop 1: (0) gets iteration 1
+Loop 1: (0) gets iteration 2
+Loop 1: (1) gets iteration 3
+Loop 1: (1) gets iteration 4
+Loop 1: (1) gets iteration 5
+Loop 1: (3) gets iteration 9
+Loop 1: (3) gets iteration 10
+Loop 1: (3) gets iteration 11
+Loop 1: (2) gets iteration 6
+Loop 1: (2) gets iteration 7
+Loop 1: (2) gets iteration 8
+\end{lstlisting}
+
+\item \textbf{Schedule(static,2)}: There is also an equal distribution of iterations for each thread but in this case each thread is executing only 2 consecutive iterations of the for loop each time according to the thread order.
+As we can see in the outputed execution of the loop, the iterations are given in chunks of size 2 and in order: thread 0 takes iteration 1 and 2, thread 1 takes iteration 2 and 3,...
+\\
+\begin{lstlisting}[frame=single]
+Going to distribute 12 iterations with schedule(static, 2) ...
+Loop 2: (3) gets iteration 6
+Loop 2: (0) gets iteration 0
+Loop 2: (0) gets iteration 1
+Loop 2: (1) gets iteration 2
+Loop 2: (1) gets iteration 3
+Loop 2: (1) gets iteration 10
+Loop 2: (1) gets iteration 11
+Loop 2: (3) gets iteration 7
+Loop 2: (0) gets iteration 8
+Loop 2: (0) gets iteration 9
+Loop 2: (2) gets iteration 4
+Loop 2: (2) gets iteration 5
+\end{lstlisting}
+
+
+\item \textbf{Schedule(dynamic,2)}: Each thread is executing 2 consecutive iterations of the loop each time. However, the order is guided by the first thread that is free. 
+As we can see in the outputed execution of the loop, the iterations are given also in chunks of size 2, but here they are not sorted, the assignment is given depending on the availability of the thread. 
+\\
+\begin{lstlisting}[frame=single]
+Going to distribute 12 iterations with schedule(dynamic, 2) ...
+Loop 3: (1) gets iteration 0
+Loop 3: (1) gets iteration 1
+Loop 3: (1) gets iteration 8
+Loop 3: (1) gets iteration 9
+Loop 3: (1) gets iteration 10
+Loop 3: (1) gets iteration 11
+Loop 3: (0) gets iteration 6
+Loop 3: (0) gets iteration 7
+Loop 3: (3) gets iteration 4
+Loop 3: (3) gets iteration 5
+Loop 3: (2) gets iteration 2
+Loop 3: (2) gets iteration 3
+\end{lstlisting}
+
+\item \textbf{Schedule(guided,2)}: In this case, the size of each chunk is proportional to the number of unassigned iterations divided by the number of the threads. Therefore the size of the chunks decreases. The order is also given by the first who is free and the chunk-size specified (in this case 2) represents the minimum size of a chunk. 
+\\
+\begin{lstlisting}[frame=single]
+Going to distribute 12 iterations with schedule(guided, 2) ...
+Loop 4: (3) gets iteration 0
+Loop 4: (3) gets iteration 1
+Loop 4: (3) gets iteration 8
+Loop 4: (0) gets iteration 2
+Loop 4: (0) gets iteration 3
+Loop 4: (0) gets iteration 10
+Loop 4: (0) gets iteration 11
+Loop 4: (1) gets iteration 6
+Loop 4: (1) gets iteration 7
+Loop 4: (2) gets iteration 4
+Loop 4: (2) gets iteration 5
+Loop 4: (3) gets iteration 9
+\end{lstlisting}
+\end{itemize}
+
 
 \subsubsection{2.nowait.c}
 \textbf{1. Which could be a possible sequence of printf when executing the program?}
-\textbf{2. How does the sequence of printf change if the nowait clause is removed from the first for
-directive?}
-\textbf{3. What would happen if dynamic is changed to static in the schedule in both loops? (keeping
-the nowait clause)}
+\\
+The nowait clause removes the synchronization time needed between threads. If we remove the clause, the threads don't wait the others to finish their parallel region executions so they continue executing code. That means that without the nowait clause the sequence of printf is printed randomly by both for loops (but respecting the code sequence in a thread). 
+Let's see an example of the outputed execution (we changed the number of iterations of the code in order to be able to check our hypothesis): 
+\\
+\begin{lstlisting}[frame=single]
+Loop 1: thread (0) gets iteration 0
+Loop 1: thread (4) gets iteration 1
+Loop 1: thread (7) gets iteration 2
+Loop 2: thread (6) gets iteration 6
+Loop 2: thread (5) gets iteration 7
+Loop 1: thread (2) gets iteration 3
+Loop 2: thread (3) gets iteration 4
+Loop 2: thread (1) gets iteration 5
+
+\end{lstlisting}
+
+\textbf{2. How does the sequence of printf change if the nowait clause is removed from the first for directive?}
+\\
+If we did not have the nowait clause we would see first the sequence of printf done by the first loop and then the sequence done by the second loop:
+In order to check if our hypothesis is correct let's see the outputed execution: 
+\\
+\begin{lstlisting}[frame=single]
+Loop 1: thread (1) gets iteration 1
+Loop 1: thread (0) gets iteration 0
+Loop 2: thread (0) gets iteration 3
+Loop 2: thread (1) gets iteration 2
+\end{lstlisting} 
+\textbf{3. What would happen if dynamic is changed to static in the schedule in both loops? (keeping the nowait clause)}
+\\
+ Even though we kept the nowait clause we would still get a correct printf sequence: first the first loop and then the second one. But why? The static clause creates a static scheduling type, that is, the iterations are grouped into chunks and each thread executes the threads in circular order. So there is implicitly an order into the static schedule. 
+
+If we check the ouputed execution we can see that out hypothesis is true. 
+\\
+\begin{lstlisting}[frame=single]
+Loop 1: thread (0) gets iteration 0
+Loop 1: thread (3) gets iteration 3
+Loop 1: thread (2) gets iteration 2
+Loop 1: thread (1) gets iteration 1
+Loop 2: thread (0) gets iteration 4
+Loop 2: thread (2) gets iteration 6
+Loop 2: thread (1) gets iteration 5
+Loop 2: thread (3) gets iteration 7
+\end{lstlisting}
+
 \subsubsection{3.collapse.c}
 \textbf{1. Which iterations of the loop are executed by each thread when the collapse clause is used?}
+\\
+The collapse clause will parallelize more than one level of the loop. So each thread will execute consecutively a set of consecutive iterations that corresponds to the sequential iterations of the loops combined. To sum up, the iterations are in groups like it was only one loop. 
+\\
+\begin{lstlisting}[frame=single]
+(0) Iter (0 0)
+(0) Iter (0 1)
+(0) Iter (0 2)
+(0) Iter (0 3)
+(1) Iter (0 4)
+(1) Iter (1 0)
+(1) Iter (1 1)
+(3) Iter (2 0)
+(3) Iter (2 1)
+(3) Iter (2 2)
+...
+\end{lstlisting}
 \textbf{2. Is the execution correct if the collapse clause is removed? Which clause (different than
 collapse) should be added to make it correct?}
+\\
+If we delete the clause the execution is not correct because only the i is protected and the j is shared. In order to solve it we could make private the variable j to avoid having different iterations of the loop overriding the variable j.
+\\
+\begin{lstlisting}[frame=single]
+int main()
+{
+    int i,j;
+
+    omp_set_num_threads(8);
+    #pragma omp parallel for private(j)
+    for (i=0; i < N; i++) {
+          for (j=0; j < N; j++) {
+          int id=omp_get_thread_num();
+          printf("(%d) Iter (%d %d)\n",id,i,j);
+        }
+    }
+
+    return 0;
+}
+
+\end{lstlisting}
+ 
 \subsection{Synchronization}
 \subsubsection{1.datarace.c} 
 \textbf{1. Is the program always executing correctly?}
-\textbf{2. Add two alternative directives to make it correct. Explain why they make the execution
-correct.}
+No. There is a data race.
+\textbf{2. Add two alternative directives to make it correct. Explain why they make the execution correct.}
+\\
+\textbf{Alternative 1}
+\\
+\begin{lstlisting}[frame=single]
+int main()
+{
+
+    int i, x=0;
+    omp_set_num_threads(8);
+    #pragma omp parallel private(i)
+    {
+    	int id = omp_get_thread_num();
+    	for (i=id; i < N;i+=8) {
+        	#pragma omp critical
+        	x++;
+    	}
+	}
+
+    if (x==N) printf("Congratulations!, program executed correctly (x = %d)\n", x);
+    else printf("Sorry, something went wrong, value of x = %d\n", x);
+
+    return 0;
+}  
+\end{lstlisting}  
+This version protects the operation x++, where we had the data race. We created a critical region that only one thread can execute at once.
+\\
+\textbf{Alternative 2}
+\\
+\begin{lstlisting}[frame=single]
+int main()
+{
+
+    int i, x=0;
+    omp_set_num_threads(8);
+    #pragma omp parallel private(i)
+     {
+    	int id = omp_get_thread_num();
+   		for (i=id; i < N;i+=8) {
+        	#pragma omp atomic
+        	x++;
+    	}
+	}
+
+    if (x==N) printf("Congratulations!, program executed correctly (x = %d)\n", x);
+    else printf("Sorry, something went wrong, value of x = %d\n", x);
+
+    return 0;
+}
+\end{lstlisting}
+Like in the previous version, here we are also protecting the operation x++, in this case we made the operation x++ indivisible using the atomic pragma directive, forcing to make the read and write operations on one thread before allowing another thread to access the variable. 
+
 \subsubsection{2.barrier.c}
 \textbf{1. Can you predict the sequence of messages in this program? Do threads exit from the barrier
-in any specific order?}
+in any specific order?} 
+
+FALTA FER 
+
 \subsubsection{3.ordered.c}
-\textbf{1.Can you explain the order in which the \textit{Outside} and \textit{Inside} messages are printed?}
+\textbf{1.Can you explain the order in which the \textit{Outside} and \textit{Inside} messages are printed?} 
+\\
+The orderer clause works like this: different threads execute concurrently until they encounter the ordered region, which is executed sequentially in the same order as it would get executed in a serial loop. So, the order in which the \textit{Outside} and \textit{Inside} messages are printed is because of the fact that the inside message is inside the ordered region (that is executed sequentially) and the outside message is outside that region where all the different threads are executing concurrently. 
+\\
+\begin{lstlisting}[frame=single]
+Before ordered - (0) gets iteration 0
+Inside ordered - (0) gets iteration 0
+Before ordered - (4) gets iteration 1
+Inside ordered - (4) gets iteration 1
+Before ordered - (4) gets iteration 3
+Before ordered - (0) gets iteration 2
+Inside ordered - (0) gets iteration 2
+Before ordered - (2) gets iteration 5
+Before ordered - (3) gets iteration 4
+Before ordered - (5) gets iteration 6
+Before ordered - (0) gets iteration 7
+Inside ordered - (4) gets iteration 3
+Before ordered - (6) gets iteration 10
+Before ordered - (7) gets iteration 9
+Before ordered - (1) gets iteration 8
+Inside ordered - (3) gets iteration 4
+Inside ordered - (2) gets iteration 5
+Before ordered - (2) gets iteration 13
+...
+\end{lstlisting}
 \textbf{2. How can you ensure that a thread always executes two consecutive iterations in order during the execution of the ordered part of the loop body?}
+\\
+Changing from schedule dynamic to schedule(dynamic,2)
 
 \subsection{Tasks}
 \subsubsection{1.single.c}
