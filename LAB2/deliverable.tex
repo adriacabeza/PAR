@@ -1,3 +1,4 @@
+
 \documentclass[12]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
@@ -278,10 +279,18 @@ int main()
 \subsection{Synchronization}
 \subsubsection{1.datarace.c} 
 \textbf{1. Is the program always executing correctly?}
+\\
 No. There is a data race.
+\\
+\medskip
+
 \textbf{2. Add two alternative directives to make it correct. Explain why they make the execution correct.}
 \\
-\textbf{Alternative 1}
+\medskip
+
+\begin{Large}
+Alternative 1
+\end{Large}
 \\
 \begin{lstlisting}[frame=single]
 int main()
@@ -306,7 +315,11 @@ int main()
 \end{lstlisting}  
 This version protects the operation x++, where we had the data race. We created a critical region that only one thread can execute at once.
 \\
-\textbf{Alternative 2}
+\\
+\medskip
+\begin{Large}
+Alternative 2
+\end{Large}
 \\
 \begin{lstlisting}[frame=single]
 int main()
@@ -394,17 +407,15 @@ In this part we will learn about the thread creation and termination overhead an
 \medskip
 In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueue}, when the execution starts, the first message informs about it. 
 \\
-Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{piqueue}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease because when the number of threads increases every thread has to do less calculations.
-\\
-\medskip
+Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{overheadplot1}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease because when the number of threads increases every thread has to do less calculations.
 
-Finally we can confirm that our conclusions are correct since the formulas to compute the overhead are the following:
-\begin{itemize}
-\item Overhead = $t_1 + num\_threads \times t_2$
-\item Overhead per thread $= \frac{t_1+num\_threads\times t_2}{num\_threads}$
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/thread.png}
+\caption{Plot of the overhead and overhead per thread depending on the number of threads}
+\label{overheadplot1}
+\end{figure}
 
-Being $t_1$ a constant and $t_2$ depends on the number of threads.
 
 \begin{figure}[H]
 \begin{lstlisting}[frame=single]
@@ -451,9 +462,18 @@ execution starts, the first message informs about it.
 \\
 \medskip
 
-Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{piqueuetask}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the inestability of the machine. 
+Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{overheadplot2}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the inestability of the machine. 
 \\
 \bigskip
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/task.png}
+\caption{Plot of the overhead and overhead per task depending on the number of tasks}
+\label{overheadplot2}
+\end{figure}
+
+
 
 \begin{figure}[H]
 \begin{lstlisting}[frame=single]
