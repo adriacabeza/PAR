@@ -377,6 +377,7 @@ Inside ordered - (2) gets iteration 5
 Before ordered - (2) gets iteration 13
 ...
 \end{lstlisting}
+
 \textbf{2. How can you ensure that a thread always executes two consecutive iterations in order during the execution of the ordered part of the loop body?}
 \\
 Changing from schedule dynamic to schedule(dynamic,2)
@@ -385,11 +386,120 @@ Changing from schedule dynamic to schedule(dynamic,2)
 \subsubsection{1.single.c}
 \textbf{1. Can you explain why all threads contribute to the execution of instances of the single worksharing
 construct? Why are those instances appear to be executed in bursts?}
+
+All threads contribute because \textit{\#pragma omp parallel} is called before the for loop, which means that all threads available will execute it, but inside the for loop there is a \textit{\#pragma omp single nowait} call which causes the instruction inside the for loop to be executed only once, by an available thread (this is because of \textit{single}). The \textit{nowait} call makes other threads continue their execution without waiting for the thread executing the \textit{single} instruction to end. \\
+To sum up, what happens is that all threads execute the for loop but each iteration is assigned once and only to one thread available. So because there are 4 threads available (due to \textit{omp\_set\_num\_threads(4)}), the first 4 iterations are executed each by only one thread and all at once (because of the \textit{nowait}). Then the 4 threads wait 1 second (because of the \textit{sleep(1)} call), which explains the bursts, and do the same again until the for loop ends.
+
 \subsubsection{2.fibtask.c}
 \textbf{1. Why all tasks are created and executed by the same thread? In other words, why the program
-is not executing in parallel?}
-\textbf{2. Modify the code so that the program correctly executes in parallel, returning the same answer
-that the sequential execution would return.}
+is not executing in parallel?} 
+
+Because there is not a \textit{\#pragma omp parallel} call before the while loop (or anywhere at all), meaning there is only one thread creating tasks and only one thread (the same that created them) available to complete them. 
+
+\textbf{2. Modify the code so that the program correctly executes in parallel, returning the same answer that the sequential execution would return.}
+To accomplish this we first need to make the parallelization possible by adding \textit{\#pragma omp parallel} before the while loop. If we left it like this, it would be incorrect because the every task would be created for every thread available, meaning we would repeat tasks as many times as threads available. To avoid this we add a \textit{\#pragma omp single} instruction before the while loop too, in order for the tasks to only be created by one thread but executed by whichever thread is available. We are now almost there, but there is a little problem with the variable \textit{p}: since it is a pointer that is passed to the function that each task computes, we need to make it private so that when a task is created with a certain value of \textit{p}, this value is not changed by the next iteration of the while loop. Also, since the initial value of \textit{p} is assigned out of the while loop, we want to make sure that, when made private, \textit{p} is still initialised with the value desired (we accomplish this by calling \textit{\#pragma omp parallel firstprivate(p)}). \\
+Now the execution would be correct and the result we would get is 75025, which is indeed the 25th number in the Fibonacci series.\\
+\medskip
+
+This is the modified code:
+\medskip
+\begin{lstlisting}[frame=single]
+    int main(int argc, char *argv[]) {
+        struct node *temp, *head;
+
+        printf("Staring computation of Fibonacci for numbers in linked list \n");
+
+        p = init_list(N);
+        head = p;
+
+        #pragma omp parallel firstprivate(p)
+        {
+            #pragma omp single
+            {
+                while (p != NULL) {
+                    printf("Thread %d creating task that will compute %d\n", omp_get_thread_num(), p->data);
+                    #pragma omp task 
+                    { processwork(p); }
+                    p = p->next;
+                }
+            }
+        }
+        printf("Finished creation of tasks to compute the Fibonacci for numbers in linked list \n");
+
+        printf("Finished computation of Fibonacci for numbers in linked list \n");
+        p = head;
+        while (p != NULL) {
+        printf("%d: %d computed by thread %d \n", p->data, p->fibdata, p->threadnum);
+        temp = p->next;
+        free (p);
+        p = temp;
+        }
+        free (p);
+
+        return 0;
+    } 
+\end{lstlisting}
+
+\bigskip
+
+And this is the obtained output:
+\medskip
+\begin{lstlisting}[frame=single]
+    Staring computation of Fibonacci for numbers in linked list 
+    Thread 0 creating task that will compute 1
+    Thread 0 creating task that will compute 2
+    Thread 0 creating task that will compute 3
+    Thread 0 creating task that will compute 4
+    Thread 0 creating task that will compute 5
+    Thread 0 creating task that will compute 6
+    Thread 0 creating task that will compute 7
+    Thread 0 creating task that will compute 8
+    Thread 0 creating task that will compute 9
+    Thread 0 creating task that will compute 10
+    Thread 0 creating task that will compute 11
+    Thread 0 creating task that will compute 12
+    Thread 0 creating task that will compute 13
+    Thread 0 creating task that will compute 14
+    Thread 0 creating task that will compute 15
+    Thread 0 creating task that will compute 16
+    Thread 0 creating task that will compute 17
+    Thread 0 creating task that will compute 18
+    Thread 0 creating task that will compute 19
+    Thread 0 creating task that will compute 20
+    Thread 0 creating task that will compute 21
+    Thread 0 creating task that will compute 22
+    Thread 0 creating task that will compute 23
+    Thread 0 creating task that will compute 24
+    Thread 0 creating task that will compute 25
+    Finished creation of tasks to compute the Fibonacci for numbers in linked list 
+    Finished computation of Fibonacci for numbers in linked list 
+    1: 1 computed by thread 18 
+    2: 1 computed by thread 17 
+    3: 2 computed by thread 15 
+    4: 3 computed by thread 22 
+    5: 5 computed by thread 4 
+    6: 8 computed by thread 23 
+    7: 13 computed by thread 5 
+    8: 21 computed by thread 16 
+    9: 34 computed by thread 13 
+    10: 55 computed by thread 7 
+    11: 89 computed by thread 22 
+    12: 144 computed by thread 19 
+    13: 233 computed by thread 8 
+    14: 377 computed by thread 9 
+    15: 610 computed by thread 7 
+    16: 987 computed by thread 22 
+    17: 1597 computed by thread 9 
+    18: 2584 computed by thread 11 
+    19: 4181 computed by thread 4 
+    20: 6765 computed by thread 16 
+    21: 10946 computed by thread 8 
+    22: 17711 computed by thread 5 
+    23: 28657 computed by thread 21 
+    24: 46368 computed by thread 3 
+    25: 75025 computed by thread 14 
+\end{lstlisting}
+
 \subsubsection{3.synchtasks.c}
 \textbf{1. Draw the task dependence graph that is specified in this program}
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}

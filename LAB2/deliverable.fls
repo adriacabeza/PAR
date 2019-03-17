@@ -226,7 +226,12 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmmi6.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmsy8.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmsy6.tfm
+INPUT d:\code\PAR\LAB2\images\UPClogo.png
+INPUT d:\code\PAR\LAB2\images\UPClogo.png
 OUTPUT d:\code\PAR\LAB2\deliverable.pdf
+INPUT d:\code\PAR\LAB2\images\UPClogo.png
+INPUT d:\code\PAR\LAB2\images\UPClogo.png
+INPUT d:\code\PAR\LAB2\images\UPClogo.png
 INPUT C:\Users\Xavi\AppData\Local\MiKTeX\2.9\pdftex\config\pdftex.map
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
@@ -239,6 +244,17 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbxti10.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmtt10.tfm
+INPUT d:\code\PAR\LAB2\images\thread.png
+INPUT d:\code\PAR\LAB2\images\thread.png
+INPUT d:\code\PAR\LAB2\images\thread.png
+INPUT d:\code\PAR\LAB2\images\thread.png
+INPUT d:\code\PAR\LAB2\images\thread.png
+INPUT d:\code\PAR\LAB2\images\task.png
+INPUT d:\code\PAR\LAB2\images\task.png
+INPUT d:\code\PAR\LAB2\images\task.png
+INPUT d:\code\PAR\LAB2\images\task.png
+INPUT d:\code\PAR\LAB2\images\task.png
 INPUT d:\code\PAR\LAB2\deliverable.aux
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
@@ -264,3 +280,5 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti10.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmtt10.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmtt10.pfb
