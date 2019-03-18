@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  17 MAR 2019 21:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  18 MAR 2019 10:34
 entering extended mode
 **d:/code/PAR/LAB2/deliverable.tex
 (d:/code/PAR/LAB2/deliverable.tex
@@ -516,31 +516,35 @@ File: images/task_dependence_graph_synctasks.png Graphic file (type png)
 <use images/task_dependence_graph_synctasks.png>
 Package pdftex.def Info: images/task_dependence_graph_synctasks.png  used on input line 508.
 (pdftex.def)             Requested size: 126.47218pt x 193.84874pt.
- [16 <d:/code/PAR/LAB2/images/task_dependence_graph_synctasks.png>]
-<images/thread.png, id=73, 602.25pt x 372.39125pt>
+ [16 <d:/code/PAR/LAB2/images/task_dependence_graph_synctasks.png>] [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 608--609
+
+ []
+
+<images/thread.png, id=79, 602.25pt x 372.39125pt>
 File: images/thread.png Graphic file (type png)
 <use images/thread.png>
-Package pdftex.def Info: images/thread.png  used on input line 532.
+Package pdftex.def Info: images/thread.png  used on input line 625.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
- [17] [18 <d:/code/PAR/LAB2/images/thread.png (PNG copy)>] [19]
-<images/task.png, id=84, 602.25pt x 372.39125pt>
+[19] [20 <d:/code/PAR/LAB2/images/thread.png (PNG copy)>] [21]
+<images/task.png, id=90, 602.25pt x 372.39125pt>
 File: images/task.png Graphic file (type png)
 <use images/task.png>
-Package pdftex.def Info: images/task.png  used on input line 589.
+Package pdftex.def Info: images/task.png  used on input line 682.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
- [20 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [21] [22] (d:/code\PAR\LAB2\deliverable.aux) ) 
+ [22 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [23] [24] (d:/code\PAR\LAB2\deliverable.aux) ) 
 Here is how much of TeX's memory you used:
- 24547 strings out of 492946
- 614964 string characters out of 3135530
+ 24554 strings out of 492946
+ 615044 string characters out of 3135530
  1095974 words of memory out of 3000000
- 28052 multiletter control sequences out of 15000+200000
+ 28059 multiletter control sequences out of 15000+200000
  8768 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,7n,96p,1146b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on d:/code\PAR\LAB2\deliverable.pdf (22 pages, 262495 bytes).
+Output written on d:/code\PAR\LAB2\deliverable.pdf (24 pages, 269661 bytes).
 PDF statistics:
- 135 PDF objects out of 1000 (max. 8388607)
+ 141 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

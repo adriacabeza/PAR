@@ -18,7 +18,7 @@
 \contentsline {subsubsection}{\numberline {2.4.2}2.fibtask.c}{13}% 
 \contentsline {subsubsection}{\numberline {2.4.3}3.synchtasks.c}{16}% 
 \contentsline {subsubsection}{\numberline {2.4.4}4.taskloop.c}{17}% 
-\contentsline {section}{\numberline {3}Observing overheads}{17}% 
-\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{17}% 
-\contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{19}% 
-\contentsline {section}{\numberline {4}Conclusions}{22}% 
+\contentsline {section}{\numberline {3}Observing overheads}{19}% 
+\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{19}% 
+\contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{21}% 
+\contentsline {section}{\numberline {4}Conclusions}{24}% 

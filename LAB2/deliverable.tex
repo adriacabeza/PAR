@@ -511,10 +511,103 @@ And this is the obtained output:
 \end{figure}
 
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
+
+NO ACONSEGUEIXO FER-HO. taskwait fa que esperi a que totes acabin, però la taska 4 no hauria d'esperar a la 3, i si poso la 4 abans de la 3 llavors la 3 no comença fins que ha  acabat la 4. no sé
+
 \subsubsection{4.taskloop.c}
 \textbf{1. Find out how many tasks and how many iterations each task execute when using the grainsize
 and num tasks clause in a taskloop. You will probably have to execute the program several times in order to have a clear answer to this question.}
+
+\begin{itemize}
+    \item num\_tasks(5): Creates 5 tasks. 3 tasks execute 2 iterations while the other 2 tasks execute 3. This is an approximation to 12/5 (12 iterations divided by 5 tasks), and adds up to the 12 iterations to execute ($3*2 + 2*3 = 12$). The output after many executions is often similar to:
+
+    \begin{lstlisting}
+    Going to distribute 12 iterations with num_tasks(5) ...
+    Loop 2: (2) gets iteration 0
+    Loop 2: (2) gets iteration 1
+    Loop 2: (1) gets iteration 3
+    Loop 2: (1) gets iteration 4
+    Loop 2: (1) gets iteration 5
+    Loop 2: (1) gets iteration 8
+    Loop 2: (1) gets iteration 9
+    Loop 2: (2) gets iteration 2
+    Loop 2: (0) gets iteration 10
+    Loop 2: (0) gets iteration 11
+    Loop 2: (3) gets iteration 6
+    Loop 2: (3) gets iteration 7
+    \end{lstlisting}
+
+    Where: 
+    \begin{itemize}
+        \item Iterations 0,1,2 are executed by thread 2
+        \item Iterations 3,4,5 are executed by thread 1
+        \item Iterations 6,7 are executed by thread 3
+        \item Iterations 8,9 are executed by thread 1
+        \item Iterations 10,11 are executed by thread 0
+    \end{itemize}
+    Which matches the explanation we did before.
+
+    \item grainsize(5): Creates 2 tasks. Each task executes 6 iterations. This is because we specified we wanted 5 iterations per task with \textit{grainsize(5)}, and grainsize asserts that every task will execute a number of iterations equal or greater than 5. Since there are 12 iterations to distribute, 2 iterations must be assigned to already existing tasks because they are not enough to create a new task. This explains why tasks have 6 iterations each, as shown by the following output:
+    
+    \begin{lstlisting}
+        Going to distribute 12 iterations with grainsize(5) ...
+        Loop 1: (1) gets iteration 0
+        Loop 1: (1) gets iteration 1
+        Loop 1: (1) gets iteration 2
+        Loop 1: (1) gets iteration 3
+        Loop 1: (1) gets iteration 4
+        Loop 1: (3) gets iteration 6
+        Loop 1: (3) gets iteration 7
+        Loop 1: (3) gets iteration 8
+        Loop 1: (3) gets iteration 9
+        Loop 1: (3) gets iteration 10
+        Loop 1: (3) gets iteration 11
+        Loop 1: (1) gets iteration 5
+    \end{lstlisting}
+
+    Where:
+    \begin{itemize}
+        \item Iterations 0,1,2,3,4,5 are executed by thread 1
+        \item Iterations 6,7,8,9,10,11 are executed by thread 3
+    \end{itemize}
+\end{itemize}
+
 \textbf{2. What does occur if the nogroup clause in the first taskloop is uncommented?}
+
+When the \textit{nogroup} clause is uncommented the output is the following:
+
+\begin{lstlisting}
+    Going to distribute 12 iterations with grainsize(5) ...
+    Going to distribute 12 iterations with num_tasks(5) ...
+    Loop 1: (1) gets iteration 6
+    Loop 1: (1) gets iteration 7
+    Loop 2: (2) gets iteration 0
+    Loop 1: (3) gets iteration 0
+    Loop 1: (3) gets iteration 1
+    Loop 2: (0) gets iteration 10
+    Loop 2: (0) gets iteration 11
+    Loop 1: (1) gets iteration 8
+    Loop 1: (1) gets iteration 9
+    Loop 1: (1) gets iteration 10
+    Loop 1: (1) gets iteration 11
+    Loop 2: (1) gets iteration 3
+    Loop 2: (1) gets iteration 4
+    Loop 2: (1) gets iteration 5
+    Loop 1: (3) gets iteration 2
+    Loop 1: (3) gets iteration 3
+    Loop 1: (3) gets iteration 4
+    Loop 1: (3) gets iteration 5
+    Loop 2: (2) gets iteration 1
+    Loop 2: (2) gets iteration 2
+    Loop 2: (0) gets iteration 8
+    Loop 2: (0) gets iteration 9
+    Loop 2: (1) gets iteration 6
+    Loop 2: (1) gets iteration 7
+\end{lstlisting}
+
+As clearly seen, everything gets mixed together. This happens because taskloop implicitly creates a taskgroup, which means that all the tasks created in that taskloop region belong to that group and the execution of the program will not continue until all the tasks of the group have ended. This is why without \textit{nogroup} the \textit{num\_tasks} part is always executed after the \textit{grainsize} part has finished. \\
+
+However, when we specify \textit{nogroup}, we tell \textit{pragma omp} not to create a group, and therefore not to wait until the tasks are all executed to continue with the execution of the main program. Thus what happens is that \textit{printf(Going to distribute 12 iterations with grainsize(5)...)} is executed, then tasks from the grainsize for loop are created and before they are completed the execution goes on and \textit{printf(Going to distribute 12 iterations with num\_tasks(5)...)} is executed. After that, the tasks of the num\_tasks for loop are created and now we have a "task bag" that contains all tasks from both for loops. From now on each one will print its line once finished, which reflects the behaviour shown by the previous output.
 
 \section{Observing overheads}
 In this last section we will be observing the main results obtained in terms of overheads for \textit{parallel},\textit{task} and the different synchronisation mechanisms. We will discuss our conclusions and support them with tables and plots.
