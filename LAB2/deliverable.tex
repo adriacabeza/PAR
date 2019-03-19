@@ -511,8 +511,68 @@ And this is the obtained output:
 \end{figure}
 
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
+ The new program, rewritten using only \textit{taskwait}, looks like this:
 
-NO ACONSEGUEIXO FER-HO. taskwait fa que esperi a que totes acabin, però la taska 4 no hauria d'esperar a la 3, i si poso la 4 abans de la 3 llavors la 3 no comença fins que ha  acabat la 4. no sé
+ \begin{lstlisting}
+    int main(int argc, char *argv[]) {
+        #pragma omp parallel
+        #pragma omp single
+        {
+        printf("Creating task foo1\n");
+        #pragma omp task
+        foo1();
+
+        printf("Creating task foo2\n");
+        #pragma omp task
+        foo2();
+
+        printf("Creating task foo4\n");
+        #pragma omp taskwait
+        #pragma omp task
+        foo4();
+
+        printf("Creating task foo3\n");
+        #pragma omp task
+        foo3();
+
+        printf("Creating task foo5\n");
+        #pragma omp taskwait
+        #pragma omp task
+        foo5();
+        }
+        return 0;
+    }
+\end{lstlisting}
+
+Which gives the following output:
+
+\begin{lstlistings}
+    Creating task foo1
+    Creating task foo2
+    Creating task foo4
+    Starting function foo2
+    Starting function foo1
+    Terminating function foo2
+    Terminating function foo1
+    Creating task foo3
+    Creating task foo5
+    Starting function foo4
+    Starting function foo3
+    Terminating function foo4
+    Terminating function foo3
+    Starting function foo5
+    Terminating function foo5
+\end{lstlisting}
+
+Note that the task dependence graph would change a little bit, because \textit{taskwait} makes the next intruction execution wait until all previous tasks have been completed. This leaves us with only 2 options for trying to recreate the previous program.
+
+\begin{itemize}
+    \item We can move foo3 to after foo4 in the code and add a \textit{taskwait} right before foo4. This will make foo3 depend on foo1 and foo2 being finished, which is not exactly the same as the original program.
+    \item Another option would be to leave the order of the functions the same as the original and simply add the \textit{taskwait} clause before foo4. This would make foo4 wait for foo1, foo2 and foo3 to finish, which again is a little bit different from the original version.
+\end{itemize}
+
+We have decided to go with the first method as we thought it reflected the original better but it still is not quite the same.
+
 
 \subsubsection{4.taskloop.c}
 \textbf{1. Find out how many tasks and how many iterations each task execute when using the grainsize
