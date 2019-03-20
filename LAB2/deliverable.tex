@@ -513,7 +513,7 @@ And this is the obtained output:
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
  The new program, rewritten using only \textit{taskwait}, looks like this:
 
- \begin{lstlisting}
+ \begin{lstlisting}[frame=single]
     int main(int argc, char *argv[]) {
         #pragma omp parallel
         #pragma omp single
@@ -546,7 +546,7 @@ And this is the obtained output:
 
 Which gives the following output:
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
     Creating task foo1
     Creating task foo2
     Creating task foo4
@@ -581,7 +581,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 \begin{itemize}
     \item num\_tasks(5): Creates 5 tasks. 3 tasks execute 2 iterations while the other 2 tasks execute 3. This is an approximation to 12/5 (12 iterations divided by 5 tasks), and adds up to the 12 iterations to execute ($3*2 + 2*3 = 12$). The output after many executions is often similar to:
 
-    \begin{lstlisting}
+    \begin{lstlisting}[frame=single]
     Going to distribute 12 iterations with num_tasks(5) ...
     Loop 2: (2) gets iteration 0
     Loop 2: (2) gets iteration 1
@@ -609,7 +609,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 
     \item grainsize(5): Creates 2 tasks. Each task executes 6 iterations. This is because we specified we wanted 5 iterations per task with \textit{grainsize(5)}, and grainsize asserts that every task will execute a number of iterations equal or greater than 5. Since there are 12 iterations to distribute, 2 iterations must be assigned to already existing tasks because they are not enough to create a new task. This explains why tasks have 6 iterations each, as shown by the following output:
     
-    \begin{lstlisting}
+    \begin{lstlisting}[frame=single]
         Going to distribute 12 iterations with grainsize(5) ...
         Loop 1: (1) gets iteration 0
         Loop 1: (1) gets iteration 1
@@ -636,7 +636,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 
 When the \textit{nogroup} clause is uncommented the output is the following:
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
     Going to distribute 12 iterations with grainsize(5) ...
     Going to distribute 12 iterations with num_tasks(5) ...
     Loop 1: (1) gets iteration 6
@@ -872,9 +872,65 @@ Value of pi = 3.1415926536
 \end{figure}
 
 
-DATA apartat 2:
+Next we executed the same programs with the same number of iterations, this time with both 4 and 8 threads, and the execution times when submited are the following:
 
-Next we executed the same programs with the same number of iterations, this time with both 4 and 8 threads, and the execution times when submited are the following (put against the results with 1 thread to compare):
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+    //pi_omp_critical 4 threads
+    qsub -l execution submit-omp.sh pi_omp_critical 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_critical_100000000_4.txt 
+    Total execution time: 36.796537s
+    Number pi after 100000000 iterations = 3.141592653590202
+
+    //pi_omp_critical 8 threads
+    qsub -l execution submit-omp.sh pi_omp_critical 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_critical_100000000_8.txt 
+    Total execution time: 34.572298s
+    Number pi after 100000000 iterations = 3.141592653589771
+
+    //pi_omp_atomic 4 threads
+    qsub -l execution submit-omp.sh pi_omp_atomic 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_atomic_100000000_4.txt 
+    Total execution time: 6.614634s
+    Number pi after 100000000 iterations = 3.141592653590222
+
+    //pi_omp_atomic 8 threads
+    qsub -l execution submit-omp.sh pi_omp_atomic 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_atomic_100000000_8.txt 
+    Total execution time: 7.093226s
+    Number pi after 100000000 iterations = 3.141592653589711
+
+    //pi_omp_reduction 4 threads
+    qsub -l execution submit-omp.sh pi_omp_reduction 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_reduction_100000000_4.txt 
+    Total execution time: 0.483557s
+    Number pi after 100000000 iterations = 3.141592653589683
+
+    ////pi_omp_reduction 8 threads
+    qsub -l execution submit-omp.sh pi_omp_reduction 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_reduction_100000000_8.txt 
+    Total execution time: 0.262972s
+    Number pi after 100000000 iterations = 3.141592653589815
+
+    //pi_omp_sumlocal 4 threads
+    qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_sumlocal_100000000_4.txt 
+    Total execution time: 0.480225s
+    Number pi after 100000000 iterations = 3.141592653589683
+
+    ////pi_omp_sumlocal 8 threads
+    qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_sumlocal_100000000_8.txt 
+    Total execution time: 0.260914s
+    Number pi after 100000000 iterations = 3.141592653589815
+\end{lstlisting}
+\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 4 | 8  threads}
+\label{overheadsComputation}
+\end{figure}
+
+\bigskip
+
+Here is a table to easily compare all the previous executions:
 
 \begin{center}
 \begin{tabular}{|| c | c | c | c ||} 
@@ -893,6 +949,7 @@ pi\_sequential & \multicolumn{3}{| c ||}{1.792886019s}\\
 \hline
 \end{tabular}
 \end{center}
+
 
 \section{Conclusions}
 Jo borraria lo de conlusions, fa tot el pal escriure-ho
