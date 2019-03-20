@@ -12,5 +12,5 @@ Per quan estigui public:
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/adriacabeza/PAR/PAR.svg)](https://github.com/adriacabeza/PAR)
 ```
 
-- [Lab 1: Experimental setup and tools](https://github.com/adriacabeza/PAR/blob/master/LAB1/deliverable.pdf)
-- [Lab 2: Brief tutorial on OpenMP programming model](https://github.com/adriacabeza/PAR/blob/master/LAB2/deliverable.pdf)
+- [Lab 1: Experimental setup and tools](https://github.com/adriacabeza/PAR/blob/master/LAB1/deliverable.pdf) Mark: 8.7/10
+- [Lab 2: Brief tutorial on OpenMP programming model](https://github.com/adriacabeza/PAR/blob/master/LAB2/deliverable.pdf) Mark: 
