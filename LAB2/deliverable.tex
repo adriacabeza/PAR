@@ -745,7 +745,6 @@ Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterat
 \end{figure}
 
 
-
 \begin{figure}[H]
 \begin{lstlisting}[frame=single]
 par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_tasks 10 1
@@ -790,6 +789,110 @@ Ntasks	Overhead	Overhead per task
 \label{piqueuetask}
 \end{figure}
 
+
+\subsection{Thread synchronization: critical}
+In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronisation mechanisms to perform the update of the global variable sum:
+\begin{itemize}
+\item \textit{pi\_omp\_\_critical.c} where a critical region is used to protect every access to sum, ensuring exclusive access to it
+\item \textit{pi\_omp\_atomic.c} where atomic is used to guarantee atomic access to the memory location where variable sum is stored. 
+\item \textit{pi\_omp\_reduction.c} where a reduction clause is applied to the global variable sum. 
+\item \textit{pi\_omp\_sumlocal.c} where a "per-thread" private copy sumlocal is used followed by a global update at the end using only one critical region. 
+\end{itemize} 
+
+Firstly, we have analysed how many synchronisation operations(critical or atomic) are executed in each version.  
+
+POSAR AQUÍ RECOMPTE DE CRITICALS I ATOMICS
+   
+   
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/paraverCritical.png}
+\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
+\label{paraverCritical}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/paraverAtomic.png}
+\caption{Traces with 4 threads and 10.000 iterations using atomic (Zoomed)}
+\label{paraverAtomic}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{images/paraverReduction.png}
+\caption{Traces with 4 threads and 10.000 iterations using reduction (Zoomed)}
+\label{paraverReduction}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{images/paraverSumLocal.png}
+\caption{Traces with 4 threads and 10.000 iterations using sumlocal (Zoomed)}
+\label{paraverSumlocal}
+\end{figure}
+
+Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
+
+HE D SCRIURE EL PERQUÊ ENCARA
+ 
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+//pi_omp_critical
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_critical 100000000 1
+Total execution time: 4.327817s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_atomic
+qsub -l execution submit-omp.sh pi_omp_atomic 100000000 1
+Total execution time: 1.796890s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_reduction
+qsub -l execution submit-omp.sh pi_omp_reduction 100000000 1
+Total execution time: 1.832242s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_sumlocal
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 1
+Total execution time: 1.832944s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_sequential
+qsub -l execution submit-omp.sh pi_sequential 100000000 1
+Wall clock execution time  = 1.792886019 seconds
+Value of pi = 3.1415926536
+
+\end{lstlisting}
+\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 1 thread}
+\label{overheadsComputation}
+\end{figure}
+
+
+DATA apartat 2:
+
+Next we executed the same programs with the same number of iterations, this time with both 4 and 8 threads, and the execution times when submited are the following (put against the results with 1 thread to compare):
+
+\begin{center}
+\begin{tabular}{|| c | c | c | c ||} 
+\hline
+\textbf{Version} & \textbf{1 thread} & \textbf{4 threads} & \textbf{8 threads} \\ [0.5ex] 
+\hline\hline
+pi\_omp\_critical & 4.327817s & 36.796537s & 34.572298s \\ 
+\hline
+pi\_omp\_atomic & 1.796890s & 6.614634s & 7.093226s \\
+\hline
+pi\_omp\_reduction & 1.832242s & 0.483557s & 0.262972s \\
+\hline
+pi\_omp\_sumlocal & 1.832944s & 0.480225s & 0.260914s \\ [1ex] 
+\hline
+pi\_sequential & \multicolumn{3}{| c ||}{1.792886019s}\\
+\hline
+\end{tabular}
+\end{center}
 
 \section{Conclusions}
 Jo borraria lo de conlusions, fa tot el pal escriure-ho
