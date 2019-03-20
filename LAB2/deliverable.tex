@@ -32,7 +32,7 @@
 \newpage
 \section{Introduction}
 
-In this laboratory assignment we will learn the basics of OpenMP extensions to the C programming languge. At this moment we already know the hardware and tools we are going to use but this is the first approach to learn about the software needed to parallelize real applications. 
+In this laboratory assignment we will learn the basics of OpenMP extensions to the C programming language. At this moment we already know the hardware and tools we are going to use but this is the first approach to learn about the software needed to parallelize real applications. 
 
 This is the scope of the next two sessions of PAR laboratory: introducing the  main components of the OpenMP programming model, from the simpler to the most complicated pragmas. 
 
@@ -88,7 +88,7 @@ Inside a parallel region however, it returns the number of threads available (bu
     \item For the first parallel region it returns all threads available for the program which are 8 (because of the \textit{export OMP\_NUM\_THREADS=8} restriction).
     \item  The second parallel region is inside a for loop which completes 2 iterations with \textit{i = 2 and 3}. Since the number of threads is set to \textit{i} at each iteration by calling \textit{omp\_set\_num\_threads(i)}, in the first iteration \textit{omp\_get\_num\_threads()} returns 2 and in the second and final one it returns 3. \\ Note that \textit{omp\_set\_num\_threads()} overrides the number of threads set by \textit{export OMP\_NUM\_THREADS=8}, which means that for the rest of the execution, unless otherwise specified, the number of available threads will be 3 (because the last call to \textit{omp\_set\_num\_threads(i)} was made in the second iteration, with \textit{i = 3}.)  
     \item Before the third parallel region, the \textit{\#pragma omp parallel} directive is extended by adding \textit{num\_threads(4)}, which overrides the number of available threads just for this entire parallel region to 4. This way \textit{omp\_get\_num\_threads()} returns 4.
-    \item For this fourth parallel region the number of threads is not overriden, so it takes the value 3 (which is what \textit{omp\_get\_num\_threads()} returns) from the \textit{omp\_set\_num\_threads(3)} call in the for loop.
+    \item For this fourth parallel region the number of threads is not overridden, so it takes the value 3 (which is what \textit{omp\_get\_num\_threads()} returns) from the \textit{omp\_set\_num\_threads(3)} call in the for loop.
 \end{enumerate}
 
 \subsubsection{4.data\_sharing.c}
@@ -111,7 +111,7 @@ attribute (shared, private, firstprivate and reduction)? Is that the value you w
 \subsubsection{1.schedule.c}
 \textbf{1. Which iterations of the loops are executed by each thread for each schedule kind?}
 \begin{itemize}
-\item \textbf{Schedule(static)}: There is an equal distribution of iterations for each thread. As we can see in the outputed execution of the loop, each of the four threads gets a chunk of 3 iterations, having in total of 12 iterations. 
+\item \textbf{Schedule(static)}: There is an equal distribution of iterations for each thread. As we can see in the outputted execution of the loop, each of the four threads gets a chunk of 3 iterations, having in total of 12 iterations. 
 \\
 \begin{lstlisting}[frame=single]
 Going to distribute 12 iterations with schedule(static) ...
@@ -130,7 +130,7 @@ Loop 1: (2) gets iteration 8
 \end{lstlisting}
 
 \item \textbf{Schedule(static,2)}: There is also an equal distribution of iterations for each thread but in this case each thread is executing only 2 consecutive iterations of the for loop each time according to the thread order.
-As we can see in the outputed execution of the loop, the iterations are given in chunks of size 2 and in order: thread 0 takes iteration 1 and 2, thread 1 takes iteration 2 and 3,...
+As we can see in the outputted execution of the loop, the iterations are given in chunks of size 2 and in order: thread 0 takes iteration 1 and 2, thread 1 takes iteration 2 and 3,...
 \\
 \begin{lstlisting}[frame=single]
 Going to distribute 12 iterations with schedule(static, 2) ...
@@ -150,7 +150,7 @@ Loop 2: (2) gets iteration 5
 
 
 \item \textbf{Schedule(dynamic,2)}: Each thread is executing 2 consecutive iterations of the loop each time. However, the order is guided by the first thread that is free. 
-As we can see in the outputed execution of the loop, the iterations are given also in chunks of size 2, but here they are not sorted, the assignment is given depending on the availability of the thread. 
+As we can see in the outputted execution of the loop, the iterations are given also in chunks of size 2, but here they are not sorted, the assignment is given depending on the availability of the thread. 
 \\
 \begin{lstlisting}[frame=single]
 Going to distribute 12 iterations with schedule(dynamic, 2) ...
@@ -192,7 +192,7 @@ Loop 4: (3) gets iteration 9
 \textbf{1. Which could be a possible sequence of printf when executing the program?}
 \\
 The nowait clause removes the synchronization time needed between threads. If we remove the clause, the threads don't wait the others to finish their parallel region executions so they continue executing code. That means that without the nowait clause the sequence of printf is printed randomly by both for loops (but respecting the code sequence in a thread). 
-Let's see an example of the outputed execution (we changed the number of iterations of the code in order to be able to check our hypothesis): 
+Let's see an example of the outputted execution (we changed the number of iterations of the code in order to be able to check our hypothesis): 
 \\
 \begin{lstlisting}[frame=single]
 Loop 1: thread (0) gets iteration 0
@@ -209,7 +209,7 @@ Loop 2: thread (1) gets iteration 5
 \textbf{2. How does the sequence of printf change if the nowait clause is removed from the first for directive?}
 \\
 If we did not have the nowait clause we would see first the sequence of printf done by the first loop and then the sequence done by the second loop:
-In order to check if our hypothesis is correct let's see the outputed execution: 
+In order to check if our hypothesis is correct let's see the outputted execution: 
 \\
 \begin{lstlisting}[frame=single]
 Loop 1: thread (1) gets iteration 1
@@ -276,7 +276,7 @@ int main()
 
 \end{lstlisting}
  
-\subsection{Synchronization}
+\subsection{synchronization}
 \subsubsection{1.datarace.c} 
 \textbf{1. Is the program always executing correctly?}
 \\
@@ -349,12 +349,12 @@ Like in the previous version, here we are also protecting the operation x++, in 
 in any specific order?} 
 \\
 Not at all.
-A barrier defines a point in the code wher all the active threads will stop unitl all threads have arrived at that point. So we can suppose that we will get all the last messages about being awake at the same time. Also, we can say that all the messages about going to sleep are going to be printed before the ones about being awake, and the sequence of threads being awake can be predicted (because of the seconds that each thread is going to sleep). Moreoever, the threads don't exit the barrier in any specific order. 
+A barrier defines a point in the code where all the active threads will stop unitl all threads have arrived at that point. So we can suppose that we will get all the last messages about being awake at the same time. Also, we can say that all the messages about going to sleep are going to be printed before the ones about being awake, and the sequence of threads being awake can be predicted (because of the seconds that each thread is going to sleep). Moreover, the threads don't exit the barrier in any specific order. 
 
 \subsubsection{3.ordered.c}
 \textbf{1.Can you explain the order in which the \textit{Outside} and \textit{Inside} messages are printed?} 
 \\
-The orderer clause works like this: different threads execute concurrently until they encounter the ordered region, which is executed sequentially in the same order as it would get executed in a serial loop. So, the order in which the \textit{Outside} and \textit{Inside} messages are printed is because of the fact that the inside message is inside the ordered region (that is executed sequentially) and the outside message is outside that region where all the different threads are executing concurrently. 
+The orderer clause works like this: different threads execute concurrently until they encounter the ordered region, which is executed sequentially in the same order as it would get executed in a serial loop. So, the order in which the \textit{Outside} and \textit{Inside} messages are printed is because the inside message is inside the ordered region (that is executed sequentially) and the outside message is outside that region where all the different threads are executing concurrently. 
 \\
 \begin{lstlisting}[frame=single]
 Before ordered - (0) gets iteration 0
@@ -397,7 +397,7 @@ is not executing in parallel?}
 Because there is not a \textit{\#pragma omp parallel} call before the while loop (or anywhere at all), meaning there is only one thread creating tasks and only one thread (the same that created them) available to complete them. 
 
 \textbf{2. Modify the code so that the program correctly executes in parallel, returning the same answer that the sequential execution would return.}
-To accomplish this we first need to make the parallelization possible by adding \textit{\#pragma omp parallel} before the while loop. If we left it like this, it would be incorrect because the every task would be created for every thread available, meaning we would repeat tasks as many times as threads available. To avoid this we add a \textit{\#pragma omp single} instruction before the while loop too, in order for the tasks to only be created by one thread but executed by whichever thread is available. We are now almost there, but there is a little problem with the variable \textit{p}: since it is a pointer that is passed to the function that each task computes, we need to make it private so that when a task is created with a certain value of \textit{p}, this value is not changed by the next iteration of the while loop. Also, since the initial value of \textit{p} is assigned out of the while loop, we want to make sure that, when made private, \textit{p} is still initialised with the value desired (we accomplish this by calling \textit{\#pragma omp parallel firstprivate(p)}). \\
+To accomplish this we first need to make the parallelization possible by adding \textit{\#pragma omp parallel} before the while loop. If we left it like this, it would be incorrect because the every task would be created for every thread available, meaning we would repeat tasks as many times as threads available. To avoid this we add a \textit{\#pragma omp single} instruction before the while loop too, in order for the tasks to only be created by one thread but executed by whichever thread is available. We are now almost there, but there is a little problem with the variable \textit{p}: since it is a pointer that is passed to the function that each task computes, we need to make it private so that when a task is created with a certain value of \textit{p}, this value is not changed by the next iteration of the while loop. Also, since the initial value of \textit{p} is assigned out of the while loop, we want to make sure that, when made private, \textit{p} is still initialized with the value desired (we accomplish this by calling \textit{\#pragma omp parallel firstprivate(p)}). \\
 Now the execution would be correct and the result we would get is 75025, which is indeed the 25th number in the Fibonacci series.\\
 \medskip
 
@@ -510,7 +510,7 @@ And this is the obtained output:
 \label{task_dependence_graph_synctasks}
 \end{figure}
 
-\textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
+\textbf{2. Rewrite the program using only taskwait as task synchronization mechanism (no depend clauses allowed)}
  The new program, rewritten using only \textit{taskwait}, looks like this:
 
  \begin{lstlisting}[frame=single]
@@ -671,10 +671,10 @@ However, when we specify \textit{nogroup}, we tell \textit{pragma omp} not to cr
 
 \section{Observing overheads}
 
-In this last section we will be observing the main results obtained in terms of overheads for \textit{parallel},\textit{task} and the different synchronisation mechanisms like atomic, critical or reduction. We will discuss our conclusions and support them with tables and plots.
+In this last section we will be observing the main results obtained in terms of overheads for \textit{parallel},\textit{task} and the different synchronization mechanisms like atomic, critical or reduction. We will discuss our conclusions and support them with tables and plots.
 
-\subsection{Synchronisation overheads}
-In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronisation mechanisms to perform the update of the global variable sum:
+\subsection{synchronization overheads}
+In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronization mechanisms to perform the update of the global variable sum:
 \begin{itemize}
 \item \textit{pi\_omp\_critical.c} where a critical region is used to protect every access to sum, ensuring exclusive access to it
 \item \textit{pi\_omp\_atomic.c} where atomic is used to guarantee atomic access to the memory location where variable sum is stored. 
@@ -682,12 +682,12 @@ In this section we will learn about how different synchronization methods work a
 \item \textit{pi\_omp\_sumlocal.c} where a "per-thread" private copy sumlocal is used followed by a global update at the end using only one critical region. 
 \end{itemize} 
 
-Firstly, we have analysed how many synchronisation operations(critical or atomic) are executed in each version.  In order to do it we have checked the code of each file. 
+Firstly, we have analyzed how many synchronization operations(critical or atomic) are executed in each version.  In order to do it we have checked the code of each file. 
 
 \begin{itemize}
 \item  \textit{pi\_omp\_critical.c}, in this file we have found a \textit{\#pragma omp critical} inside the loop, it will be executed for each iteration in order to protect all the region that is considered critical (the one related to the update of sum).
 \item  \textit{pi\_omp\_atomic.c}, in this file we have found a \textit{\#pragma omp atomic} inside the loop, so it will be executed for each iteration in order to protect the way sum it is written. 
-\item  \textit{pi\_omp\_reduction.c}, in this file we have not found explicitly any critical or atomic region, however reduction implements a smiliar method to critical in order to add up the final result of each thread to avoid data races while doing this. This means if we were to count this calls as critical, there would be one call for each thread at the end of the loop to add its local sum copy result to the global sum result. This reduces the overhead caused by the critical calls (which is greater than the overhead cause by atomic calls) vastly. 
+\item  \textit{pi\_omp\_reduction.c}, in this file we have not found explicitly any critical or atomic region, however reduction implements a similar method to critical in order to add up the final result of each thread to avoid data races while doing this. This means if we were to count this calls as critical, there would be one call for each thread at the end of the loop to add its local sum copy result to the global sum result. This reduces the overhead caused by the critical calls (which is greater than the overhead cause by atomic calls) vastly. 
 \item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. This again, as with reduction, will be executed just once for every thread. We hypothesized that we would see a similar overhead to \textit{pi\_omp\_reduction.c} since their implementation is very alike. We used Paraver in order to see their tasks and our hypothesis was confirmed, please see figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
 \end{itemize}
 
@@ -695,7 +695,7 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 
 Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
 
-The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The trace outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
+The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The trace outputted by Paraver can be seen in the figure \ref{paraverCritical1}. 
 
 Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time needed is not as much as the critical one because atomic has a much smaller overhead. Critical can be generalized to any region of code and when done it sets a lock and unlock around the region that results in a lot of overhead. The atomic clause in comparison often takes advantage of hardware operations to do atomic operations (increment in this case) and just protects reads and writes instead of a whole region of code. This results in atomic adding much less overhead than critical for every call.
 
@@ -744,7 +744,7 @@ Wall clock execution time  = 1.792886019 seconds
 Value of pi = 3.1415926536
 
 \end{lstlisting}
-\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 1 thread}
+\caption{Execution of computation pi using different synchronization mechanisms to update a variable with 100.000.000 iterations and 1 thread}
 \label{overheadsComputation}
 \end{figure}
 
@@ -804,22 +804,22 @@ Next we executed the same programs with the same number of iterations, this time
     Total execution time: 0.260914s
     Number pi after 100000000 iterations = 3.141592653589815
 \end{lstlisting}
-\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 4 | 8  threads}
+\caption{Execution of computation pi using different synchronization mechanisms to update a variable with 100.000.000 iterations and 4 | 8  threads}
 \label{overheadsComputation}
 \end{figure}
 
-And here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as expected. In Figure \ref{4threadsParaverNoZoom}, which has no zoom applied for any of the traces, the critical version clearly shows a lot more overhead when synchronisation occurs for all 4 threads (sync region is represented in red). For the other 3 versions overhead seems minimal, so we zoomed in in Figure \ref{4threadsParaverZoom} to better appreciate what is happening. Note that they are not all at the same scale, but we can use the time stamps at both bottom-left and bottom-right to know the time-span that we are dealing with for each trace. Reduction needs the least amount of time to sync (around 105 microseconds for these traces) as we saw when we clicked over the red region of the trace, followed closely by sumlocal (with 172 microseconds), then atomic (with 358 microseconds) and finally critical (with 12 ms).
+And here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as expected. In Figure \ref{4threadsParaverNoZoom}, which has no zoom applied for any of the traces, the critical version clearly shows a lot more overhead when synchronization occurs for all 4 threads (sync region is represented in red). For the other 3 versions overhead seems minimal, so we zoomed in in Figure \ref{4threadsParaverZoom} to better appreciate what is happening. Note that they are not all at the same scale, but we can use the time stamps at both bottom-left and bottom-right to know the time-span that we are dealing with for each trace. Reduction needs the least amount of time to sync (around 105 microseconds for these traces) as we saw when we clicked over the red region of the trace, followed closely by sumlocal (with 172 microseconds), then atomic (with 358 microseconds) and finally critical (with 12 ms).
 
 \begin{figure}[H]
 \centering
-\includegraphics{images/4threadsParaverNoZoom.PNG}
+\includegraphics[scale=0.85]{images/4threadsParaverNoZoom.png}
 \caption{Traces with 4 threads 10.000 iterations for the 4 versions (No Zoom)}
 \label{4threadsParaverNoZoom}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics{images/4threadsParaverZoom.png}
+\includegraphics[scale=0.85]{images/4threadsParaverZoom.png}
 \caption{Traces with 4 threads 10.000 iterations for the 4 versions (Zoomed)}
 \label{4threadsParaverZoom}
 \end{figure}
@@ -849,9 +849,9 @@ pi\_sequential & \multicolumn{5}{| c ||}{1.792886019s}\\
 
 As clearly seen, not all 4 programs benefit from more processors. We have computed the speed-ups for 4 threads and 8 threads with respect to 1 thread. 
 
-Critical and atomic are far slower when executed with more threads (critical being the worst). This happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead, which as seen in the Paraver reports is very big. In fact, the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread (we explained why in the 1 thread section before), and is the main reason for critical's bad performance. In comparison, for atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to read and write the result. This of course speeds things up in comparison to critical (as we said though, the main reason for atomic being faster is not the computation but the fact that it generates much less overhead), but still we do not get the expected benefit of a parallel program, and execution time added by the parallelization overhead trumps any improvement cause by computing the fraction in parallel.
+Critical and atomic are far slower when executed with more threads (critical being the worst). This happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes the execution to behave sequentially, but with the added overhead, which as seen in the Paraver reports is very big. In fact, the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread (we explained why in the 1 thread section before), and is the main reason for critical's bad performance. In comparison, for atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to read and write the result. This of course speeds things up in comparison to critical (as we said though, the main reason for atomic being faster is not the computation but the fact that it generates much less overhead), but still we do not get the expected benefit of a parallel program, and execution time added by the parallelization overhead trumps any improvement cause by computing the fraction in parallel.
 
-Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the seperate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
+Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the separate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
 
 
 \subsection{Thread creation and termination}
@@ -915,7 +915,7 @@ execution starts, the first message informs about it.
 \\
 \medskip
 
-Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{overheadplot2}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the inestability of the machine. 
+Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{overheadplot2}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the instability of the machine. 
 \\
 \bigskip
 
