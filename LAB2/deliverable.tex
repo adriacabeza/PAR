@@ -815,7 +815,7 @@ Secondly, we have executed all the versions mentioned before using only 1 thread
 
 The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The trace outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
 
-Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time is not as big as the critical one because in the atomic version the $4.0/(1.0+x\times x)$ operation could be done by multiple threads at once, so not so many overhead is needed for this version, but in the critical one all the line "\textit{sum += 4.0/(1.0+x*x);}" is inside the region. 
+Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time needed is not as much as the critical one because atomic has a much smaller overhead. Critical can be generalized to any region of code and when done it sets a lock and unlock around the region that results in a lot of overhead. The atomic clause in comparison often takes advantage of hardware operations to do atomic operations (increment in this case) and just protects reads and writes instead of a whole region of code. This results in atomic adding much less overhead than critical for every call.
 
 \begin{figure}[H]
 \centering
@@ -981,13 +981,9 @@ pi\_sequential & \multicolumn{5}{| c ||}{1.792886019s}\\
 
 As clearly seen, not all 4 programs benefit from more processors. We have computed the speed-ups for 4 threads and 8 threads with respect to 1 thread. 
 
-Critical and atomic are far slower when executed with more threads (critical being the worst). We think this happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead of parallelization, which as seen in the Paraver reports is very big. In fact, not only that but the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread. For atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to write the result. This of course speeds things up in comparison to critical, but still we do not get the expected benefit of a parallel program, and execution time added by the paralle overhead trumps any improvement cause by computing the fraction in parallel.
+Critical and atomic are far slower when executed with more threads (critical being the worst). This happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead, which as seen in the Paraver reports is very big. In fact, the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread (we explained why in the 1 thread section before), and is the main reason for critical's bad performance. In comparison, for atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to read and write the result. This of course speeds things up in comparison to critical (as we said though, the main reason for atomic being faster is not the computation but the fact that it generates much less overhead), but still we do not get the expected benefit of a parallel program, and execution time added by the parallelization overhead trumps any improvement cause by computing the fraction in parallel.
 
 Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the seperate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
-
-\section{Conclusions}
-Jo borraria lo de conlusions, fa tot el pal escriure-ho
-
 
 
 \end{document}
