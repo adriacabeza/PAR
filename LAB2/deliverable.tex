@@ -808,36 +808,22 @@ Next we executed the same programs with the same number of iterations, this time
 \label{overheadsComputation}
 \end{figure}
 
-And here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as exepected:
+And here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as expected. In Figure \ref{4threadsParaverNoZoom}, which has no zoom applied for any of the traces, the critical version clearly shows a lot more overhead when synchronisation occurs for all 4 threads (sync region is represented in red). For the other 3 versions overhead seems minimal, so we zoomed in in Figure \ref{4threadsParaverZoom} to better appreciate what is happening. Note that they are not all at the same scale, but we can use the time stamps at both bottom-left and bottom-right to know the time-span that we are dealing with for each trace. Reduction needs the least amount of time to sync (around 105 microseconds for these traces) as we saw when we clicked over the red region of the trace, followed closely by sumlocal (with 172 microseconds), then atomic (with 358 microseconds) and finally critical (with 12 ms).
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.35]{images/paraverCritical.png}
-\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
-\label{paraverCritical}
+\includegraphics{images/4threadsParaverNoZoom.PNG}
+\caption{Traces with 4 threads 10.000 iterations for the 4 versions (No Zoom)}
+\label{4threadsParaverNoZoom}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{images/paraverAtomic.png}
-\caption{Traces with 4 threads and 10.000 iterations using atomic (Zoomed)}
-\label{paraverAtomic}
+\includegraphics{images/4threadsParaverZoom.png}
+\caption{Traces with 4 threads 10.000 iterations for the 4 versions (Zoomed)}
+\label{4threadsParaverZoom}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.20]{images/paraverReduction.png}
-\caption{Traces with 4 threads and 10.000 iterations using reduction (Zoomed)}
-\label{paraverReduction}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.20]{images/paraverSumLocal.png}
-\caption{Traces with 4 threads and 10.000 iterations using sumlocal (Zoomed)}
-\label{paraverSumlocal}
-\end{figure}
 
 \bigskip
 

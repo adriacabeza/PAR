@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  20 MAR 2019 13:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  20 MAR 2019 13:48
 entering extended mode
 **d:/code/PAR/LAB2/deliverable.tex
 (d:/code/PAR/LAB2/deliverable.tex
@@ -340,9 +340,6 @@ LaTeX Warning: Unused global option(s):
 
 LaTeX Warning: Label `overheadsComputation' multiply defined.
 
-
-LaTeX Warning: Label `paraverCritical' multiply defined.
-
 )
 \openout1 = `deliverable.aux'.
 
@@ -528,7 +525,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 668--669
 
  []
 
-[20] [21]
+[20]
+
+LaTeX Warning: Reference `paraverReduction' on page 21 undefined on input line 691.
+
+
+LaTeX Warning: Reference `paraverSumlocal' on page 21 undefined on input line 691.
+
+[21]
 Overfull \hbox (4.1878pt too wide) in paragraph at lines 700--701
 []\OT1/cmr/m/n/10 Also, an in-ter-est-ing fact to men-tion is that even though in the \OT1/cmr/m/it/10 pi[]omp[]atomic.c
  []
@@ -549,60 +553,59 @@ Overfull \hbox (11.23622pt too wide) in paragraph at lines 712--713
  []
 
 [22 <d:/code/PAR/LAB2/images/paraverCritical1.png> <d:/code/PAR/LAB2/images/paraverCritical.png>] [23] [24]
-File: images/paraverCritical.png Graphic file (type png)
-<use images/paraverCritical.png>
-Package pdftex.def Info: images/paraverCritical.png  used on input line 815.
-(pdftex.def)             Requested size: 356.23622pt x 96.9637pt.
+<images/4threadsParaverNoZoom.PNG, id=102, 451.6875pt x 438.8897pt>
+File: images/4threadsParaverNoZoom.PNG Graphic file (type png)
+<use images/4threadsParaverNoZoom.PNG>
+Package pdftex.def Info: images/4threadsParaverNoZoom.PNG  used on input line 815.
+(pdftex.def)             Requested size: 451.68639pt x 438.88863pt.
 
-Overfull \hbox (11.23622pt too wide) in paragraph at lines 815--816
+Overfull \hbox (106.68639pt too wide) in paragraph at lines 815--816
  [][] 
  []
 
 [25]
-<images/paraverAtomic.png, id=106, 605.26125pt x 232.87pt>
-File: images/paraverAtomic.png Graphic file (type png)
-<use images/paraverAtomic.png>
-Package pdftex.def Info: images/paraverAtomic.png  used on input line 822.
-(pdftex.def)             Requested size: 302.62987pt x 116.43471pt.
-<images/paraverReduction.png, id=107, 1371.1225pt x 593.21625pt>
-File: images/paraverReduction.png Graphic file (type png)
-<use images/paraverReduction.png>
-Package pdftex.def Info: images/paraverReduction.png  used on input line 829.
-(pdftex.def)             Requested size: 274.21964pt x 118.64114pt.
-<images/paraverSumLocal.png, id=108, 1371.1225pt x 589.20125pt>
-File: images/paraverSumLocal.png Graphic file (type png)
-<use images/paraverSumLocal.png>
-Package pdftex.def Info: images/paraverSumLocal.png  used on input line 837.
-(pdftex.def)             Requested size: 274.21964pt x 117.83815pt.
- [26 <d:/code/PAR/LAB2/images/paraverAtomic.png> <d:/code/PAR/LAB2/images/paraverReduction.png>] [27 <d:/code/PAR/LAB2/images/paraverSumLocal.png>]
-<images/thread.png, id=118, 602.25pt x 372.39125pt>
+<images/4threadsParaverZoom.png, id=107, 450.9347pt x 435.12563pt>
+File: images/4threadsParaverZoom.png Graphic file (type png)
+<use images/4threadsParaverZoom.png>
+Package pdftex.def Info: images/4threadsParaverZoom.png  used on input line 822.
+(pdftex.def)             Requested size: 450.9336pt x 435.12456pt.
+
+Overfull \hbox (105.9336pt too wide) in paragraph at lines 822--823
+ [][] 
+ []
+
+[26 <d:/code/PAR/LAB2/images/4threadsParaverNoZoom.PNG>] [27 <d:/code/PAR/LAB2/images/4threadsParaverZoom.png>] [28]
+<images/thread.png, id=119, 602.25pt x 372.39125pt>
 File: images/thread.png Graphic file (type png)
 <use images/thread.png>
-Package pdftex.def Info: images/thread.png  used on input line 881.
+Package pdftex.def Info: images/thread.png  used on input line 867.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
- [28 <d:/code/PAR/LAB2/images/thread.png (PNG copy)>] [29]
-<images/task.png, id=125, 602.25pt x 372.39125pt>
+ [29 <d:/code/PAR/LAB2/images/thread.png (PNG copy)>] [30]
+<images/task.png, id=126, 602.25pt x 372.39125pt>
 File: images/task.png Graphic file (type png)
 <use images/task.png>
-Package pdftex.def Info: images/task.png  used on input line 938.
+Package pdftex.def Info: images/task.png  used on input line 924.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
- [30 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [31] (d:/code\PAR\LAB2\deliverable.aux)
+ [31 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [32] (d:/code\PAR\LAB2\deliverable.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24650 strings out of 492946
- 616969 string characters out of 3135530
+ 24647 strings out of 492946
+ 616915 string characters out of 3135530
  1147971 words of memory out of 3000000
- 28150 multiletter control sequences out of 15000+200000
+ 28147 multiletter control sequences out of 15000+200000
  8768 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,8n,96p,1271b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on d:/code\PAR\LAB2\deliverable.pdf (31 pages, 348405 bytes).
+Output written on d:/code\PAR\LAB2\deliverable.pdf (32 pages, 393613 bytes).
 PDF statistics:
- 174 PDF objects out of 1000 (max. 8388607)
+ 175 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 58 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
