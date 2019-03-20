@@ -673,124 +673,6 @@ However, when we specify \textit{nogroup}, we tell \textit{pragma omp} not to cr
 
 In this last section we will be observing the main results obtained in terms of overheads for \textit{parallel},\textit{task} and the different synchronisation mechanisms like atomic, critical or reduction. We will discuss our conclusions and support them with tables and plots.
 
-\subsection{Thread creation and termination}
-In this part we will learn about the thread creation and termination overhead and how it varies. We will be using the \textit{pi\_omp\_parallel.c} file, which it computes the difference of time between the sequential execution and the parallel execution when using a certain number of threads and finally uses that information to print the difference in time (in microseconds), which is the overhead introduced by the parallel construct. 
-\\
-\medskip
-In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueue}, when the execution starts, the first message informs about it. 
-\\
-Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{overheadplot1}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease because when the number of threads increases every thread has to do less calculations.
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{images/thread.png}
-\caption{Plot of the overhead and overhead per thread depending on the number of threads}
-\label{overheadplot1}
-\end{figure}
-
-
-\begin{figure}[H]
-\begin{lstlisting}[frame=single]
-par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_parallel 1 24
-Your job 97651 ("submit-omp.sh") has been submitted
-
-par4111@boada-1:~/lab2/overheads$ more pi_omp_parallel_1_24.txt 
-All overheads expressed in microseconds
-Nthr	Overhead	Overhead per thread
-2	1.1726		0.5863
-3	0.8639		0.2880
-4	0.7910		0.1978
-5	0.9701		0.1940
-6	1.7148		0.2858
-7	1.7640		0.2520
-8	1.8267		0.2283
-9	2.0780		0.2309
-10	2.0664		0.2066
-11	2.4082		0.2189
-12	2.6808		0.2234
-13	3.0237		0.2326
-14	2.9701		0.2122
-15	2.8141		0.1876
-16	2.8110		0.1757
-17	2.9655		0.1744
-18	2.9356		0.1631
-19	2.9420		0.1548
-20	2.9402		0.1470
-21	2.9768		0.1418
-22	3.0285		0.1377
-23	3.0284		0.1317
-24	3.1657		0.1319
-
-\end{lstlisting}
-\caption{Execution of pi\_omp\_parallel.c with 1 iteration and a maximum of 24 threads}
-\label{piqueue}
-\end{figure}
-\subsection{Task creation and synchronization}
-In this part we will learn about the overhead related to the creation of \textbf{tasks} and their synchronization at \textbf{taskwait} and how it varies. We will be using the \textit{pi\_omp\_tasks.c} file, which it computes the difference of time between the sequential execution and the version that creates the tasks, when using a certain number of tasks and finally uses that information to print the difference in time (in microseconds), which is the overhead introduced by the \textbf{task} and \textbf{taskwait} constructs. 
-\\
-\medskip
-In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueuetask}, when the 
-execution starts, the first message informs about it. 
-\\
-\medskip
-
-Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{overheadplot2}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the inestability of the machine. 
-\\
-\bigskip
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{images/task.png}
-\caption{Plot of the overhead and overhead per task depending on the number of tasks}
-\label{overheadplot2}
-\end{figure}
-
-
-\begin{figure}[H]
-\begin{lstlisting}[frame=single]
-par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_tasks 10 1
-Your job 97659 ("submit-omp.sh") has been submitted
-par4111@boada-1:~/lab2/overheads$ more pi_omp_tasks_10_1.txt 
-All overheads expressed in microseconds
-Ntasks	Overhead	Overhead per task
-2	0.2105		0.1052
-4	0.5151		0.1288
-6	0.7635		0.1273
-8	1.0115		0.1264
-10	1.2594		0.1259
-12	1.5057		0.1255
-14	1.7508		0.1251
-16	1.9950		0.1247
-18	2.2435		0.1246
-20	2.4908		0.1245
-22	2.7343		0.1243
-24	2.9798		0.1242
-26	3.2272		0.1241
-28	3.4727		0.1240
-30	3.7192		0.1240
-32	3.9713		0.1241
-34	4.2150		0.1240
-36	4.4738		0.1243
-38	4.7067		0.1239
-40	4.9300		0.1232
-42	5.1890		0.1235
-44	5.4513		0.1239
-46	5.6880		0.1237
-48	5.9030		0.1230
-50	6.2037		0.1241
-52	6.4264		0.1236
-54	6.6773		0.1237
-56	6.9273		0.1237
-58	7.1824		0.1238
-60	7.3931		0.1232
-62	7.6592		0.1235
-64	7.8985		0.1234
-\end{lstlisting}
-\caption{Execution of pi\_omp\_tasks.c with 10 iteration and 1 thread}
-\label{piqueuetask}
-\end{figure}
-
-
 \subsection{Synchronisation overheads}
 In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronisation mechanisms to perform the update of the global variable sum:
 \begin{itemize}
@@ -984,6 +866,124 @@ As clearly seen, not all 4 programs benefit from more processors. We have comput
 Critical and atomic are far slower when executed with more threads (critical being the worst). This happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead, which as seen in the Paraver reports is very big. In fact, the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread (we explained why in the 1 thread section before), and is the main reason for critical's bad performance. In comparison, for atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to read and write the result. This of course speeds things up in comparison to critical (as we said though, the main reason for atomic being faster is not the computation but the fact that it generates much less overhead), but still we do not get the expected benefit of a parallel program, and execution time added by the parallelization overhead trumps any improvement cause by computing the fraction in parallel.
 
 Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the seperate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
+
+
+\subsection{Thread creation and termination}
+In this part we will learn about the thread creation and termination overhead and how it varies. We will be using the \textit{pi\_omp\_parallel.c} file, which it computes the difference of time between the sequential execution and the parallel execution when using a certain number of threads and finally uses that information to print the difference in time (in microseconds), which is the overhead introduced by the parallel construct. 
+\\
+\medskip
+In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueue}, when the execution starts, the first message informs about it. 
+\\
+Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{overheadplot1}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease because when the number of threads increases every thread has to do less calculations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/thread.png}
+\caption{Plot of the overhead and overhead per thread depending on the number of threads}
+\label{overheadplot1}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_parallel 1 24
+Your job 97651 ("submit-omp.sh") has been submitted
+
+par4111@boada-1:~/lab2/overheads$ more pi_omp_parallel_1_24.txt 
+All overheads expressed in microseconds
+Nthr	Overhead	Overhead per thread
+2	1.1726		0.5863
+3	0.8639		0.2880
+4	0.7910		0.1978
+5	0.9701		0.1940
+6	1.7148		0.2858
+7	1.7640		0.2520
+8	1.8267		0.2283
+9	2.0780		0.2309
+10	2.0664		0.2066
+11	2.4082		0.2189
+12	2.6808		0.2234
+13	3.0237		0.2326
+14	2.9701		0.2122
+15	2.8141		0.1876
+16	2.8110		0.1757
+17	2.9655		0.1744
+18	2.9356		0.1631
+19	2.9420		0.1548
+20	2.9402		0.1470
+21	2.9768		0.1418
+22	3.0285		0.1377
+23	3.0284		0.1317
+24	3.1657		0.1319
+
+\end{lstlisting}
+\caption{Execution of pi\_omp\_parallel.c with 1 iteration and a maximum of 24 threads}
+\label{piqueue}
+\end{figure}
+\subsection{Task creation and synchronization}
+In this part we will learn about the overhead related to the creation of \textbf{tasks} and their synchronization at \textbf{taskwait} and how it varies. We will be using the \textit{pi\_omp\_tasks.c} file, which it computes the difference of time between the sequential execution and the version that creates the tasks, when using a certain number of tasks and finally uses that information to print the difference in time (in microseconds), which is the overhead introduced by the \textbf{task} and \textbf{taskwait} constructs. 
+\\
+\medskip
+In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueuetask}, when the 
+execution starts, the first message informs about it. 
+\\
+\medskip
+
+Observing the results on the execution of \textit{pi\_omp\_tasks} with 10 iterations and 1 thread, see figure \ref{overheadplot2}, we can confirm that the time of the overhead does not depend on the number of tasks. The overhead will cost the same independently of the number of tasks, so it is constant. This affirmation is defended mainly by the tiny variation of time, probably given by the inestability of the machine. 
+\\
+\bigskip
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/task.png}
+\caption{Plot of the overhead and overhead per task depending on the number of tasks}
+\label{overheadplot2}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_tasks 10 1
+Your job 97659 ("submit-omp.sh") has been submitted
+par4111@boada-1:~/lab2/overheads$ more pi_omp_tasks_10_1.txt 
+All overheads expressed in microseconds
+Ntasks	Overhead	Overhead per task
+2	0.2105		0.1052
+4	0.5151		0.1288
+6	0.7635		0.1273
+8	1.0115		0.1264
+10	1.2594		0.1259
+12	1.5057		0.1255
+14	1.7508		0.1251
+16	1.9950		0.1247
+18	2.2435		0.1246
+20	2.4908		0.1245
+22	2.7343		0.1243
+24	2.9798		0.1242
+26	3.2272		0.1241
+28	3.4727		0.1240
+30	3.7192		0.1240
+32	3.9713		0.1241
+34	4.2150		0.1240
+36	4.4738		0.1243
+38	4.7067		0.1239
+40	4.9300		0.1232
+42	5.1890		0.1235
+44	5.4513		0.1239
+46	5.6880		0.1237
+48	5.9030		0.1230
+50	6.2037		0.1241
+52	6.4264		0.1236
+54	6.6773		0.1237
+56	6.9273		0.1237
+58	7.1824		0.1238
+60	7.3931		0.1232
+62	7.6592		0.1235
+64	7.8985		0.1234
+\end{lstlisting}
+\caption{Execution of pi\_omp\_tasks.c with 10 iteration and 1 thread}
+\label{piqueuetask}
+\end{figure}
 
 
 \end{document}
