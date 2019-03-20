@@ -19,7 +19,7 @@
 \contentsline {subsubsection}{\numberline {2.4.3}3.synchtasks.c}{16}
 \contentsline {subsubsection}{\numberline {2.4.4}4.taskloop.c}{18}
 \contentsline {section}{\numberline {3}Observing overheads}{20}
-\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{20}
+\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{21}
 \contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{22}
 \contentsline {subsection}{\numberline {3.3}Thead synchronization: critical}{24}
-\contentsline {section}{\numberline {4}Conclusions}{27}
+\contentsline {section}{\numberline {4}Conclusions}{28}
