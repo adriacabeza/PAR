@@ -810,13 +810,6 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 \end{itemize}
 
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.35]{images/paraverCritical.png}
-\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
-\label{paraverCritical}
-\end{figure}
-
 
 Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
 
@@ -830,6 +823,15 @@ Also, an interesting fact to mention is that even though in the \textit{pi\_omp\
 \caption{Trace with 1 threads and 100.000.000 iterations using critical}
 \label{paraverCritical1}
 \end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/paraverCritical.png}
+\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
+\label{paraverCritical}
+\end{figure}
+
 
 
 \begin{figure}[H]
