@@ -21,5 +21,5 @@
 \contentsline {section}{\numberline {3}Observing overheads}{20}
 \contentsline {subsection}{\numberline {3.1}Thread creation and termination}{21}
 \contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{22}
-\contentsline {subsection}{\numberline {3.3}Thead synchronization: critical}{24}
-\contentsline {section}{\numberline {4}Conclusions}{28}
+\contentsline {subsection}{\numberline {3.3}Thread synchronization: critical}{24}
+\contentsline {section}{\numberline {4}Conclusions}{31}

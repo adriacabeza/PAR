@@ -4,7 +4,7 @@
 \usepackage{cite}
 \author{par4111 \\ Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
 \title{Lab 2: Brief tutorial on OpenMP programming model }
-\date{\today \\ 2018 - 19 PRIMAVERA}
+\date{\today \\ 2018 - 19 SPRING}
 \usepackage{graphicx}
 %\usepackage[left=3.5cm, right=3.5cm]{geometry}
 \usepackage{subcaption}
@@ -513,7 +513,7 @@ And this is the obtained output:
 \textbf{2. Rewrite the program using only taskwait as task synchronisation mechanism (no depend clauses allowed)}
  The new program, rewritten using only \textit{taskwait}, looks like this:
 
- \begin{lstlisting}
+ \begin{lstlisting}[frame=single]
     int main(int argc, char *argv[]) {
         #pragma omp parallel
         #pragma omp single
@@ -546,7 +546,7 @@ And this is the obtained output:
 
 Which gives the following output:
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
     Creating task foo1
     Creating task foo2
     Creating task foo4
@@ -581,7 +581,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 \begin{itemize}
     \item num\_tasks(5): Creates 5 tasks. 3 tasks execute 2 iterations while the other 2 tasks execute 3. This is an approximation to 12/5 (12 iterations divided by 5 tasks), and adds up to the 12 iterations to execute ($3*2 + 2*3 = 12$). The output after many executions is often similar to:
 
-    \begin{lstlisting}
+    \begin{lstlisting}[frame=single]
     Going to distribute 12 iterations with num_tasks(5) ...
     Loop 2: (2) gets iteration 0
     Loop 2: (2) gets iteration 1
@@ -609,7 +609,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 
     \item grainsize(5): Creates 2 tasks. Each task executes 6 iterations. This is because we specified we wanted 5 iterations per task with \textit{grainsize(5)}, and grainsize asserts that every task will execute a number of iterations equal or greater than 5. Since there are 12 iterations to distribute, 2 iterations must be assigned to already existing tasks because they are not enough to create a new task. This explains why tasks have 6 iterations each, as shown by the following output:
     
-    \begin{lstlisting}
+    \begin{lstlisting}[frame=single]
         Going to distribute 12 iterations with grainsize(5) ...
         Loop 1: (1) gets iteration 0
         Loop 1: (1) gets iteration 1
@@ -636,7 +636,7 @@ and num tasks clause in a taskloop. You will probably have to execute the progra
 
 When the \textit{nogroup} clause is uncommented the output is the following:
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
     Going to distribute 12 iterations with grainsize(5) ...
     Going to distribute 12 iterations with num_tasks(5) ...
     Loop 1: (1) gets iteration 6
@@ -791,7 +791,7 @@ Ntasks	Overhead	Overhead per task
 \end{figure}
 
 
-\subsection{Thead synchronization: critical}
+\subsection{Thread synchronization: critical}
 In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronisation mechanisms to perform the update of the global variable sum:
 \begin{itemize}
 \item \textit{pi\_omp\_critical.c} where a critical region is used to protect every access to sum, ensuring exclusive access to it
@@ -809,6 +809,119 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 \item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. We hypothesized that we would see a similar overhead with \textit{pi\_omp\_reduction.c} since they look very alike. We used Paraver in order to see their tasks and our hypothesis was confirmed, see please figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
 \end{itemize}
 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/paraverCritical.png}
+\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
+\label{paraverCritical}
+\end{figure}
+
+
+Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
+
+The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The task outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
+
+Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time is not as big as the critical one because in the atomic version the $4.0/(1.0+x\times x)$ operation could be done by multiple threads at once, so not so many overhead is needed for this version, but in the critical one all the line "\textit{sum += 4.0/(1.0+x*x);}" is inside the region. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.55]{images/paraverCritical1.png}
+\caption{Trace with 1 threads and 100.000.000 iterations using critical}
+\label{paraverCritical1}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+//pi_omp_critical
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_critical 100000000 1
+Total execution time: 4.327817s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_atomic
+qsub -l execution submit-omp.sh pi_omp_atomic 100000000 1
+Total execution time: 1.796890s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_reduction
+qsub -l execution submit-omp.sh pi_omp_reduction 100000000 1
+Total execution time: 1.832242s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_omp_sumlocal
+par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 1
+Total execution time: 1.832944s
+Number pi after 100000000 iterations = 3.141592653590426
+
+//pi_sequential
+qsub -l execution submit-omp.sh pi_sequential 100000000 1
+Wall clock execution time  = 1.792886019 seconds
+Value of pi = 3.1415926536
+
+\end{lstlisting}
+\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 1 thread}
+\label{overheadsComputation}
+\end{figure}
+
+
+Next we executed the same programs with the same number of iterations, this time with both 4 and 8 threads, and the execution times when submited are the following:
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
+    //pi_omp_critical 4 threads
+    qsub -l execution submit-omp.sh pi_omp_critical 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_critical_100000000_4.txt 
+    Total execution time: 36.796537s
+    Number pi after 100000000 iterations = 3.141592653590202
+
+    //pi_omp_critical 8 threads
+    qsub -l execution submit-omp.sh pi_omp_critical 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_critical_100000000_8.txt 
+    Total execution time: 34.572298s
+    Number pi after 100000000 iterations = 3.141592653589771
+
+    //pi_omp_atomic 4 threads
+    qsub -l execution submit-omp.sh pi_omp_atomic 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_atomic_100000000_4.txt 
+    Total execution time: 6.614634s
+    Number pi after 100000000 iterations = 3.141592653590222
+
+    //pi_omp_atomic 8 threads
+    qsub -l execution submit-omp.sh pi_omp_atomic 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_atomic_100000000_8.txt 
+    Total execution time: 7.093226s
+    Number pi after 100000000 iterations = 3.141592653589711
+
+    //pi_omp_reduction 4 threads
+    qsub -l execution submit-omp.sh pi_omp_reduction 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_reduction_100000000_4.txt 
+    Total execution time: 0.483557s
+    Number pi after 100000000 iterations = 3.141592653589683
+
+    ////pi_omp_reduction 8 threads
+    qsub -l execution submit-omp.sh pi_omp_reduction 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_reduction_100000000_8.txt 
+    Total execution time: 0.262972s
+    Number pi after 100000000 iterations = 3.141592653589815
+
+    //pi_omp_sumlocal 4 threads
+    qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 4
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_sumlocal_100000000_4.txt 
+    Total execution time: 0.480225s
+    Number pi after 100000000 iterations = 3.141592653589683
+
+    ////pi_omp_sumlocal 8 threads
+    qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 8
+    par4111@boada-1:~/lab2/overheads$ cat pi_omp_sumlocal_100000000_8.txt 
+    Total execution time: 0.260914s
+    Number pi after 100000000 iterations = 3.141592653589815
+\end{lstlisting}
+\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 4 | 8  threads}
+\label{overheadsComputation}
+\end{figure}
+
+And here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as exepected:
 
 \begin{figure}[H]
 \centering
@@ -839,53 +952,33 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 \label{paraverSumlocal}
 \end{figure}
 
-Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
+\bigskip
 
-The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The task outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
+Here is a table to easily compare all the previous executions:
 
-Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time is not as big as the critical one because in the atomic version the $4.0/(1.0+x\times x)$ operation could be done by multiple threads at once, so not so many overhead is needed for this version, but in the critical one all the line "\textit{sum += 4.0/(1.0+x*x);}" is inside the region. 
+\begin{center}
+\begin{tabular}{|| c | c | c | c | c | c ||} 
+\hline
+\textbf{Version} & \textbf{1 thread} & \textbf{4 threads} & \textbf{8 threads} & \textbf{$S_{4}$} & \textbf{$S_{8}$}\\ [0.5ex] 
+\hline\hline
+pi\_omp\_critical & 4.327817s & 36.796537s & 34.572298s & 0.12 & 0.13\\ 
+\hline
+pi\_omp\_atomic & 1.796890s & 6.614634s & 7.093226s & 0.27 & 0.25 \\
+\hline
+pi\_omp\_reduction & 1.832242s & 0.483557s & 0.262972s & 3.79 & 6.97 \\
+\hline
+pi\_omp\_sumlocal & 1.832944s & 0.480225s & 0.260914s & 3.82 & 7.02 \\ [1ex] 
+\hline \hline
+pi\_sequential & \multicolumn{5}{| c ||}{1.792886019s}\\
+\hline
+\end{tabular}
+\end{center}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.55]{images/paraverCritical1.png}
-\caption{Trace with 1 threads and 100.000.000 iterations using critical}
-\label{paraverCritical1}
-\end{figure}
+As clearly seen, not all 4 programs benefit from more processors. We have computed the speed-ups for 4 threads and 8 threads with respect to 1 thread. 
 
+Critical and atomic are far slower when executed with more threads (critical being the worst). We think this happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead of parallelization, which as seen in the Paraver reports is very big. In fact, not only that but the critical call adds a lot more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread. For atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to write the result. This of course speeds things up in comparison to critical, but still we do not get the expected benefit of a parallel program, and execution time added by the paralle overhead trumps any improvement cause by computing the fraction in parallel.
 
-\begin{figure}[H]
-\begin{lstlisting}[frame=single]
-//pi_omp_critical
-par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_critical 100000000 1
-Total execution time: 4.327817s
-Number pi after 100000000 iterations = 3.141592653590426
-
-//pi_omp_reduction
-qsub -l execution submit-omp.sh pi_omp_reduction 100000000 1
-Total execution time: 1.832242s
-Number pi after 100000000 iterations = 3.141592653590426
-
-//pi_omp_sumlocal
-par4111@boada-1:~/lab2/overheads$ qsub -l execution submit-omp.sh pi_omp_sumlocal 100000000 1
-Total execution time: 1.832944s
-Number pi after 100000000 iterations = 3.141592653590426
-
-//pi_omp_atomic
-qsub -l execution submit-omp.sh pi_omp_atomic 100000000 1
-Total execution time: 1.796890s
-Number pi after 100000000 iterations = 3.141592653590426
-
-//pi_sequential
-qsub -l execution submit-omp.sh pi_sequential 100000000 1
-Wall clock execution time  = 1.792886019 seconds
-Value of pi = 3.1415926536
-
-\end{lstlisting}
-\caption{Execution of computation pi using different synchronisation mechanisms to update a variable with 100.000.000 iterations and 1 thread}
-\label{overheadsComputation}
-\end{figure}
-
-
+Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the seperate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
 
 \section{Conclusions}
 Jo borraria lo de conlusions, fa tot el pal escriure-ho
