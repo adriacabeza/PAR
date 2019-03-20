@@ -806,14 +806,14 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 \item  \textit{pi\_omp\_critical.c}, in this file we have found a \textit{\#pragma omp critical} inside the loop, it will be executed for each iteration in order to protect all the region that is considered critical (the one related to the update of sum).
 \item  \textit{pi\_omp\_atomic.c}, in this file we have found a \textit{\#pragma omp atomic} inside the loop, so it will be executed for each iteration in order to protect the way sum it is written. 
 \item  \textit{pi\_omp\_reduction.c}, in this file we have not found explicitly any critical or atomic region, however we have looked for the reduction implementation and there is a critical region to avoid data races with the variable sum. So the overhead will be smaller than other versions  because the \textit{pragma\_omp\_critical} is not executed in every iteration like in \textit{pi\_omp\_critical.c}.
-\item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. We hypothesized that we would see a similar overhead with \textit{pi\_omp\_reduction.c} since they look very alike. We used Paraver in order to see their tasks and our hypothesis was confirmed, see please figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
+\item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. We hypothesized that we would see a similar overhead with \textit{pi\_omp\_reduction.c} since they look very alike. We used Paraver in order to see their traces and our hypothesis was confirmed, see please figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
 \end{itemize}
 
 
 
 Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
 
-The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The task outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
+The main reason was already mentioned in the previous analysis. In the \textit{pi\_omp\_critical} version there is a \textit{\#pragma omp critical} inside the loop, so a lineal overhead related to the number of iterations will be created. The trace outputed by Paraver can be seen in the figure \ref{paraverCritical1}. 
 
 Also, an interesting fact to mention is that even though in the \textit{pi\_omp\_atomic.c} version we can find  a \textit{\#pragma omp atomic} inside the loop, the time is not as big as the critical one because in the atomic version the $4.0/(1.0+x\times x)$ operation could be done by multiple threads at once, so not so many overhead is needed for this version, but in the critical one all the line "\textit{sum += 4.0/(1.0+x*x);}" is inside the region. 
 
