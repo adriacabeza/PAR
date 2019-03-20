@@ -860,7 +860,7 @@ In this part we will learn about the thread creation and termination overhead an
 \medskip
 In the results of the execution we can see that the order of magnitude of the overhead generated is in microseconds, we can see it clearly in figure \ref{piqueue}, when the execution starts, the first message informs about it. 
 \\
-Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{overheadplot1}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease because when the number of threads increases every thread has to do less calculations.
+Observing the results on the execution of \textit{pi\_omp\_parallel} with just 1 iteration and a maximum of 24 threads, see in figure \ref{overheadplot1}, we can confirm that the time of the overhead is not constant, it increases linearly when the number of threads increase. Moreover, the overhead per thread tends to decrease due to most of the overhead of the program being created by just parallelizing instead of adding threads. This means that when you parallelize a program a big overhead is created, but then little overhead is added for each thread created. This is why when we add threads, the overhead per thread tends to decrease (up to a point), not much is added but is divided by another threads.
 
 \begin{figure}[H]
 \centering
@@ -971,5 +971,6 @@ Ntasks	Overhead	Overhead per task
 \label{piqueuetask}
 \end{figure}
 
+With this we conclude our study about overheads with different pragma omp calls.
 
 \end{document}
