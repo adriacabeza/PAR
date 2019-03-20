@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.11)  20 MAR 2019 14:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.11)  20 MAR 2019 14:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1046,16 +1046,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 668--669
 
  []
 
-[20]
-
-LaTeX Warning: Reference `paraverReduction' on page 21 undefined on input line 
-691.
-
-
-LaTeX Warning: Reference `paraverSumlocal' on page 21 undefined on input line 6
-91.
-
-[21]
+[20] [21]
 Overfull \hbox (4.1878pt too wide) in paragraph at lines 700--701
 []\OT1/cmr/m/n/10 Also, an in-ter-est-ing fact to men-tion is that even though 
 in the \OT1/cmr/m/it/10 pi[]omp[]atomic.c
@@ -1116,17 +1107,14 @@ Package pdftex.def Info: images/task.png  used on input line 924.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
  [31 <./images/task.png (PNG copy)>] [32] (./deliverable.aux)
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24639 strings out of 494880
- 611940 string characters out of 6179600
+ 24637 strings out of 494880
+ 611905 string characters out of 6179600
  992456 words of memory out of 5000000
- 27560 multiletter control sequences out of 15000+600000
+ 27558 multiletter control sequences out of 15000+600000
  8768 words of font info for 31 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  62i,8n,96p,1254b,1729s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1142,7 +1130,7 @@ ic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on deliverable.pdf (32 pages, 375631 bytes).
+Output written on deliverable.pdf (32 pages, 375567 bytes).
 PDF statistics:
  178 PDF objects out of 1000 (max. 8388607)
  115 compressed objects within 2 object streams
