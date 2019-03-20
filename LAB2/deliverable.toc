@@ -1,25 +1,25 @@
-\contentsline {section}{\numberline {1}Introduction}{3}
-\contentsline {section}{\numberline {2}OpenMP questionnaire}{3}
-\contentsline {subsection}{\numberline {2.1}Parallel regions}{3}
-\contentsline {subsubsection}{\numberline {2.1.1}1.hello.c}{3}
-\contentsline {subsubsection}{\numberline {2.1.2}2.hello.c}{3}
-\contentsline {subsubsection}{\numberline {2.1.3}3.how\_many.c}{4}
-\contentsline {subsubsection}{\numberline {2.1.4}4.data\_sharing.c}{5}
-\contentsline {subsection}{\numberline {2.2}Loop parallelism}{6}
-\contentsline {subsubsection}{\numberline {2.2.1}1.schedule.c}{6}
-\contentsline {subsubsection}{\numberline {2.2.2}2.nowait.c}{8}
-\contentsline {subsubsection}{\numberline {2.2.3}3.collapse.c}{9}
-\contentsline {subsection}{\numberline {2.3}Synchronization}{10}
-\contentsline {subsubsection}{\numberline {2.3.1}1.datarace.c}{10}
-\contentsline {subsubsection}{\numberline {2.3.2}2.barrier.c}{12}
-\contentsline {subsubsection}{\numberline {2.3.3}3.ordered.c}{12}
-\contentsline {subsection}{\numberline {2.4}Tasks}{13}
-\contentsline {subsubsection}{\numberline {2.4.1}1.single.c}{13}
-\contentsline {subsubsection}{\numberline {2.4.2}2.fibtask.c}{13}
-\contentsline {subsubsection}{\numberline {2.4.3}3.synchtasks.c}{16}
-\contentsline {subsubsection}{\numberline {2.4.4}4.taskloop.c}{18}
-\contentsline {section}{\numberline {3}Observing overheads}{20}
-\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{21}
-\contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{22}
-\contentsline {subsection}{\numberline {3.3}Thread synchronization: critical}{24}
-\contentsline {section}{\numberline {4}Conclusions}{31}
+\contentsline {section}{\numberline {1}Introduction}{3}% 
+\contentsline {section}{\numberline {2}OpenMP questionnaire}{3}% 
+\contentsline {subsection}{\numberline {2.1}Parallel regions}{3}% 
+\contentsline {subsubsection}{\numberline {2.1.1}1.hello.c}{3}% 
+\contentsline {subsubsection}{\numberline {2.1.2}2.hello.c}{3}% 
+\contentsline {subsubsection}{\numberline {2.1.3}3.how\_many.c}{4}% 
+\contentsline {subsubsection}{\numberline {2.1.4}4.data\_sharing.c}{5}% 
+\contentsline {subsection}{\numberline {2.2}Loop parallelism}{6}% 
+\contentsline {subsubsection}{\numberline {2.2.1}1.schedule.c}{6}% 
+\contentsline {subsubsection}{\numberline {2.2.2}2.nowait.c}{8}% 
+\contentsline {subsubsection}{\numberline {2.2.3}3.collapse.c}{9}% 
+\contentsline {subsection}{\numberline {2.3}Synchronization}{10}% 
+\contentsline {subsubsection}{\numberline {2.3.1}1.datarace.c}{10}% 
+\contentsline {subsubsection}{\numberline {2.3.2}2.barrier.c}{12}% 
+\contentsline {subsubsection}{\numberline {2.3.3}3.ordered.c}{12}% 
+\contentsline {subsection}{\numberline {2.4}Tasks}{13}% 
+\contentsline {subsubsection}{\numberline {2.4.1}1.single.c}{13}% 
+\contentsline {subsubsection}{\numberline {2.4.2}2.fibtask.c}{13}% 
+\contentsline {subsubsection}{\numberline {2.4.3}3.synchtasks.c}{16}% 
+\contentsline {subsubsection}{\numberline {2.4.4}4.taskloop.c}{18}% 
+\contentsline {section}{\numberline {3}Observing overheads}{20}% 
+\contentsline {subsection}{\numberline {3.1}Thread creation and termination}{21}% 
+\contentsline {subsection}{\numberline {3.2}Task creation and synchronization}{22}% 
+\contentsline {subsection}{\numberline {3.3}Synchronisation overheads}{25}% 
+\contentsline {section}{\numberline {4}Conclusions}{32}% 

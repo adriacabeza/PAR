@@ -791,7 +791,7 @@ Ntasks	Overhead	Overhead per task
 \end{figure}
 
 
-\subsection{Thread synchronization: critical}
+\subsection{Synchronisation overheads}
 In this section we will learn about how different synchronization methods work and how they change the overheads that are created. We will be using different files that compute pi with several synchronisation mechanisms to perform the update of the global variable sum:
 \begin{itemize}
 \item \textit{pi\_omp\_critical.c} where a critical region is used to protect every access to sum, ensuring exclusive access to it
@@ -805,8 +805,8 @@ Firstly, we have analysed how many synchronisation operations(critical or atomic
 \begin{itemize}
 \item  \textit{pi\_omp\_critical.c}, in this file we have found a \textit{\#pragma omp critical} inside the loop, it will be executed for each iteration in order to protect all the region that is considered critical (the one related to the update of sum).
 \item  \textit{pi\_omp\_atomic.c}, in this file we have found a \textit{\#pragma omp atomic} inside the loop, so it will be executed for each iteration in order to protect the way sum it is written. 
-\item  \textit{pi\_omp\_reduction.c}, in this file we have not found explicitly any critical or atomic region, however we have looked for the reduction implementation and there is a critical region to avoid data races with the variable sum. So the overhead will be smaller than other versions  because the \textit{pragma\_omp\_critical} is not executed in every iteration like in \textit{pi\_omp\_critical.c}.
-\item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. We hypothesized that we would see a similar overhead with \textit{pi\_omp\_reduction.c} since they look very alike. We used Paraver in order to see their tasks and our hypothesis was confirmed, see please figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
+\item  \textit{pi\_omp\_reduction.c}, in this file we have not found explicitly any critical or atomic region, however reduction implements a smiliar method to critical in order to add up the final result of each thread to avoid data races while doing this. This means if we were to count this calls as critical, there would be one call for each thread at the end of the loop to add its local sum copy result to the global sum result. This reduces the overhead caused by the critical calls (which is greater than the overhead cause by atomic calls) vastly. 
+\item  \textit{pi\_omp\_sumlocal.c}, in this file we have found just a \textit{\#pragma omp critical} outside the loop which merge all the sums into a general sum. This again, as with reduction, will be executed just once for every thread. We hypothesized that we would see a similar overhead with \textit{pi\_omp\_reduction.c} since they look very alike. We used Paraver in order to see their tasks and our hypothesis was confirmed, see please figures \ref{paraverReduction} and \ref{paraverSumlocal}. 
 \end{itemize}
 
 
@@ -894,7 +894,10 @@ Next we executed the same programs with the same number of iterations, this time
     par4111@boada-1:~/lab2/overheads$ cat pi_omp_atomic_100000000_8.txt 
     Total execution time: 7.093226s
     Number pi after 100000000 iterations = 3.141592653589711
-
+\end{lstlisting}
+\end{figure}
+\begin{figure}[H]
+\begin{lstlisting}[frame=single]
     //pi_omp_reduction 4 threads
     qsub -l execution submit-omp.sh pi_omp_reduction 100000000 4
     par4111@boada-1:~/lab2/overheads$ cat pi_omp_reduction_100000000_4.txt 
