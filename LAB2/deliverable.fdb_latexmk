@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1553075765 "d:/code/PAR/LAB2/deliverable.tex" "d:/code/PAR/LAB2/deliverable.pdf" "deliverable" 1553075767
+["pdflatex"] 1553079099 "d:/code/PAR/LAB2/deliverable.tex" "d:/code/PAR/LAB2/deliverable.pdf" "deliverable" 1553079102
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "C:/Program Files/MiKTeX 2.9/fonts/tfm/public/cm/cmbxti10.tfm" 1136765053 1532 9162035f4e7176612125649e348e2195 ""
@@ -169,11 +169,11 @@
   "C:/Program Files/MiKTeX 2.9/tex/latex/xcolor/xcolor.sty" 1463131981 57049 34128738f682d033422ca125f82e5d62 ""
   "C:/Users/Xavi/AppData/Local/MiKTeX/2.9/miktex/data/le/pdftex/pdflatex.fmt" 1550163439 4157658 b9aece55c587e8e11e4696161f7a3e47 ""
   "C:/Users/Xavi/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map" 1550163205 80453 73224248f0a73acd005b5611945eaaa6 ""
-  "d:/code/PAR/LAB2/deliverable.aux" 1553075767 5302 4b3694b365d7e185e63e9b34752e9fc7 ""
-  "d:/code/PAR/LAB2/deliverable.tex" 1553075764 48481 145ead13f14c830e59a5f35ec07457a2 ""
-  "deliverable.aux" 1553075767 5302 4b3694b365d7e185e63e9b34752e9fc7 ""
-  "deliverable.tex" 1553075764 48481 145ead13f14c830e59a5f35ec07457a2 ""
-  "deliverable.toc" 1553075767 1737 8d1a4c37c968f58a17ec4b5da1027d5d ""
+  "d:/code/PAR/LAB2/deliverable.aux" 1553079102 5302 2c6dff9ca909ec2934bf6e01a6642db3 ""
+  "d:/code/PAR/LAB2/deliverable.tex" 1553079098 50487 ecac0360ecef91dfc8a662ae1004f303 ""
+  "deliverable.aux" 1553079102 5302 2c6dff9ca909ec2934bf6e01a6642db3 ""
+  "deliverable.tex" 1553079098 50487 ecac0360ecef91dfc8a662ae1004f303 ""
+  "deliverable.toc" 1553079102 1737 259505972d1a7e85de130b40cbb171ab ""
   "images/UPClogo.png" 1552852818 9583 5f6dd23487f0dea981edf984b72770d7 ""
   "images/paraverAtomic.png" 1553073815 14739 0fd42bb264a36237412dbdf72c787a4e ""
   "images/paraverCritical.png" 1553073815 16522 4e225a7fb4e528809825d9202e0b06ce ""
@@ -183,9 +183,9 @@
   "images/task_dependence_graph_synctasks.png" 1552854448 7574 ed8cb1fdc5e7dbdbc597b77e6699d468 ""
   "images/thread.png" 1552852818 14752 47bcb1a2d674b682600d13f0d5931b1d ""
   (generated)
-  "d:/code/PAR/LAB2/deliverable.log"
-  "deliverable.log"
   "deliverable.pdf"
+  "d:/code/PAR/LAB2/deliverable.log"
   "deliverable.aux"
-  "d:/code/PAR/LAB2/deliverable.pdf"
+  "deliverable.log"
   "deliverable.toc"
+  "d:/code/PAR/LAB2/deliverable.pdf"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  20 MAR 2019 10:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.6960 64-bit) (preloaded format=pdflatex 2019.2.14)  20 MAR 2019 11:51
 entering extended mode
 **d:/code/PAR/LAB2/deliverable.tex
 (d:/code/PAR/LAB2/deliverable.tex
@@ -537,37 +537,36 @@ File: images/task.png Graphic file (type png)
 <use images/task.png>
 Package pdftex.def Info: images/task.png  used on input line 742.
 (pdftex.def)             Requested size: 301.12425pt x 186.19516pt.
- [23 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [24]
-<images/paraverCritical.png, id=100, 1017.8025pt x 277.035pt>
+ [23 <d:/code/PAR/LAB2/images/task.png (PNG copy)>] [24] [25] [26]
+Overfull \vbox (163.79999pt too high) has occurred while \output is active []
+
+ [27]
+<images/paraverCritical.png, id=110, 1017.8025pt x 277.035pt>
 File: images/paraverCritical.png Graphic file (type png)
 <use images/paraverCritical.png>
-Package pdftex.def Info: images/paraverCritical.png  used on input line 810.
+Package pdftex.def Info: images/paraverCritical.png  used on input line 908.
 (pdftex.def)             Requested size: 356.23622pt x 96.9637pt.
 
-Overfull \hbox (11.23622pt too wide) in paragraph at lines 810--811
+Overfull \hbox (11.23622pt too wide) in paragraph at lines 908--909
  [][] 
  []
 
-<images/paraverAtomic.png, id=101, 605.26125pt x 232.87pt>
+<images/paraverAtomic.png, id=111, 605.26125pt x 232.87pt>
 File: images/paraverAtomic.png Graphic file (type png)
 <use images/paraverAtomic.png>
-Package pdftex.def Info: images/paraverAtomic.png  used on input line 817.
+Package pdftex.def Info: images/paraverAtomic.png  used on input line 915.
 (pdftex.def)             Requested size: 302.62987pt x 116.43471pt.
-<images/paraverReduction.png, id=102, 1371.1225pt x 593.21625pt>
+<images/paraverReduction.png, id=112, 1371.1225pt x 593.21625pt>
 File: images/paraverReduction.png Graphic file (type png)
 <use images/paraverReduction.png>
-Package pdftex.def Info: images/paraverReduction.png  used on input line 824.
+Package pdftex.def Info: images/paraverReduction.png  used on input line 922.
 (pdftex.def)             Requested size: 274.21964pt x 118.64114pt.
-[25 <d:/code/PAR/LAB2/images/paraverCritical.png> <d:/code/PAR/LAB2/images/paraverAtomic.png>]
-<images/paraverSumLocal.png, id=109, 1371.1225pt x 589.20125pt>
+<images/paraverSumLocal.png, id=113, 1371.1225pt x 589.20125pt>
 File: images/paraverSumLocal.png Graphic file (type png)
 <use images/paraverSumLocal.png>
-Package pdftex.def Info: images/paraverSumLocal.png  used on input line 832.
+Package pdftex.def Info: images/paraverSumLocal.png  used on input line 930.
 (pdftex.def)             Requested size: 274.21964pt x 117.83815pt.
- [26 <d:/code/PAR/LAB2/images/paraverReduction.png> <d:/code/PAR/LAB2/images/paraverSumLocal.png>] [27]
-Overfull \vbox (163.79999pt too high) has occurred while \output is active []
-
- [28] [29] (d:/code\PAR\LAB2\deliverable.aux)
+[28 <d:/code/PAR/LAB2/images/paraverCritical.png> <d:/code/PAR/LAB2/images/paraverAtomic.png> <d:/code/PAR/LAB2/images/paraverReduction.png>] [29 <d:/code/PAR/LAB2/images/paraverSumLocal.png>] [30] (d:/code\PAR\LAB2\deliverable.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -579,11 +578,11 @@ Here is how much of TeX's memory you used:
  28147 multiletter control sequences out of 15000+200000
  8768 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,7n,96p,1146b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,8n,96p,1146b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on d:/code\PAR\LAB2\deliverable.pdf (29 pages, 334418 bytes).
+Output written on d:/code\PAR\LAB2\deliverable.pdf (30 pages, 338094 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
+ 168 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

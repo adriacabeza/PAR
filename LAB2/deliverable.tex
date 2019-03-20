@@ -805,34 +805,7 @@ POSAR AQUÍ RECOMPTE DE CRITICALS I ATOMICS
    
    
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.35]{images/paraverCritical.png}
-\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
-\label{paraverCritical}
-\end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{images/paraverAtomic.png}
-\caption{Traces with 4 threads and 10.000 iterations using atomic (Zoomed)}
-\label{paraverAtomic}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.20]{images/paraverReduction.png}
-\caption{Traces with 4 threads and 10.000 iterations using reduction (Zoomed)}
-\label{paraverReduction}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.20]{images/paraverSumLocal.png}
-\caption{Traces with 4 threads and 10.000 iterations using sumlocal (Zoomed)}
-\label{paraverSumlocal}
-\end{figure}
 
 Secondly, we have executed all the versions mentioned before using only 1 thread and 100.000.000 iterations. The results can be seen in figure \ref{overheadsComputation}. The main difference that can be seen here is that the \textit{pi\_omp\_critical} version has the biggest overhead, with a huge difference respect the others ones.
 
@@ -928,27 +901,64 @@ Next we executed the same programs with the same number of iterations, this time
 \label{overheadsComputation}
 \end{figure}
 
+Anf here are the Paraver visualizations of the 4 threads executions. Note that for Paraver we used only 10.000 iterations because otherwise we got a weird behaviour and had to zoom in a lot. Nevertheless, the results are still as exepected:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/paraverCritical.png}
+\caption{Traces with 4 threads 10.000 iterations using critical (Zoomed)}
+\label{paraverCritical}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/paraverAtomic.png}
+\caption{Traces with 4 threads and 10.000 iterations using atomic (Zoomed)}
+\label{paraverAtomic}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{images/paraverReduction.png}
+\caption{Traces with 4 threads and 10.000 iterations using reduction (Zoomed)}
+\label{paraverReduction}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{images/paraverSumLocal.png}
+\caption{Traces with 4 threads and 10.000 iterations using sumlocal (Zoomed)}
+\label{paraverSumlocal}
+\end{figure}
+
 \bigskip
 
 Here is a table to easily compare all the previous executions:
 
 \begin{center}
-\begin{tabular}{|| c | c | c | c ||} 
+\begin{tabular}{|| c | c | c | c | c | c ||} 
 \hline
-\textbf{Version} & \textbf{1 thread} & \textbf{4 threads} & \textbf{8 threads} \\ [0.5ex] 
+\textbf{Version} & \textbf{1 thread} & \textbf{4 threads} & \textbf{8 threads} & \textbf{$S_{4}$} & \textbf{$S_{8}$}\\ [0.5ex] 
 \hline\hline
-pi\_omp\_critical & 4.327817s & 36.796537s & 34.572298s \\ 
+pi\_omp\_critical & 4.327817s & 36.796537s & 34.572298s & 0.12 & 0.13\\ 
 \hline
-pi\_omp\_atomic & 1.796890s & 6.614634s & 7.093226s \\
+pi\_omp\_atomic & 1.796890s & 6.614634s & 7.093226s & 0.27 & 0.25 \\
 \hline
-pi\_omp\_reduction & 1.832242s & 0.483557s & 0.262972s \\
+pi\_omp\_reduction & 1.832242s & 0.483557s & 0.262972s & 3.79 & 6.97 \\
 \hline
-pi\_omp\_sumlocal & 1.832944s & 0.480225s & 0.260914s \\ [1ex] 
-\hline
-pi\_sequential & \multicolumn{3}{| c ||}{1.792886019s}\\
+pi\_omp\_sumlocal & 1.832944s & 0.480225s & 0.260914s & 3.82 & 7.02 \\ [1ex] 
+\hline \hline
+pi\_sequential & \multicolumn{5}{| c ||}{1.792886019s}\\
 \hline
 \end{tabular}
 \end{center}
+
+As clearly seen, not all 4 programs benefit from more processors. We have computed the speed-ups for 4 threads and 8 threads with respect to 1 thread. 
+
+Critical and atomic are far slower when executed with more threads (critical being the worst). We think this happens because with critical there can only be one thread at a time computing $4.0/(1.0+x^2)$ , because the whole instruction is protected. This causes te execution to behave sequentially, but with the added overhead of parallelization, which as seen in the Paraver reports is very big. In fact, not only that but the critical call adds more overhead than atomic as shown by the way slower execution of critical with 1 thread in comparison to atomic with 1 thread. For atomic the protected part is only reading and writing to/from the var sum, which means that all threads can compute $4.0/(1.0+x^2)$ in parallel but have to wait to write the result. This of course speeds things up in comparison to critical, but still we do not get the expected benefit of a parallel program, and execution time added by the paralle overhead trumps any improvement cause by computing the fraction in parallel.
+
+Reduction and sumlocal, on the other hand, do improve a lot as shown by their speed-ups. This is caused by the threads only waiting after the whole computation is over, when they have to add up the seperate results of each thread. This means critical is only called once per thread in both cases (reduction does something similar implicitly), greatly reducing waiting time. By doing this, overhead is finally overcome by parallelization speed-up and executions time is vastly reduced.
 
 
 \section{Conclusions}
