@@ -1,0 +1,50 @@
+
+\documentclass[12]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\author{par4111 \\ Adrià Cabeza, Xavier Lacasa \\ Departament d' Arquitectura de Computadors}
+\title{Lab 3: Embarrassingly parallelism with OpenMP: Mandelbrot set }
+\date{\today \\ 2018 - 19 SPRING}
+\usepackage{graphicx}
+%\usepackage[left=3.5cm, right=3.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\lstset{
+  basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{orange},
+  keywordstyle=\color{blue},
+	frame=tb,language=C,breaklines=true,numbers=none,  stringstyle=\color{red}, tabsize=3,   showstringspaces=false,
+  columns=flexible, 
+}
+\begin{document}
+\maketitle
+
+\vspace*{\fill}
+\begin{center}
+\includegraphics[scale=0.5]{images/UPClogo.png}
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+
+WE HAVE TO REMEMBER THAT THE DEPENDENCY IS DUE TO THE WINDOWS THAT IS USED TO DRAW THE MANDELBROT SET (X11)
+
+\textbf{ADD THE MISSING PRAGMA}, WE NEED TO CREATE A CRITICAL SECTION TO AVOID THE VARIABLE ACCESS THAT CREATES THE CONFLICT IN ORDER TO AVOID THE POSSIBLE DATA RACE (IT IS A VARIABLE OF THE X11 SECTION). 
+%we need to add a frame with the code
+
+%ES IMPORTANT FICAR-HO JUNT!
+OMP_NUM_THREADS= 8 ./mandel-omp -i 10000 -o 
+
+OMP_NUM_THREADS= 1 ./mandel-omp -i 10000 -o 
+
+
+
+
+
+
+\end{document}
