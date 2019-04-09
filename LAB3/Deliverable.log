@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.11)  3 APR 2019 17:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.2.23)  9 APR 2019 20:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Deliverable.tex
 (./Deliverable.tex
 LaTeX2e <2017-04-15>
-Babel <3.18> and hyphenation patterns for 5 language(s) loaded.
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -945,63 +945,84 @@ Package pdftex.def Info: images/UPClogo.png  used on input line 28.
 \openout4 = `Deliverable.toc'.
 
  [2]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.41 OMP_
-         NUM_THREADS= 8 ./mandel-omp -i 10000 -o
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 41.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 41.
-! Missing $ inserted.
-<inserted text> 
-                $
-l.42 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+Package caption Warning: \label without proper reference on input line 49.
+See the caption package documentation for explanation.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.43 OMP_
-         NUM_THREADS= 1 ./mandel-omp -i 10000 -o
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.44 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+LaTeX Warning: Reference `point' on page 3 undefined on input line 44.
 
-[3] (./Deliverable.aux) ) 
+<images/point_dependencygraph.png, id=20, 1414.28375pt x 234.8775pt>
+File: images/point_dependencygraph.png Graphic file (type png)
+<use images/point_dependencygraph.png>
+Package pdftex.def Info: images/point_dependencygraph.png  used on input line 4
+8.
+(pdftex.def)             Requested size: 353.57007pt x 58.71922pt.
+
+Overfull \hbox (8.57007pt too wide) in paragraph at lines 48--50
+ [][] 
+ []
+
+
+Package caption Warning: \label without proper reference on input line 59.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `Row' on page 3 undefined on input line 53.
+
+<images/row_dependencygraph.png, id=21, 2007.5pt x 608.2725pt>
+File: images/row_dependencygraph.png Graphic file (type png)
+<use images/row_dependencygraph.png>
+Package pdftex.def Info: images/row_dependencygraph.png  used on input line 58.
+
+(pdftex.def)             Requested size: 401.49289pt x 121.65234pt.
+
+Overfull \hbox (56.49289pt too wide) in paragraph at lines 58--60
+ [][] 
+ []
+
+[3 <./images/point_dependencygraph.png> <./images/row_dependencygraph.png>]
+
+Package caption Warning: \label without proper reference on input line 76.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `graphic' on page 4 undefined on input line 70.
+
+<images/dependency_graph_Mandeld.png, id=26, 361.35pt x 3011.25pt>
+File: images/dependency_graph_Mandeld.png Graphic file (type png)
+<use images/dependency_graph_Mandeld.png>
+Package pdftex.def Info: images/dependency_graph_Mandeld.png  used on input lin
+e 75.
+(pdftex.def)             Requested size: 72.2687pt x 602.23933pt.
+[4]
+Overfull \vbox (74.23933pt too high) has occurred while \output is active []
+
+
+[5 <./images/dependency_graph_Mandeld.png>] [6] (./Deliverable.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 23974 strings out of 494880
- 604259 string characters out of 6179600
- 766468 words of memory out of 5000000
- 26907 multiletter control sequences out of 15000+600000
- 7588 words of font info for 27 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 62i,7n,96p,728b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Deliverable.pdf (3 pages, 99656 bytes).
+ 24339 strings out of 492982
+ 607661 string characters out of 6134896
+ 782249 words of memory out of 5000000
+ 27510 multiletter control sequences out of 15000+600000
+ 8102 words of font info for 29 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 62i,7n,96p,728b,1140s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Deliverable.pdf (6 pages, 427467 bytes).
 PDF statistics:
- 52 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
+ 61 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

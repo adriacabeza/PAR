@@ -13,4 +13,4 @@ Per quan estigui public:
 ```
 
 - [Lab 1: Experimental setup and tools](https://github.com/adriacabeza/PAR/blob/master/LAB1/deliverable.pdf) Mark: 8.7/10
-- [Lab 2: Brief tutorial on OpenMP programming model](https://github.com/adriacabeza/PAR/blob/master/LAB2/deliverable.pdf) Mark: 
+- [Lab 2: Brief tutorial on OpenMP programming model](https://github.com/adriacabeza/PAR/blob/master/LAB2/deliverable.pdf) Mark:10/10 

@@ -1,1 +1,2 @@
 \contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Task decomposition and granularity analysis}{3}
