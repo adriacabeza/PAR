@@ -1,8 +1,9 @@
 # Parallellism 
 
 [![HitCount](http://hits.dwyl.io/PAR/Par.svg)](http://hits.dwyl.io/adriacabeza/PAR)
-[![GitHub stars](https://img.shields.io/github/stars/adriacabeza/PAR/PAR.svg)](https://GitHub.com/adriacabeza/PAR/stargazers/)
-[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/adriacabeza/PAR/PAR.svg)](https://github.com/adriacabeza/PAR)
+[![GitHub stars](https://img.shields.io/github/stars/adriacabeza/PAR.svg)](https://GitHub.com/adriacabeza/PAR/stargazers/)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/adriacabeza/PAR.svg)](https://github.com/adriacabeza/PAR)
+
 
 ### by Xavier Lacasa and Adrià Cabeza
 
