@@ -13,5 +13,5 @@
 - [Lab 2: Brief tutorial on OpenMP programming model](https://github.com/adriacabeza/PAR/blob/master/LAB2/deliverable.pdf) Mark:10/10 
 - [Lab3: Embarrassingly parallelism with OpenMP: Mandelbrot set](https://github.com/adriacabeza/PAR/blob/master/LAB3/Deliverable.pdf)  Mark: 10/10
 - [Lab 4: Divide and Conquer parallelism with OpenMP: Sorting](https://github.com/adriacabeza/PAR/blob/master/LAB4/deliverable.pdf) Mark:9.6/10
-- Lab 5: Geometric (data) decomposition: heat diffusion equation
+- [Lab 5: Geometric (data) decomposition: heat diffusion equation]
 (https://github.com/adriacabeza/PAR/blob/master/LAB5/deliverable.pdf)
